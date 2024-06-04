@@ -1,0 +1,393 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-bold.woff2') format("woff2"), url('../fonts/opensans-bold.woff') format("woff"), url('../fonts/opensans-bold.eot') format("eot"), url('../fonts/opensans-bold.ttf') format("ttf");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-extrabold.woff2') format("woff2"), url('../fonts/opensans-extrabold.woff') format("woff"), url('../fonts/opensans-extrabold.eot') format("eot"), url('../fonts/opensans-extrabold.ttf') format("ttf");
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-italic.woff2') format("woff2"), url('../fonts/opensans-italic.woff') format("woff"), url('../fonts/opensans-italic.eot') format("eot"), url('../fonts/opensans-italic.ttf') format("ttf");
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-light.woff2') format("woff2"), url('../fonts/opensans-light.woff') format("woff"), url('../fonts/opensans-light.eot') format("eot"), url('../fonts/opensans-light.ttf') format("ttf");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-lightitalic.woff2') format("woff2"), url('../fonts/opensans-lightitalic.woff') format("woff"), url('../fonts/opensans-lightitalic.eot') format("eot"), url('../fonts/opensans-lightitalic.ttf') format("ttf");
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-regular.woff2') format("woff2"), url('../fonts/opensans-regular.woff') format("woff"), url('../fonts/opensans-regular.eot') format("eot"), url('../fonts/opensans-regular.ttf') format("ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/OpenSans-Medium.eot');
+    src: url('../fonts/OpenSans-Medium.eot?#iefix') format("embedded-opentype"), url('../fonts/OpenSans-Medium.ttf') format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/OpenSans-MediumItalic.eot');
+    src: url('../fonts/OpenSans-MediumItalic.eot?#iefix') format("embedded-opentype"), url('../fonts/OpenSans-MediumItalic.woff2') format("woff2"), url('../fonts/OpenSans-MediumItalic.woff') format("woff"), url('../fonts/OpenSans-MediumItalic.ttf') format("truetype");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Open Sans";
+    src: url('../fonts/opensans-semibold.woff2') format("woff2"), url('../fonts/opensans-semibold.woff') format("woff"), url('../fonts/opensans-semibold.eot') format("eot"), url('../fonts/opensans-semibold.ttf') format("ttf");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Delius Unicase";
+    src: url('../fonts/DeliusUnicase-Bold.eot');
+    src: url('../fonts/DeliusUnicase-Bold.eot?#iefix') format("embedded-opentype"), url('../fonts/DeliusUnicase-Bold.woff2') format("woff2"), url('../fonts/DeliusUnicase-Bold.woff') format("woff"), url('../fonts/DeliusUnicase-Bold.ttf') format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Delius Unicase";
+    src: url('../fonts/DeliusUnicase-Regular.eot');
+    src: url('../fonts/DeliusUnicase-Regular.eot?#iefix') format("embedded-opentype"), url('../fonts/DeliusUnicase-Regular.woff2') format("woff2"), url('../fonts/DeliusUnicase-Regular.woff') format("woff"), url('../fonts/DeliusUnicase-Regular.ttf') format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    font-family: "Open Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
+.container{
+    max-width: 1830px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+input:hover, input:focus {
+    box-shadow: 0 0 12px rgba(13, 35, 67, 0.12);
+    border-color: #fff;
+}
+input:hover, textarea:hover {
+    border: 1px solid rgba(34, 36, 38, 0.35);
+}
+input, textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 38px;
+    min-height: 38px;
+    margin: 0;
+    padding: 5px 16px;
+    border: 1px solid #cacaca;
+    outline: none;
+    border-radius: 5px;
+    background-color: #fefefe;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #0a0a0a;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.bg_black{
+    background-color: #262829;
+}
+.color_white{
+    color: #fff;
+}
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    min-height: 1em;
+    outline: none;
+    border: none;
+    vertical-align: baseline;
+    color: rgba(0, 0, 0, 0.6);
+    text-transform: none;
+    text-shadow: none;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0 0.25em;
+    padding: 0.55em 1.5em;
+    font-family: "Open Sans", Roboto, Arial, sans-serif;
+    line-height: 1.4;
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    gap: 5px;
+}
+
+.btn svg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover{
+    background: #3588F3;
+}
+
+.btn_blue{
+    background: #3588F3;
+}
+
+.transition {
+    animation-iteration-count: 1;
+    animation-duration: 300ms;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+}
+
+a{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.btn.sky{
+    background: #E1F3FF;
+    color: #3588F3;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_only_icon{
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    padding: 0;
+}
+.btn svg{
+    fill: #fff;
+}
+.btn.sky svg{
+    fill: #3588F3;
+}
+
+section{
+    padding: 0 20px;
+}
+
+.tt{
+    text-transform: uppercase;
+}
+
+.bg_gray{
+    background: #e0e1e2;
+}
+.bg_green{
+    background: rgb(229, 243, 211);
+}
+.bg_red{
+    background: rgb(249, 215, 201) !important;
+}
+.bg_blue{
+    background: rgb(206, 235, 244);
+}
+.bg_orange{
+    background: rgb(250, 237, 204);
+}
+.color_gray{
+    color: #444;
+}
+.color_grey{
+    color: #777;
+}
+.color_green{
+    color: #036746;
+}
+.color_red{
+    color: #db3230 !important;
+}
+.color_blue{
+    color: #1f59af;
+}
+.color_orange{
+    color: #f68219;
+}
+
+button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.d-flex{
+    display: flex;
+}
+.align-center{
+    align-items: center;
+}
+.h100{
+    height: 100%;
+}
+
+.btn-icon-text{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 2px 0;
+    padding: 2px 8px;
+    white-space: nowrap;
+    text-align: left;
+    line-height: 1.6;
+    font-size: 13px;
+    font-weight: 400;
+    background-color: #ddd;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-icon-text:hover {
+    background-color: #eee;
+    color: #333;
+}
+
+.tippy-box[data-theme~='tomato'] {
+    background-color: tomato;
+    color: yellow;
+}
+
+._fz18{
+    font-size: 18px;
+}
+.lh18{
+    line-height: 1.8;
+}
+.fw600{
+    font-weight: 600;
+}
+.main_green{
+    color: #05A87C;
+}
+._nowrap{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.link:hover .button_note{
+    border: 1px solid #3588F3;
+}
+.button_note{
+    padding: 5px 8px;
+    padding-bottom: 5px;
+    line-height: 1.2;
+    vertical-align: middle;
+    border-radius: 4px;
+    background-color: #E1F3FF;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_note svg {
+    fill: #3588F3;
+    margin: 0;
+    width: 12px;
+    height: 12px;
+}
+._yellow-contract{
+    background: #fffedc;
+}
+._yellow-contract:hover{
+    background: #fffec9;
+}
+._green-contract{
+    background: #d9ffdc;
+}
+._green-contract:hover{
+    background: #c9ffcd;
+}
+._red-contract{
+    background: #FFD9DF;
+}
+._red-contract:hover{
+    background: #ffcdcd;
+}
+.divider_container{
+    padding: 6px 0;
+}
+.divider{
+    width: 100%;
+    margin: 0;
+    height: 1px;
+    background: #eee;
+}
+
+.mt6{
+    margin-top: 6px;
+}
+._hover-cell:hover {
+    background: #eee;
+    cursor: pointer;
+}
+.w100{
+    width: 100%;
+}
