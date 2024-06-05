@@ -5,11 +5,7 @@ import TableBody from './Table/TableBody';
 
 const sortField = ref('id')
 const typeSort = ref('asc')
-
-const objects = ref([
-
-])
-
+const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}])
 const selectedObjects = ref([])
 
 const objectsSorting = computed(() => {
@@ -71,6 +67,7 @@ function handleScroll(event) {
     }
 }
 
+
 </script>
 
 <template>
@@ -78,7 +75,9 @@ function handleScroll(event) {
         <div class="table_content" ref="tableRef">
           <table class="table" id="mainTable">
             <TableHead/>
-            <TableBody />
+              <tbody>
+                <TableBody v-for="object in objects" :key="object.id" :object="object"/>
+              </tbody>
           </table>
         </div>
     </div>

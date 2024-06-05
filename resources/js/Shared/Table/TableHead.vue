@@ -581,6 +581,7 @@ function activeTab(event) {
 .table_head_cell{
     display: table-cell;
     z-index: 30;
+    position: relative;
     padding: 3px 7px;
     vertical-align: middle;
     font-weight: 400;
