@@ -31,7 +31,6 @@ export default {
             statePopup.value = !statePopup.value
         }
 
-
         return{
             toggledContact,
             selectContact,

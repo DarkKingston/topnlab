@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/inertia-vue3'
 import Table from "../Shared/Table.vue";
 import Tabs from "../Shared/Tabs.vue";
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import {usePresentationStore} from '../store/computed';
 export default {
     props:{
@@ -17,6 +17,16 @@ export default {
     setup(){
         const presentationStore = usePresentationStore();
 
+        watch(() => presentationStore.presentation, (newVal) => {
+            localStorage.setItem('presentation', newVal);
+        });
+
+        onMounted(() => {
+            const storedPresentation = localStorage.getItem('presentation');
+            if (storedPresentation !== null) {
+                presentationStore.presentation = storedPresentation === 'true';
+            }
+        });
         return{
             presentationStore
         }
