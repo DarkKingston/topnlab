@@ -5,7 +5,7 @@ import TableBody from './Table/TableBody';
 
 const sortField = ref('id')
 const typeSort = ref('asc')
-const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}])
+const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}])
 const selectedObjects = ref([])
 
 const objectsSorting = computed(() => {

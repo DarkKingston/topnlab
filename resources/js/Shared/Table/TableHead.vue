@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import { usePresentationStore } from "../../store/computed";
 
+const presentationStore = usePresentationStore();
 const activeClass = ref(null);
 
 function activeTab(event) {
@@ -31,7 +33,7 @@ function activeTab(event) {
                     <label for="all"></label>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Ответственный
@@ -59,7 +61,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="!presentationStore.presentation" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Контакты
@@ -87,7 +89,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="!presentationStore.presentation" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Реклама
@@ -325,14 +327,14 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Задачи
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Тип Договора
@@ -385,7 +387,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Примечания
@@ -427,7 +429,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Кадастровый номер
@@ -463,7 +465,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Источник
@@ -514,7 +516,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="!presentationStore.presentation" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Комментарий для КЦ

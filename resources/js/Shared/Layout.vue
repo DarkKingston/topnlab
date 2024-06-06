@@ -1,27 +1,32 @@
 <script>
 import { Link, Head } from '@inertiajs/inertia-vue3';
+import {ref} from "vue";
 export default {
     components:{
         Link,
         Head
-    }
-}
-</script>
-<script setup>
-import {ref} from "vue";
-let tabs = ref([false, false])
+    },
+    setup(){
+        let tabs = ref([false, false])
 
-function changeTab(idx){
-    for(let i=0; i<tabs.value.length; i++){
-        if(idx != i){
-            tabs.value[i] = false;
+        function changeTab(idx){
+            for(let i=0; i<tabs.value.length; i++){
+                if(idx != i){
+                    tabs.value[i] = false;
+                }
+            }
+            tabs.value[idx] = !tabs.value[idx]
+        }
+        function handleClickOutside() {
+            tabs.value = [false, false];
+        }
+
+        return {
+            handleClickOutside,
+            changeTab,
+            tabs
         }
     }
-    tabs.value[idx] = !tabs.value[idx]
-}
-function handleClickOutside() {
-    tabs.value = [false, false];
-    console.log(1231)
 }
 </script>
 
@@ -122,7 +127,7 @@ header{
     bottom: 0;
     border: 2px solid #5B5F62;
     background-color: #3588F3;
-    z-index: 2;
+    z-index: 1;
 }
 .header_menu{
     display: flex;

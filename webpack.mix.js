@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const webpack = require('webpack');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -18,6 +18,13 @@ mix.js('resources/js/app.js', 'public/js')
 mix.webpackConfig({
     output: {
         chunkFilename: 'js/[name].js?id=[chunkhash]',
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false,
+            __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+        })
+    ]
 });
 

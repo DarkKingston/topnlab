@@ -4,9 +4,11 @@ import { InertiaProgress } from '@inertiajs/progress'
 import Layout from './Shared/Layout'
 import VueDragscroll from "vue-dragscroll";
 import VueTippy from 'vue-tippy'
+import vClickOutside from "click-outside-vue3"
 import "tippy.js/dist/tippy.css";
+import { createPinia } from 'pinia'
 InertiaProgress.init()
-
+const pinia = createPinia()
 createInertiaApp({
     resolve: name => {
         const page = require(`./Pages/${name}`).default;
@@ -17,6 +19,8 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(VueTippy)
+            .use(vClickOutside)
+            .use(pinia)
             .use(VueDragscroll)
             .mixin({ methods: {route: window.route}})
             .mount(el)

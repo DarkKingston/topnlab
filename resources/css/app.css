@@ -116,7 +116,7 @@ input:hover, input:focus {
 input:hover, textarea:hover {
     border: 1px solid rgba(34, 36, 38, 0.35);
 }
-input, textarea {
+input[type="text"], textarea {
     box-sizing: border-box;
     width: 100%;
     height: 38px;
@@ -390,4 +390,117 @@ button{
 }
 .w100{
     width: 100%;
+}
+.mb0{
+    margin-bottom: 0 !important;
+}
+.pb0{
+    padding-bottom: 0 !important;
+}
+.popup{
+    display: none;
+    background-color: rgba(10, 10, 10, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+}
+.popup.active{
+    display: block;
+}
+.popup_content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: #fff;
+    z-index: 1001;
+    text-align: left;
+    border: none;
+    border-radius: 5px;
+}
+
+.popup_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    position: relative;
+}
+
+.popup_close{
+    position: static;
+    padding: 10px 20px;
+    font-size: 2em;
+    cursor: pointer;
+}
+.justify-between{
+    justify-content: space-between;
+}
+
+.subheader{
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background-color: #fff;
+    padding: 0 10px;
+    box-shadow: 0 0 12px rgba(13, 35, 67, 0.17);
+}
+.subheader_item{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    padding: 0px 10px;
+    font-size: 13px;
+    padding-right: 0;
+}
+
+.subheader_item::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    opacity: 1;
+    background: #B74DFF;
+    visibility: visible;
+    pointer-events: none;
+}
+
+.subheader_title{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 13px 10px;
+    font-size: 13px;
+    text-transform: uppercase;
+    line-height: 1;
+    color: #B74DFF;
+}
+.subheader_ico{
+    display: flex;
+    align-items: center;
+}
+.subheader_arrow{
+    background: #B74DFF;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    width: 33px;
+    padding: 0 10px;
+    margin-left: 15px;
+    border: 2px solid #B74DFF;
+    border-radius: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.subheader_arrow svg{
+    width: 15px;
+    height: 15px;
 }

@@ -1,17 +1,22 @@
 <script>
 import Fancybox from "../ui/Fancybox";
 import { ref } from 'vue';
+import PopupUserTable from "../popups/PopupUserTable";
+import {usePresentationStore} from "../../store/computed";
 
 export default {
     components:{
-        Fancybox
+        Fancybox,
+        PopupUserTable
     },
     props:{
         object: Object
     },
     setup(){
+        const presentationStore = usePresentationStore();
         const active = ref(false);
         const showedNumber = ref(false);
+        const statePopup = ref(false)
         function toggledContact() {
             active.value = !active.value
         }
@@ -22,6 +27,9 @@ export default {
         function changeShowNumber(){
             showedNumber.value = !showedNumber.value
         }
+        function togglePopup(){
+            statePopup.value = !statePopup.value
+        }
 
 
         return{
@@ -29,7 +37,10 @@ export default {
             selectContact,
             active,
             changeShowNumber,
-            showedNumber
+            showedNumber,
+            togglePopup,
+            statePopup,
+            presentationStore
         }
     }
 }
@@ -84,17 +95,39 @@ export default {
                 <div class="table_cell_id">{{ object.id }}</div>
             </div>
         </td>
-        <td class="table_info_cell _user_id">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _user_id">
             <div class="table_cell_content">
-                <div class="table_cell_user">
-                    <div class="table_cell_user_name">
+                <div class="table_cell_user" @click="togglePopup">
+                    <div class="link pb0" @click="togglePopup">
                         Пугачева Татьяна
                     </div>
                     <div class="table_cell_user_label">
                         #Стажер
                     </div>
                 </div>
-                <div class="table_cell_btn btn_gray bg_gray color_gray d-flex align-center">
+                <div class="table_cell_user_info">
+                    <div class="table_cell_user_info_name fw600">Пугачева Татьяна</div>
+                    <div class="table_cell_user_info_action">
+                        <div class="table_cell_user_info_item _nowrap">
+                                <span>
+                                    <svg data-v-e42d1d7a="" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50"><path data-v-e42d1d7a="" d="M 25 4.0703125 C 12.368265 4.0703125 2.0703125 12.921644 2.0703125 24 C 2.0703125 30.432481 5.5907163 36.030749 11.003906 39.6875 C 10.995106 39.903125 11.010706 40.250912 10.728516 41.294922 C 10.378462 42.590119 9.6725023 44.413033 8.2382812 46.46875 L 7.21875 47.929688 L 9 47.929688 C 15.17102 47.929688 18.741544 43.907595 19.294922 43.261719 C 21.134317 43.693171 23.024914 43.929686 25 43.929688 C 37.631735 43.929688 47.929688 35.078356 47.929688 24 C 47.929688 12.921644 37.631735 4.0703125 25 4.0703125 z"></path></svg>
+                                </span>
+                            Написать в чате
+                        </div>
+                        <div class="table_cell_user_info_item _nowrap"  @click="togglePopup">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.56 8.47a8 8 0 0 0-7-7 64.29 64.29 0 0 0-15.06 0 8 8 0 0 0-7 7 64.29 64.29 0 0 0 0 15.06 8 8 0 0 0 7 7 64.29 64.29 0 0 0 15.06 0 8 8 0 0 0 7-7 64.29 64.29 0 0 0 0-15.06zM23 3.4h.3a6 6 0 0 1 5.28 5.3V9H23zM17 29a63.9 63.9 0 0 1-8.3-.39A6 6 0 0 1 7 28.1V24a5 5 0 0 1 10 0zM9 14a3 3 0 1 1 3 3 3 3 0 0 1-3-3zm12 14.78c-.67 0-1.33.1-2 .13V24a7 7 0 0 0-3.78-6.21 5 5 0 1 0-6.44 0A7 7 0 0 0 5 24v2.7a6 6 0 0 1-1.58-3.4 63.65 63.65 0 0 1 0-14.6A6 6 0 0 1 8.7 3.42a61.22 61.22 0 0 1 12.3-.2zm7.58-5.48a6 6 0 0 1-5.28 5.28H23V23h5.6c-.01.1-.01.2-.02.3zm.2-2.3H23v-4h6c0 1.34-.12 2.67-.22 4zM23 15v-4h5.78c.1 1.33.17 2.66.19 4z" data-name="people android app aplication phone"/></svg>
+                                </span>
+                            Открыть карточку пользователя
+                        </div>
+                    </div>
+                </div>
+                <div class="popup" :class="{active: statePopup}">
+                    <div class="popup_content">
+                        <PopupUserTable :userId="168291"/>
+                    </div>
+                </div>
+                <div class="table_cell_btn btn_gray color_gray d-flex align-center">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50">
                             <path d="M 25 4.0703125 C 12.368265 4.0703125 2.0703125 12.921644 2.0703125 24 C 2.0703125 30.432481 5.5907163 36.030749 11.003906 39.6875 C 10.995106 39.903125 11.010706 40.250912 10.728516 41.294922 C 10.378462 42.590119 9.6725023 44.413033 8.2382812 46.46875 L 7.21875 47.929688 L 9 47.929688 C 15.17102 47.929688 18.741544 43.907595 19.294922 43.261719 C 21.134317 43.693171 23.024914 43.929686 25 43.929688 C 37.631735 43.929688 47.929688 35.078356 47.929688 24 C 47.929688 12.921644 37.631735 4.0703125 25 4.0703125 z"></path>
@@ -103,6 +136,7 @@ export default {
                     Написать
                 </div>
             </div>
+
         </td>
         <td class="table_info_cell _photo">
             <Fancybox
@@ -136,7 +170,7 @@ export default {
             </Fancybox>
 
         </td>
-        <td class="table_info_cell _contacts">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _contacts">
             <div class="contact_box">
                 <div v-if="true">
                     <div class="state_contact" :class="{ active: active }">
@@ -183,7 +217,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _ad">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _ad">
             <div class="base_table_content">
                 <div class="rel_ad" v-tippy.top="`Посмотреть список всех обращений по этому объекту`">
                     Обращений - <span>0</span>
@@ -347,7 +381,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _tasks">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _tasks">
             <div class="base_table_content">
                 <div class="d-flex align-center link" v-tippy.left="`Создать новую задачу или заметку`">
                     <div class="button_note">
@@ -359,7 +393,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _dc_contract_type">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _dc_contract_type">
             <div class="base_table_content _yellow-contract" v-if="true">
                 <div class="fw600">
                     Возмездный договор
@@ -390,7 +424,7 @@ export default {
                 Косметический ремонт
             </div>
         </td>
-        <td class="table_info_cell _notes">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _notes">
             <div class="base_table_content">
                 <div class="d-flex align-center link mt6" v-tippy.left="`Нажмите чтобы добавить ЛИЧНОЕ примечание или посмотреть историю ранее созданных(личные примечания доступны только вам)`">
                     <div class="button_note">
@@ -451,7 +485,7 @@ export default {
         <td class="table_info_cell _use">
             <div class="base_table_content">—</div>
         </td>
-        <td class="table_info_cell _cadastral_num">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _cadastral_num">
             <div class="base_table_content">—</div>
         </td>
         <td class="table_info_cell _show_in_mls">
@@ -460,7 +494,7 @@ export default {
                 <div>Не в фиде</div>
             </div>
         </td>
-        <td class="table_info_cell _source_name">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _source_name">
             <div class="base_table_content">
                 Холодный звонок
             </div>
@@ -474,7 +508,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _comment_callcenter">
+        <td v-if="!presentationStore.presentation" class="table_info_cell _comment_callcenter">
             <div class="base_table_content">
                 —
             </div>
@@ -554,384 +588,58 @@ export default {
 
 
 
-<style lang="scss" scoped>
-.table_cell{
-    position: relative;
-}
-.table_row_separator{
-    height: 11px;
-    background: #f4f5f7;
-}
-.btn_table_blue{
-    width: 42px;
-    min-width: auto;
-    background: #E1F3FF;
-    color: #3588F3;
-    border-color: #e1f3ff;
-    height: 32px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 13px;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-}
-.btn_table_blue::after{
-    content: '';
-    height: 8px;
-    width: 8px;
-    background: #e00943;
-    border-radius: 50%;
-    position: absolute;
-    right: 3px;
-    top: 3px;
-}
-.footer_bar_btn{
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: #3588F3;
-    background-color: #E1F3FF;
-    margin-right: 7px;
-    padding: 0 10px;
-    font-size: 14px;
-    cursor: pointer;
-    white-space: nowrap;
-    border-radius: 5px;
-    height: 32px;
-    line-height: 1.8;
-    border: 1px solid #E1F3FF;
-}
-.footer_bar_btn._yellow:hover, .footer_bar_btn._yellow._active {
-    border-color: #d17e00;
-}
-.footer_bar_btn._yellow {
-    background: rgba(243, 156, 24, 0.1215686275);
-    color: #d17e00;
-    border: 1px solid transparent;
-}
-.advertising-button._default {
-    position: relative;
-    background: #E4F2FE;
-    color: #3588F3;
-    border-color: #E4F2FE;
-    border-style: solid;
-}
-.combo_button{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border: 1px solid #E4F2FE;
-    border-radius: 5px;
-    margin-right: 7px;
-}
-.combo_button:hover{
-    border: 1px solid #3588F3;
-    border-radius: 5px;
-}
-.advertising-button {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    padding: 0 10px 0 7px;
-    border-radius: 5px 0 0 5px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 15px;
-    cursor: pointer;
-}
-.advertising-button._default:before {
-    content: "|";
-    position: absolute;
-    right: -2px;
-    top: 6px;
-    color: #777;
-    font-size: 15px;
-}
-.service-label {
-    display: flex;
-    align-items: center;
-    padding: 0 11px 0 7px;
-    color: #3588F3;
-    font-size: 14px;
-    height: 32px;
-    background: #E4F2FE;
-    border-radius: 0 5px 5px 0;
-}
-.footer_actions{
-    display: flex;
-    margin-left: auto;
-    margin-right: 7px;
-    height: 100%;
-    align-items: center;
-}
+<style lang="scss">
+@import "/resources/css/table.css";
+
 .checkbox {
     position: absolute;
     z-index: -1;
     opacity: 0;
 
     & + label {
-          display: inline-flex;
-          align-items: center;
-          user-select: none;
-          cursor: pointer;
-      }
+        display: inline-flex;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+    }
     & + label::before {
-          content: '';
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          flex-shrink: 0;
-          flex-grow: 0;
-          border: 2px solid #D3D5E0;
-          border-radius: 2px;
-          margin-top: 3px;
-          margin-bottom: 3px;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-size: 50% 50%;
-      }
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        flex-grow: 0;
+        border: 2px solid #D3D5E0;
+        border-radius: 2px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50% 50%;
+    }
     &:checked + label::before {
-         border-color: #127cda;
-         background-color: #127cda;
-         background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAsMCwyNjAsMjUwIj4KPGcgZmlsbD0iI2ZmZmZmZiIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PGcgdHJhbnNmb3JtPSJzY2FsZSg4LjUzMzMzLDguNTMzMzMpIj48cGF0aCBkPSJNMjYuOTgwNDcsNS45OTAyM2MtMC4yNTk4LDAuMDA3NzQgLTAuNTA2MzgsMC4xMTYzMiAtMC42ODc1LDAuMzAyNzNsLTE1LjI5Mjk3LDE1LjI5Mjk3bC02LjI5Mjk3LC02LjI5Mjk3Yy0wLjI1MDgyLC0wLjI2MTI0IC0wLjYyMzI3LC0wLjM2NjQ3IC0wLjk3MzcxLC0wLjI3NTExYy0wLjM1MDQ0LDAuMDkxMzYgLTAuNjI0MTEsMC4zNjUwMyAtMC43MTU0NywwLjcxNTQ3Yy0wLjA5MTM2LDAuMzUwNDQgMC4wMTM4OCwwLjcyMjg5IDAuMjc1MTEsMC45NzM3MWw3LDdjMC4zOTA1MywwLjM5MDM3IDEuMDIzNTMsMC4zOTAzNyAxLjQxNDA2LDBsMTYsLTE2YzAuMjk1NzYsLTAuMjg3NDkgMC4zODQ2OSwtMC43MjcwNyAwLjIyMzkzLC0xLjEwNjkxYy0wLjE2MDc1LC0wLjM3OTg1IC0wLjUzODIxLC0wLjYyMjA0IC0wLjk1MDUsLTAuNjA5ODh6Ij48L3BhdGg+PC9nPjwvZz4KPC9zdmc+");
-         background-size: 22px 16px;
-     }
+        border-color: #127cda;
+        background-color: #127cda;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAsMCwyNjAsMjUwIj4KPGcgZmlsbD0iI2ZmZmZmZiIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PGcgdHJhbnNmb3JtPSJzY2FsZSg4LjUzMzMzLDguNTMzMzMpIj48cGF0aCBkPSJNMjYuOTgwNDcsNS45OTAyM2MtMC4yNTk4LDAuMDA3NzQgLTAuNTA2MzgsMC4xMTYzMiAtMC42ODc1LDAuMzAyNzNsLTE1LjI5Mjk3LDE1LjI5Mjk3bC02LjI5Mjk3LC02LjI5Mjk3Yy0wLjI1MDgyLC0wLjI2MTI0IC0wLjYyMzI3LC0wLjM2NjQ3IC0wLjk3MzcxLC0wLjI3NTExYy0wLjM1MDQ0LDAuMDkxMzYgLTAuNjI0MTEsMC4zNjUwMyAtMC43MTU0NywwLjcxNTQ3Yy0wLjA5MTM2LDAuMzUwNDQgMC4wMTM4OCwwLjcyMjg5IDAuMjc1MTEsMC45NzM3MWw3LDdjMC4zOTA1MywwLjM5MDM3IDEuMDIzNTMsMC4zOTAzNyAxLjQxNDA2LDBsMTYsLTE2YzAuMjk1NzYsLTAuMjg3NDkgMC4zODQ2OSwtMC43MjcwNyAwLjIyMzkzLC0xLjEwNjkxYy0wLjE2MDc1LC0wLjM3OTg1IC0wLjUzODIxLC0wLjYyMjA0IC0wLjk1MDUsLTAuNjA5ODh6Ij48L3BhdGg+PC9nPjwvZz4KPC9zdmc+");
+        background-size: 22px 16px;
+    }
     &:not(:disabled):not(:checked) + label:hover::before {
-         border-color: var(--primary-hover);
-     }
+        border-color: var(--primary-hover);
+    }
     &:not(:disabled):active + label::before {
-         background-color: var(--primary);
-         border: 1px solid #ECEBED;
-     }
+        background-color: var(--primary);
+        border: 1px solid #ECEBED;
+    }
     &:focus + label::before {
-         box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.07);
-     }
+        box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.07);
+    }
     &:focus:not(:checked) + label::before {
-         border-color: var(--primary);
-     }
+        border-color: var(--primary);
+    }
     &:disabled + label::before {
-         background-color: #e9ecef;
-         border: 1px solid #ECEBED;
-     }
-}
-.table_row_object{
-    background: #fff;
-}
-.table_row_cell{
-    position: relative;
-}
-.table_status{
-    position: relative;
-    z-index: 20;
-    border-bottom: 1px solid #ebedef;
-    display: flex;
-    align-items: center;
-    height: 35px;
-    min-height: 35px;
-}
-.table_status_sticky{
-    position: sticky;
-    left: 0;
-    top: 0;
-    display: flex;
-    padding-right: 10px;
-    width: calc(100vw - 40px);
-}
-.table_status_progress{
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-    margin-right: 10px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background: #e8f7f3;
-    overflow: hidden;
-}
-.table_status_steps{
-    display: flex;
-    margin: 0;
-    border: 0;
-    border-top-left-radius: 0;
-    height: 100%;
-    overflow: hidden;
-    box-shadow: none;
-    line-height: 1.14285714em;
-    flex-direction: row;
-    align-items: stretch;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    direction: rtl;
-}
-.table_status_step_item{
-    color: rgba(0, 0, 0, 0.87);
-    box-shadow: none;
-    border: none;
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    vertical-align: middle;
-    align-items: center;
-    justify-content: center;
-    margin: 0em 0em;
-    flex: 1 1 0;
-    padding: 3px 15px;
-    padding-bottom: 3px;
-    border-right: 1px solid #ddd;
-    white-space: nowrap;
-    font-size: 13px;
-    padding-left: 22px;
-    height: 25px;
-    flex-wrap: nowrap;
-    border-radius: 0;
-    direction: ltr;
-    background-color: #05a87c
-}
-.table_status_step_descr{
-    font-size: 14px;
-    line-height: 1;
-    color: #fff;
-    font-weight: normal;
-}
-.table_status_step_item::after{
-    border-color: #ddd;
-    color: #ddd;
-    display: block;
-    position: absolute;
-    z-index: 2;
-    content: "";
-    top: 50%;
-    right: 0%;
-    border: medium none;
-    border-style: solid;
-    border-width: 0px 1px 1px 0px;
-    transform: translateY(-50%) translateX(50%) rotate(-45deg);
-    width: 18.5px;
-    height: 18.5px;
-    background-color: #05a87c;
-}
-.btn_table{
-    font-size: 13px;
-    justify-content: center;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    margin-right: 1px;
-    display: flex;
-    align-items: center;
-    height: 25px;
-    padding: 0 10px;
-}
-.btn_next{
-    background: rgba(5, 168, 124, 0.09);
-    border: 1px solid #05a87c;
-    color: #05a87c;
-}
-.btn_next:hover{
-    background: #05a87c;
-    color: #fff;
-}
-.btn_next:hover svg path{
-    fill: #fff;
-}
-.btn_next svg{
-    width: 15px;
-    height: 15px;
-    margin-left: 8px;
-}
-.btn_next svg path{
-    fill: #05a87c;
-}
-.btn_prev{
-    background: rgba(243, 156, 24, 0.12);
-    color: #F39C18;
-    border: 1px solid #f39c18;
-    border-radius: 0 4px 4px 0;
-}
-.btn_prev:hover{
-    background: #f39c18;
-    color: #fff;
-}
-.btn_prev:hover svg path{
-    fill: #fff;
-}
-.btn_prev svg{
-    width: 17px;
-    height: 17px;
-}
-.btn_prev svg path{
-    fill: #f39d18;
-}
-.table_info_object{
-    background-color: #fff;
-}
-.table_info_cell{
-    min-height: 50px;
-    flex: 1;
-    border: 1px solid #EBEDEF;
-    vertical-align: top;
-}
-.table_info_cell._check{
-    position: sticky;
-    left: 0;
-    max-width: 35px;
-    width: 100%;
-    background-color: #fff;
-    z-index: 10;
-    border-left: none;
-}
-.table_cell_content{
-    max-height: 93px;
-    padding: 3px 7px;
-    overflow: auto;
-}
-.table_cell_id{
-    text-align: center;
-    display: block;
-    font-style: italic;
-    line-height: 1.8;
-    white-space: nowrap;
-    color: #555;
-}
-
-.table_info_cell._shadow .table_cell_content:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: auto;
-    width: 10px;
-    height: 100%;
-    right: -10px;
-    border-left: 2px solid #ebedef;
-    background: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(176, 177, 201, 0.2) 100%);
-}
-.table_cell_btn {
-    background-color: #eee;
-    color: #333;
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 185px;
-    margin: 2px 0;
-    padding: 2px 8px;
-    white-space: nowrap;
-    text-align: left;
-    line-height: 1.6;
-    font-size: 13px;
-    font-weight: 400;
-    border-radius: 4px;
-    cursor: pointer;
-    width: fit-content;
-}
-.table_cell_btn svg{
-    width: 12px;
-    height: 12px;
-    margin-right: 7px;
-    fill: #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        background-color: #e9ecef;
+        border: 1px solid #ECEBED;
+    }
 }
 .table_cell_user{
     position: relative;
@@ -944,395 +652,5 @@ export default {
         color: #777;
         font-style: italic;
     }
-}
-.table_info_cell._contacts,
-.table_info_cell._title,
-.table_info_cell._user_id,
-.table_info_cell._user,
-.table_info_cell._partner {
-    min-width: 171px;
-    max-width: 171px;
-}
-.table_info_cell._photo {
-    padding: 5px;
-    min-width: 120px;
-    max-width: 120px;
-}
-.table_info_cell._ad {
-    min-width: 240px;
-}
-.table_info_cell._realty_type {
-    min-width: 130px;
-}
-.table_info_cell._house {
-    min-width: 60px;
-}
-.table_info_cell._price {
-    position: relative;
-    min-width: 140px;
-}
-.table_info_cell._floor {
-    min-width: 60px;
-}
-.table_info_cell._mydescription,
-.table_info_cell._comment {
-    position: relative;
-    min-width: 340px;
-    max-width: 340px;
-    vertical-align: top;
-}
-
-.table_img{
-    max-width: 100%;
-    width: 108px;
-    height: 82px;
-    position: relative;
-    -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: center;
-    object-position: center;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-bottom: 1px;
-    overflow: hidden;
-}
-.table_img img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.table_img:hover .table_img_shadow{
-    opacity: 1;
-    visibility: visible;
-}
-.table_img_shadow{
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    border-radius: 5px;
-    transition: 0.2s;
-}
-.table_img_shadow_btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    flex: 1;
-    background: rgba(0, 0, 0, 0.8);
-    cursor: pointer;
-}
-.table_img_shadow_btn svg{
-    width: 20px;
-    height: 20px;
-}
-
-.table_info_cell._photo a{
-    display: none;
-}
-.table_info_cell._photo .table_img{
-    display: block;
-}
-.no-access{
-    min-width: 16px;
-    padding: 3px 5px;
-    font-family: "Open Sans", Roboto, Arial, sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-    line-height: 8px;
-    border-radius: 3px;
-    background-color: #e55360;
-    border-color: #DB2828;
-    color: #FFFFFF;
-    width: fit-content;
-}
-.contact_box{
-    max-height: 93px;
-    padding: 3px 7px;
-    margin-top: 0.14285714em;
-}
-
-.table_cell_contact_content{
-    display: none;
-}
-.state_content_current{
-    display: flex;
-    align-items: center;
-}
-.state_contact{
-    position: relative;
-}
-.state_contact.active .table_cell_contact_content{
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    cursor: auto;
-    outline: none;
-    min-width: -moz-max-content;
-    min-width: max-content;
-    margin: 0em;
-    padding: 0em 0em;
-    background: #FFFFFF;
-    font-size: 1em;
-    text-shadow: none;
-    text-align: left;
-    box-shadow: 0 0 8px 1px rgba(80, 86, 141, 0.5);
-    z-index: 11;
-    will-change: transform, opacity;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.circle{
-    width: 12px;
-    height: 12px;
-    font-size: 12px;
-    cursor: default;
-    border-radius: 50%;
-    margin-right: 0.38571429rem;
-}
-
-.blue_circle{
-    background: #1eb0db;
-}
-.gold_circle{
-    background: #f9ba16;
-}
-.red_circle{
-    background: #e55360;
-}
-.gray_circle{
-    background: #E8E8E8;
-}
-
-.table_cell_content_item{
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border: none;
-    height: auto;
-    text-align: left;
-    border-top: none;
-    line-height: 1em;
-    color: rgba(0, 0, 0, 0.87);
-    padding: 0.6rem 1.5rem;
-    font-size: 14px;
-    text-transform: none;
-    font-weight: normal;
-    box-shadow: none;
-}
-.table_cell_content_item:hover{
-    background: rgba(0, 0, 0, 0.05);
-    color: rgba(0, 0, 0, 0.95);
-    z-index: 13;
-}
-
-.state_content_current{
-    cursor: pointer;
-}
-
-.contact_phone, .rel_ad{
-    color: #3588F3;
-    cursor: pointer;
-    padding: 4px 0;
-    margin-bottom: 8px;
-}
-.rel_ad{
-    padding-top: 0;
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-.contact_phone:hover, .rel_ad:hover{
-    text-decoration: underline;
-}
-.link{
-    color: #3588F3;
-    cursor: pointer;
-    padding: 4px 0;
-    padding-top: 0;
-}
-.link:hover{
-    text-decoration: underline;
-}
-.base_table_content{
-    height: 93px;
-    min-width: 150px;
-    padding: 3px 7px;
-    overflow: auto;
-}
-
-.table_label{
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.table_location{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.table_type{
-    margin-right: 4px;
-    font-style: normal;
-    color: #777;
-}
-.base_table_ellipsis{
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.base_table_location svg{
-    width: 14px;
-    height: 14px;
-    margin-right: 3px;
-    fill: #1fb0db;
-}
-.price_arrow{
-    position: relative;
-}
-.price_box{
-    display: none;
-    padding: 8px 13px;
-    max-height: 350px;
-    overflow-y: auto;
-    position: absolute;
-    inset: 0px 0px auto auto;
-    margin: 0px;
-    right: calc(100% );
-    background: #FFFFFF;
-    box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    z-index: 10100;
-}
-.price_box_wrapper{
-    min-width: 300px;
-    padding: 10px;
-}
-.price_content{
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
-.price_box_label{
-    margin-bottom: 0;
-    padding-bottom: 10px;
-    font-size: 15px;
-    font-weight: 600;
-}
-.price_content{
-    font-size: 13px;
-    padding: 10px 0;
-}
-.price_content_item{
-    white-space: nowrap;
-}
-.price_content_item td{
-    padding: 4px 0;
-    padding-right: 20px;
-}
-.price_box_stats{
-    padding-top: 10px;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 10px;
-    font-size: 15px;
-    font-weight: 600;
-}
-.color_green_light{
-    color: #91d637;
-}
-.price_arrow{
-    cursor: pointer;
-    padding-left: 5px;
-}
-.price_arrow svg{
-    width: 15px;
-}
-.price_arrow:hover .price_box{
-    display: block;
-}
-.price_box:hover{
-    display: block;
-}
-.liquid_label svg{
-    margin: 1px 6px 0 0;
-}
-.liquid_label{
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-size: 13px;
-    white-space: nowrap;
-    font-weight: 600;
-    display: inline-flex;
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-.liquid_label._green{
-    color: #05a87c;
-    background: #cdeee5;
-}
-.liquid_price{
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-}
-.text_event {
-    display: block;
-    padding: 2px 0;
-    padding-left: 5px;
-}
-.multi-ellipsis{
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.multi-ellipsis._four {
-    -webkit-line-clamp: 4;
-}
-._no-scroll{
-    overflow: hidden ;
-}
-.table_footer_bar{
-    height: 51px;
-}
-.footer_bar_date{
-    display: flex;
-    font-size: 13px;
-    line-height: 15px;
-    align-items: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 3px;
-    padding: 3px 8px;
-    background: #eeeeee;
-    color: #747474;
-    height: 20px;
-    cursor: pointer;
-}
-.footer_bar_date:first-child{
-    margin-bottom: 3px;
-}
-.footer_bar_date svg{
-    width: 9px;
-    height: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 5px;
 }
 </style>

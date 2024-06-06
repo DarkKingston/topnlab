@@ -1,6 +1,7 @@
 <script>
     import Layout from '../Shared/LayoutLogin';
     import { Link, Head } from '@inertiajs/inertia-vue3';
+    import {ref} from "vue";
     export default{
         layout: Layout,
         components:{
@@ -9,21 +10,24 @@
         },
         props:{
             title: String
+        },
+        setup(){
+            let changeView = ref(false);
+            function onChangeView() {
+                changeView.value = !changeView.value;
+            }
+
+            function onSubmit(){
+                console.log('asd')
+            }
+
+            return{
+                onSubmit,
+                onChangeView,
+                changeView
+            }
         }
     }
-</script>
-<script setup>
-import { ref } from 'vue';
-let changeView = ref(false);
-function onChangeView() {
-    changeView.value = !changeView.value;
-}
-
-function onSubmit(){
-    console.log('asd')
-}
-
-
 </script>
 
 <template>

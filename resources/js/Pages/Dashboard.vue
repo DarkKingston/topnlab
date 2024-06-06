@@ -2,6 +2,8 @@
 import { Head } from '@inertiajs/inertia-vue3'
 import Table from "../Shared/Table.vue";
 import Tabs from "../Shared/Tabs.vue";
+import { ref } from 'vue'
+import {usePresentationStore} from '../store/computed';
 export default {
     props:{
         title: String
@@ -9,12 +11,44 @@ export default {
     components:{
         Head,
         Table,
-        Tabs
+        Tabs,
+        usePresentationStore
+    },
+    setup(){
+        const presentationStore = usePresentationStore();
+
+        return{
+            presentationStore
+        }
     }
 };
 </script>
 <template>
     <Head :title="title"/>
+    <section class="subheader d-flex align-center justify-between">
+        <div class="subheader_box">
+            <div class="subheader_item">
+                <div class="subheader_ico">
+                    <svg data-name="Layer 1" width="16" height="16" fill="#B74DFF" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 0h7v7H0zM0 9h7v7H0zM9 0h7v7H9zM9 9h7v7H9z"/></svg>
+                </div>
+                <div class="subheader_title tt">
+                    ОБЪЕКТЫ КОМПАНИИ
+                </div>
+                <div class="subheader_arrow">
+                    <svg data-name="Layer 1" fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.81 4.38 8 8.57l4.19-4.19 1.52 1.53L8 11.62 2.29 5.91l1.52-1.53z"/></svg>
+                </div>
+            </div>
+        </div>
+        <div class="subheader_box" v-tippy.bottom="'Режим презентации'">
+            <input _ngcontent-irg-c739=""
+                   type="checkbox"
+                   id="relation-mode"
+                   class="checkbox-switch ng-untouched ng-valid ng-dirty"
+                   v-model="presentationStore.presentation">
+            <label _ngcontent-irg-c739="" for="relation-mode" ruipopup="" popupplacement="bottom" class="checkbox-switch__label"></label>
+        </div>
+    </section>
+
     <section class="actions">
         <h1 class="actions_title">
             Продавцы, Объекты компании - 27209
@@ -74,5 +108,83 @@ export default {
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+.checkbox-switch {
+    display: none;
+}
+.checkbox-switch__label {
+    outline: 0;
+    display: flex;
+    width: 50px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background: #A5A5A5;
+    border-radius: 2em;
+    transition: all 0.4s ease;
+}
+.checkbox-switch__label::-moz-selection {
+    background: none;
+}
+.checkbox-switch__label::selection {
+    background: none;
+}
+.checkbox-switch__label:after, .checkbox-switch__label:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 22px;
+    height: 22px;
+    margin-top: -1px;
+}
+.checkbox-switch__label:after {
+    left: 0;
+}
+.checkbox-switch__label:before {
+    display: none;
+}
+.checkbox-switch__label:after {
+    border-radius: 25px;
+    background: #fff;
+    border: 2px solid #A5A5A5;
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, margin 0.3s ease;
+}
+.checkbox-switch__label:hover:after {
+    will-change: padding;
+}
+.checkbox-switch__label:active {
+    box-shadow: inset 0 0 0 2em #e8eae9;
+}
+.checkbox-switch__label:active:after {
+    padding-right: 0.8em;
+}
+.checkbox-switch__label._status {
+    background: #3588F3;
+}
+.checkbox-switch__label._status._offline {
+    background: #E23D4B;
+}
+.checkbox-switch__label._status:after {
+    border: 2px solid #E23D4B;
+}
+.checkbox-switch:checked + .checkbox-switch__label {
+    background: #3588F3;
+}
+.checkbox-switch:checked + .checkbox-switch__label._sota {
+    background: #f68219;
+}
+.checkbox-switch:checked + .checkbox-switch__label._sota:after {
+    border: 2px solid #f68219;
+}
+.checkbox-switch:checked + .checkbox-switch__label:after {
+    left: 55%;
+    border: 2px solid #3588F3;
+}
+.checkbox-switch:checked + .checkbox-switch__label:active:after {
+    margin-left: -0.8em;
 }
 </style>

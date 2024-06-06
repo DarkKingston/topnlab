@@ -1,52 +1,67 @@
-<script setup>
+<script>
 import { ref } from "vue";
 import draggable from "vuedraggable";
+export default{
+ components: {
+     draggable
+ },
+ setup(){
+     const activeClass = ref(null);
 
-const activeClass = ref(null);
+     function activeTab(event) {
+         if (activeClass.value) {
+             activeClass.value.classList.remove('active');
+         }
 
-function activeTab(event) {
-    if (activeClass.value) {
-        activeClass.value.classList.remove('active');
-    }
+         const target = event.currentTarget;
+         if (target !== activeClass.value) {
+             target.classList.add('active');
+             activeClass.value = target;
+         } else {
+             activeClass.value = null;
+         }
+     }
+     let tabsStatic = ref([
+         { id: 0, title: "Новые", count: "7241" },
+         { id: 1, title: "Все", count: "27215" }
+     ]);
 
-    const target = event.currentTarget;
-    if (target !== activeClass.value) {
-        target.classList.add('active');
-        activeClass.value = target;
-    } else {
-        activeClass.value = null;
-    }
-}
-let tabsStatic = ref([
-  { id: 0, title: "Новые", count: "7241" },
-  { id: 1, title: "Все", count: "27215" }
-]);
+     let tabsDraggable = ref([
+         { id: 2, title: "Вариант", count: "7242" },
+         { id: 3, title: "Отложено", count: "126", tooltip:'На данном этапе находяться Продавцы, которых НОП перевел в отложенный спрос' },
+         { id: 4, title: "Нужно распределить", count: "284", tooltip: 'Старовый этар ТОПа. Заявки, которые нужно распределить по Агентам' },
+         { id: 5, title: "Заключенные договора", count: "1146", tooltip: 'На этом этапе находяться Продавцы, с которыми заключен агентский договор' },
+         { id: 6, title: "Новые продавцы", count: "5", tooltip: 'Это стартовый этап воронки. Вновь созданные карточки Продавцов и карточки полученные от ТОПа будут попадать на этот этап.' },
+         { id: 7, title: "Передано в црп", count: "0", tooltip: 'На этом этапе находяться карточки Продавцов, переданные в Центр Регионального Партнерства' },
+         { id: 8, title: "В рекламе / показы", count: "8333", tooltip: 'На этом этапе находяться объекты Продавцов, по каторым ведется рекламная компания и проводяться показы Покупателям' },
+         { id: 9, title: "Аванс", count: "385", tooltip: 'На этом этапе находяться Продавцы, которые подписали предварительный договор' },
+         { id: 10, title: "Ожидание комиссии", count: "33", tooltip: 'На этом этапе находяться Клиенты, которые ожидают оканчательного расчета за оказание услуг' },
+         { id: 11, title: "Отложено (на Нопа)", count: "180", tooltip: 'На этом этапе находяться Продавцы, которых Агент планирует отложить. НОП принимает решения по отложке' },
+         { id: 12, title: "Отказ снят", count: "4633", tooltip: 'На этом этапе находяться Продавцы, по которым получены отказы. Например: продали сами, отказались от сотрудничества и т.д.' },
+         { id: 13, title: "Сделка закрыта", count: "459", tooltip: 'Финальные этап сделки' }
+     ]);
 
-let tabsDraggable = ref([
-  { id: 2, title: "Вариант", count: "7242" },
-  { id: 3, title: "Отложено", count: "126", tooltip:'На данном этапе находяться Продавцы, которых НОП перевел в отложенный спрос' },
-  { id: 4, title: "Нужно распределить", count: "284", tooltip: 'Старовый этар ТОПа. Заявки, которые нужно распределить по Агентам' },
-  { id: 5, title: "Заключенные договора", count: "1146", tooltip: 'На этом этапе находяться Продавцы, с которыми заключен агентский договор' },
-  { id: 6, title: "Новые продавцы", count: "5", tooltip: 'Это стартовый этап воронки. Вновь созданные карточки Продавцов и карточки полученные от ТОПа будут попадать на этот этап.' },
-  { id: 7, title: "Передано в црп", count: "0", tooltip: 'На этом этапе находяться карточки Продавцов, переданные в Центр Регионального Партнерства' },
-  { id: 8, title: "В рекламе / показы", count: "8333", tooltip: 'На этом этапе находяться объекты Продавцов, по каторым ведется рекламная компания и проводяться показы Покупателям' },
-  { id: 9, title: "Аванс", count: "385", tooltip: 'На этом этапе находяться Продавцы, которые подписали предварительный договор' },
-  { id: 10, title: "Ожидание комиссии", count: "33", tooltip: 'На этом этапе находяться Клиенты, которые ожидают оканчательного расчета за оказание услуг' },
-  { id: 11, title: "Отложено (на Нопа)", count: "180", tooltip: 'На этом этапе находяться Продавцы, которых Агент планирует отложить. НОП принимает решения по отложке' },
-  { id: 12, title: "Отказ снят", count: "4633", tooltip: 'На этом этапе находяться Продавцы, по которым получены отказы. Например: продали сами, отказались от сотрудничества и т.д.' },
-  { id: 13, title: "Сделка закрыта", count: "459", tooltip: 'Финальные этап сделки' }
-]);
+     let isDragging = ref(false);
 
-let isDragging = ref(false);
+     function handleDragStart() {
+         setTimeout(() => {
+             isDragging.value = true;
+         }, 100)
+     }
 
-function handleDragStart() {
-  setTimeout(() => {
-    isDragging.value = true;
-  }, 100)
-}
-
-function handleDragEnd() {
-  isDragging.value = false;
+     function handleDragEnd() {
+         isDragging.value = false;
+     }
+     return{
+         handleDragEnd,
+         handleDragStart,
+         isDragging,
+         tabsDraggable,
+         tabsStatic,
+         activeTab,
+         activeClass
+     }
+ }
 }
 </script>
 
