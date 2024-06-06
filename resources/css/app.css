@@ -109,14 +109,14 @@ main{
     padding: 0 15px;
 }
 
-input:hover, input:focus {
+.login_box input:hover, .login_box input:focus {
     box-shadow: 0 0 12px rgba(13, 35, 67, 0.12);
     border-color: #fff;
 }
-input:hover, textarea:hover {
+.login_box input:hover, .login_box textarea:hover {
     border: 1px solid rgba(34, 36, 38, 0.35);
 }
-input[type="text"], textarea {
+.login_box input, .login_box textarea {
     box-sizing: border-box;
     width: 100%;
     height: 38px;
