@@ -2,10 +2,12 @@
 import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import TableHead from './Table/TableHead';
 import TableBody from './Table/TableBody';
+import PopupUserTable from "./popups/PopupUserTable";
 export default {
     components: {
         TableHead,
-        TableBody
+        TableBody,
+        PopupUserTable
     },
     setup() {
 
@@ -14,6 +16,8 @@ export default {
         const typeSort = ref('asc');
         const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]);
         const selectedObjects = ref([]);
+        const userInfo = ref(null);
+        const showUserPopup = ref(false);
 
         // Ссылки на элементы DOM
         const tableRef = ref(null);
@@ -134,6 +138,12 @@ export default {
             }
         }
 
+        // Показ/скрытие карточки пользователя
+        const togglePopup = (user) => {
+            userInfo.value = user;
+            showUserPopup.value = !showUserPopup.value;
+        };
+
         return {
             sortField,
             typeSort,
@@ -154,6 +164,10 @@ export default {
             setSort,
             updateFakeScrollWidth,
             handleTableScroll,
+            togglePopup,
+            userInfo,
+            showUserPopup
+
         }
     }
 }
@@ -165,9 +179,14 @@ export default {
             <table class="table" id="mainTable" ref="tableRef">
                 <TableHead />
                 <tbody>
-                <TableBody v-for="object in objects" :key="object.id" :object="object" />
+                <TableBody v-for="object in objects" :key="object.id" :object="object" @toggle-popup="togglePopup"/>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="popup" :class="{active: showUserPopup}">
+        <div class="popup_content">
+            <PopupUserTable :userId="userInfo"/>
         </div>
     </div>
 

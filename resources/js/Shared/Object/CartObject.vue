@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
@@ -21,9 +21,35 @@ export default {
             }, 1000)
         }
 
-        return{
+        onMounted(() => {
+            console.log(123);
+
+            var slider = new Swiper ('.gallery-slider', {
+                slidesPerView: 1,
+                centeredSlides: true,
+                loop: false,
+                spaceBetween: 15,
+                loopedSlides: 6,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+            var thumbs = new Swiper ('.gallery-thumbs', {
+                slidesPerView: 'auto',
+                spaceBetween: 4,
+                centeredSlides: true,
+                loop: false,
+                slideToClickedSlide: true,
+            });
+            slider.controller.control = thumbs;
+            thumbs.controller.control = slider;
+        })
+
+        return {
             copied,
-            clipboardCopy
+            clipboardCopy,
         }
     }
 }
@@ -139,17 +165,64 @@ export default {
                 <div class="cart_object_info_preview">
                     <div class="cart_preview_actions">
                         <div class="combo_button">
-                            <div class="button_left_side">
+                            <div class="button_left_side" v-tippy.top="`У вас недостаточно прав`">
                                 <div class="advertising-button _default"> Реклама </div>
                             </div>
-                            <div class="button_right_side">
+                            <div class="button_right_side" v-tippy.top="`Услуг не заказано`">
                                 <div class="service-label"> Сервисы </div>
                             </div>
                         </div>
-                        <div class="cart_preview_action_item"></div>
-                        <div class="cart_preview_action_item"></div>
-                        <div class="cart_preview_action_item"></div>
+                        <div class="cart_preview_action_item" v-tippy.top="`В базе данных есть покупатели под этот обьект`">
+                            <button class="btn_table btn_combo fz-13 btn_next" >
+                                Покупателей 0
+                            </button>
+                        </div>
+                        <div class="footer_bar_btn fz-14 _yellow" v-tippy.top="`Недостаточно прав для этой операции`"> CMA </div>
+                        <div class="combo_button btn_table_blue fz-13" v-tippy.top="`В карточке заполнены не все обязательные поля`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="#3588F3" width="18" height="4">
+                                <circle cx="9" cy="2" r="2"></circle>
+                                <circle cx="2" cy="2" r="2"></circle>
+                                <circle cx="16" cy="2" r="2"></circle>
+                            </svg>
+                        </div>
                     </div>
+
+                    <div class="cart_object_slider">
+                        <div class="swiper-container gallery-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                            </div>
+                            <div class="swiper-button-prev">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#3588f3"/></svg>
+                            </div>
+                            <div class="swiper-button-next">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#3588f3"/></svg>
+                            </div>
+                            <div class="slider_info">
+                                <div class="slider_info_wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M32 44a10 10 0 1 0-10-10 10 10 0 0 0 10 10z"/><path class="cls-1" d="M9.51 56h45A5.51 5.51 0 0 0 60 50.49V20.18A4.18 4.18 0 0 0 55.82 16H48.3a1.81 1.81 0 0 1-1.51-.81L43.3 10a4.39 4.39 0 0 0-3.65-2h-15.3a4.39 4.39 0 0 0-3.65 2l-3.5 5.19a1.81 1.81 0 0 1-1.5.81H8.18A4.18 4.18 0 0 0 4 20.18v30.31A5.51 5.51 0 0 0 9.51 56zM52 20a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm-20 0a14 14 0 1 1-14 14 14 14 0 0 1 14-14zM54.82 12A1.18 1.18 0 0 0 56 10.82v-.61A2.22 2.22 0 0 0 53.78 8h-4.15a.74.74 0 0 0-.74.74A3.26 3.26 0 0 0 52.15 12z"/></g></svg>
+                                    <span>6 фото</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-container gallery-thumbs">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="cart_object_info_contract">
 
@@ -163,6 +236,55 @@ export default {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
+.gallery {
+    width: 100%;
+    max-width: 620px;
+    margin: 40px auto;
+
+    &-slider {
+        width: 100%;
+        height: auto;
+        margin: 0 0 10px 0;
+
+        .swiper-slide {
+            width: auto;
+            height: 525px;
+
+            img {
+                display: block;
+                width: auto;
+                height: 100%;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    &-thumbs {
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 5px;
+
+        .swiper-slide {;
+            width: 96px;
+            height: 72px;
+            outline: none;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 5px;
+            opacity: .7;
+
+            &-active {
+                opacity: 1;
+            }
+
+            img {
+                width: auto;
+                height: 100%;
+            }
+        }
+    }
+}
 </style>

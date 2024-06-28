@@ -1,20 +1,18 @@
 <script>
 import Fancybox from "../ui/Fancybox";
 import { ref } from 'vue';
-import PopupUserTable from "../popups/PopupUserTable";
 import {usePresentationStore} from "../../store/computed";
 import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     components:{
         Fancybox,
-        Link,
-        PopupUserTable
+        Link
     },
     props:{
         object: Object
     },
-    setup(){
+    setup(props, { emit }){
         console.log(Object);
         const presentationStore = usePresentationStore();
         const active = ref(false);
@@ -30,9 +28,10 @@ export default {
         function changeShowNumber(){
             showedNumber.value = !showedNumber.value
         }
-        function togglePopup(){
-            statePopup.value = !statePopup.value
-        }
+        const togglePopup = (user) => {
+            console.log(user.id);
+            emit('toggle-popup', user.id);
+        };
 
         return{
             toggledContact,
@@ -65,7 +64,7 @@ export default {
                     </div>
 
                     <div style="display:flex; align-items: center;flex-shrink: 0">
-                        <button class="btn_table btn_next" v-tippy.left="`Нажми, чтобы перейти на следующий этап воронки`">
+                        <button class="btn_table fz-13 btn_next" v-tippy.left="`Нажми, чтобы перейти на следующий этап воронки`">
                             Вперед по воронке
                             <svg viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_iconCarrier">
@@ -73,7 +72,7 @@ export default {
                                 </g>
                             </svg>
                         </button>
-                        <button class="btn_table btn_prev" v-tippy.left="`Сброс пройденных этапов`">
+                        <button class="btn_table fz-13 btn_prev" v-tippy.left="`Сброс пройденных этапов`">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 92.794 92.794" xml:space="preserve">
                                     <g>
                                         <path d="M1,44.666l39.697-22.925c0.618-0.356,1.381-0.356,2,0c0.618,0.357,1,1.019,1,1.732v9.599h0.001   c0.279,0.036,28.08,3.903,47.527,30.507l1.211,1.734c0.537,0.772,0.465,1.814-0.176,2.504c-0.639,0.688-1.674,0.842-2.482,0.361   l-1.813-1.071c-0.346-0.206-1.096-0.63-1.142-0.655c-10.483-6.26-20.814-9.434-30.705-9.434c-7.401,0-11.849,1.86-12.419,2.108   l-0.001,10.192c0,0.714-0.382,1.375-1,1.732c-0.31,0.179-0.655,0.268-1,0.268c-0.345,0-0.69-0.089-1-0.268L1,48.13   c-0.618-0.357-1-1.019-1-1.732S0.381,45.022,1,44.666z"/>
@@ -99,7 +98,7 @@ export default {
         </td>
         <td v-if="!presentationStore.presentation" class="table_info_cell _user_id">
             <div class="table_cell_content">
-                <div class="table_cell_user" @click="togglePopup">
+                <div class="table_cell_user" @click="togglePopup(object)">
                     <div class="link pb0">
                         Пугачева Татьяна
                     </div>
@@ -108,15 +107,15 @@ export default {
                     </div>
                 </div>
                 <div class="table_cell_user_info">
-                    <div class="table_cell_user_info_name fw600">Пугачева Татьяна</div>
+                    <div class="table_cell_user_info_name fz-14 fw600">Пугачева Татьяна</div>
                     <div class="table_cell_user_info_action">
-                        <div class="table_cell_user_info_item _nowrap">
+                        <div class="table_cell_user_info_item fz-14 _nowrap">
                                 <span>
                                     <svg data-v-e42d1d7a="" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50"><path data-v-e42d1d7a="" d="M 25 4.0703125 C 12.368265 4.0703125 2.0703125 12.921644 2.0703125 24 C 2.0703125 30.432481 5.5907163 36.030749 11.003906 39.6875 C 10.995106 39.903125 11.010706 40.250912 10.728516 41.294922 C 10.378462 42.590119 9.6725023 44.413033 8.2382812 46.46875 L 7.21875 47.929688 L 9 47.929688 C 15.17102 47.929688 18.741544 43.907595 19.294922 43.261719 C 21.134317 43.693171 23.024914 43.929686 25 43.929688 C 37.631735 43.929688 47.929688 35.078356 47.929688 24 C 47.929688 12.921644 37.631735 4.0703125 25 4.0703125 z"></path></svg>
                                 </span>
                             Написать в чате
                         </div>
-                        <div class="table_cell_user_info_item _nowrap"  @click="togglePopup">
+                        <div class="table_cell_user_info_item fz-14 _nowrap"  @click="togglePopup(object)">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.56 8.47a8 8 0 0 0-7-7 64.29 64.29 0 0 0-15.06 0 8 8 0 0 0-7 7 64.29 64.29 0 0 0 0 15.06 8 8 0 0 0 7 7 64.29 64.29 0 0 0 15.06 0 8 8 0 0 0 7-7 64.29 64.29 0 0 0 0-15.06zM23 3.4h.3a6 6 0 0 1 5.28 5.3V9H23zM17 29a63.9 63.9 0 0 1-8.3-.39A6 6 0 0 1 7 28.1V24a5 5 0 0 1 10 0zM9 14a3 3 0 1 1 3 3 3 3 0 0 1-3-3zm12 14.78c-.67 0-1.33.1-2 .13V24a7 7 0 0 0-3.78-6.21 5 5 0 1 0-6.44 0A7 7 0 0 0 5 24v2.7a6 6 0 0 1-1.58-3.4 63.65 63.65 0 0 1 0-14.6A6 6 0 0 1 8.7 3.42a61.22 61.22 0 0 1 12.3-.2zm7.58-5.48a6 6 0 0 1-5.28 5.28H23V23h5.6c-.01.1-.01.2-.02.3zm.2-2.3H23v-4h6c0 1.34-.12 2.67-.22 4zM23 15v-4h5.78c.1 1.33.17 2.66.19 4z" data-name="people android app aplication phone"/></svg>
                                 </span>
@@ -124,12 +123,8 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="popup" :class="{active: statePopup}">
-                    <div class="popup_content">
-                        <PopupUserTable :userId="168291"/>
-                    </div>
-                </div>
-                <div class="table_cell_btn btn_gray color_gray d-flex align-center">
+
+                <div class="table_cell_btn fz-13 btn_gray color_gray d-flex align-center">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50">
                             <path d="M 25 4.0703125 C 12.368265 4.0703125 2.0703125 12.921644 2.0703125 24 C 2.0703125 30.432481 5.5907163 36.030749 11.003906 39.6875 C 10.995106 39.903125 11.010706 40.250912 10.728516 41.294922 C 10.378462 42.590119 9.6725023 44.413033 8.2382812 46.46875 L 7.21875 47.929688 L 9 47.929688 C 15.17102 47.929688 18.741544 43.907595 19.294922 43.261719 C 21.134317 43.693171 23.024914 43.929686 25 43.929688 C 37.631735 43.929688 47.929688 35.078356 47.929688 24 C 47.929688 12.921644 37.631735 4.0703125 25 4.0703125 z"></path>
@@ -138,7 +133,6 @@ export default {
                     Написать
                 </div>
             </div>
-
         </td>
         <td class="table_info_cell _photo">
             <Fancybox
@@ -183,21 +177,21 @@ export default {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10.033" height="5"><path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z"/></svg>
                             </span>
                         </div>
-                        <div class="table_cell_contact_content">
-                            <div class="table_cell_content_item" @click="selectContact('empty')">
+                        <div class="table_cell_contact_content fz-1em">
+                            <div class="table_cell_content_item fz-14" @click="selectContact('empty')">
                                 <div class="gray_circle circle"></div>
                                 Не выбрано
                             </div>
-                            <div class="table_cell_content_item" @click="selectContact('cold')">
-                                <div class="blue_circle circle"></div>
+                            <div class="table_cell_content_item fz-14" @click="selectContact('cold')">
+                                <div class="blue_circle circlebtn fz-12"></div>
                                 Сначала Холодные
                             </div>
-                            <div class="table_cell_content_item" @click="selectContact('warm')">
-                                <div class="gold_circle circle"></div>
+                            <div class="table_cell_content_item fz-14" @click="selectContact('warm')">
+                                <div class="gold_circle circlebtn fz-12"></div>
                                 Сначала Теплые
                             </div>
-                            <div class="table_cell_content_item" @click="selectContact('hot')">
-                                <div class="red_circle circle"></div>
+                            <div class="table_cell_content_item fz-14" @click="selectContact('hot')">
+                                <div class="red_circle circlebtn fz-12"></div>
                                 Сначала Горячие
                             </div>
                         </div>
@@ -208,12 +202,12 @@ export default {
                             +7 934 342 6058
                         </div>
                     </div>
-                    <div class="btn-icon-text" v-tippy.top="`Нажми, чтобы выбрать способ отправки сообщения`">
+                    <div class="btn-icon-text fz-13" v-tippy.top="`Нажми, чтобы выбрать способ отправки сообщения`">
                         Написать сообщение
                     </div>
                 </div>
                 <div v-else>
-                    <div class="no-access">
+                    <div class="no-access fz-12">
                         Нет доступа
                     </div>
                 </div>
@@ -224,7 +218,7 @@ export default {
                 <div class="rel_ad" v-tippy.top="`Посмотреть список всех обращений по этому объекту`">
                     Обращений - <span>0</span>
                 </div>
-                <div class="btn-icon-text tt" style="background: #e0e1e2;color: #444;font-size: 10px;font-weight: 700;">
+                <div class="btn-icon-text fz-13 tt" style="background: #e0e1e2;color: #444;font-size: 10px;font-weight: 700;">
                     В РЕКЛАМУ НЕ ВЫГРУЖАЛСЯ
                 </div>
             </div>
@@ -280,10 +274,10 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.924 13.617A1 1 0 0 0 19 13h-3V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v10H5a1 1 0 0 0-.707 1.707l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 0 0 .217-1.09z" style="fill:#91d637" data-name="Down"/></svg>
                         <div class="price_box">
                             <div class="price_box_wrapper">
-                                <div class="price_box_label">
+                                <div class="price_box_label fz-15">
                                     Изменение цены
                                 </div>
-                                <table class="price_content">
+                                <table class="price_content fz-13">
                                     <tr class="price_content_item">
                                         <td class="price_content_data">3 июня 24г в 09:48</td>
                                         <td class="price_content_price">15 000 000р.</td>
@@ -295,7 +289,7 @@ export default {
                                         <td class="price_content_change"><div class="start fw600">(Стартовая цена)</div></td>
                                     </tr>
                                 </table>
-                                <div class="price_box_stats">
+                                <div class="price_box_stats fz-15">
                                     Стартовая цена <span class="color_green_light fw600">понижена на 43%</span>
                                 </div>
                             </div>
@@ -312,7 +306,7 @@ export default {
         </td>
         <td class="table_info_cell _market_price">
             <div class="base_table_content">
-                <div class="liquid_label _green d-flex align-center">
+                <div class="liquid_label fz-13 _green d-flex align-center">
                     <svg width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128"
                          style="enable-background:new 0 0 128 128" xml:space="preserve">
                         <g id="row3">
@@ -321,7 +315,7 @@ export default {
                     </svg>
                     Ликвид
                 </div>
-                <div class="liquid_price">
+                <div class="liquid_price fz-16">
                     —
                 </div>
                 <div>
@@ -503,7 +497,7 @@ export default {
         </td>
         <td class="table_info_cell _deal_state">
             <div class="base_table_content">
-                <div class="btn-icon-text tt"
+                <div class="btn-icon-text fz-13 tt"
                      style="background: rgb(224, 225, 226); color: rgb(68, 68, 68); font-size: 10px; font-weight: 700;"
                      v-tippy.top="'У вас недостаточно прав для изменения статуса'">
                     СБОР ДАННЫХ
@@ -531,19 +525,19 @@ export default {
 
                                 </div>
                                 <div class="footer_info_box_item" style="padding: 1px 7px 4px 9px;">
-                                    <div class="btn-icon-text tt color_red bg_red"
+                                    <div class="btn-icon-text fz-13 tt color_red bg_red"
                                          style="font-size: 10px; font-weight: 700;">
                                         ОТКАЗ
                                     </div>
                                 </div>
                             </div>
                             <div class="footer_info_box ">
-                                <div class="footer_bar_date d-flex align-center">
+                                <div class="footer_bar_date fz-13 d-flex align-center">
                                     <span class="color_gray" style="margin-right: 2px;">Созд:</span>
                                     07.11.2023, 12:09
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#7e7e7e" width="10.033" height="5"><path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z"/></svg>
                                 </div>
-                                <div class="footer_bar_date">
+                                <div class="footer_bar_date fz-13">
                                     <span class="color_gray" style="margin-right: 2px;">Изм:</span>
                                     07.11.2023, 12:09
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#7e7e7e" width="10.033" height="5"><path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z"/></svg>
@@ -554,26 +548,26 @@ export default {
 
                             <div class="combo_button">
                                 <div class="button_left_side">
-                                    <div class="advertising-button _default">
+                                    <div class="advertising-button fz-14 _default">
                                         Реклама
                                     </div>
                                 </div>
                                 <div class="button_right_side">
-                                    <div class="service-label">
+                                    <div class="service-label fz-14">
                                         Сервисы
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="footer_bar_btn _yellow">
+                            <div class="footer_bar_btn fz-14 _yellow">
                                 Найти покупателя
                             </div>
 
-                            <div class="footer_bar_btn _yellow">
+                            <div class="footer_bar_btn fz-14 _yellow">
                                 CMA
                             </div>
 
-                            <div class="combo_button btn_table_blue">
+                            <div class="combo_button btn_table_blue fz-13">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#3588F3" width="18" height="4"><circle cx="9" cy="2" r="2"/><circle cx="2" cy="2" r="2"/><circle cx="16" cy="2" r="2"/></svg>
                             </div>
 
