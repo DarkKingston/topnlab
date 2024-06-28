@@ -1,84 +1,210 @@
-<script setup>
-import { ref, computed, onMounted } from 'vue';
+<script >
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import TableHead from './Table/TableHead';
 import TableBody from './Table/TableBody';
+export default {
+    components: {
+        TableHead,
+        TableBody
+    },
+    setup() {
 
-const sortField = ref('id')
-const typeSort = ref('asc')
-const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}])
-const selectedObjects = ref([])
+        // Данные и состояние
+        const sortField = ref('id');
+        const typeSort = ref('asc');
+        const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]);
+        const selectedObjects = ref([]);
 
-const objectsSorting = computed(() => {
-  return objects.value.sort((a, b) => {
-    let modifier = 1
-    if (typeSort.value === 'desc') modifier = -1
-    if (a[sortField.value] < b[sortField.value]) return -1 * modifier
-    if (a[sortField.value] > b[sortField.value]) return 1 * modifier
-    return 0
-  })
-})
+        // Ссылки на элементы DOM
+        const tableRef = ref(null);
+        const tableContentRef = ref(null);
+        const fakeScrollContainer = ref(null);
+        const fakeScrollWidth = ref('0px');
 
-const setSort = (name) => {
-  if (sortField.value === name) {
-    typeSort.value = typeSort.value === 'asc' ? 'desc' : 'asc'
-  } else {
-    sortField.value = name
-  }
-}
+        // Управление состоянием дропдауна
+        const dropDownState = ref(false);
+        const activeItem = ref(5);
 
-const toggleSelection = (id) => {
-  const index = selectedObjects.value.indexOf(id)
-  if (index === -1) {
-    selectedObjects.value.push(id)
-  } else {
-    selectedObjects.value.splice(index, 1)
-  }
-}
+        function dropState() {
+            dropDownState.value = !dropDownState.value;
+        }
 
-const selectObject = (objectId) => {
-  console.log(objectId)
-  const object = objects.value.find(obj => obj.id === optionId)
-  if (object) {
-    object.checked = checked
-    toggleSelection(optionId)
-  }
-}
+        function changeItem(event) {
+            activeItem.value = event.target.innerText;
+            dropState();
+        }
 
-const showRow = (row) => {
-  console.log(row);
-}
+        // Синхронизация позиций скролла
+        function syncScroll() {
+            if (tableContentRef.value && fakeScrollContainer.value) {
+                tableContentRef.value.scrollLeft = fakeScrollContainer.value.scrollLeft;
+            }
+        }
 
+        // Добавление слушателя событий на фейковую полосу прокрутки
+        function handleFakeScroll() {
+            if (fakeScrollContainer.value) {
+                fakeScrollContainer.value.addEventListener('scroll', syncScroll);
+            }
+        }
 
-const tableRef = ref(null);
+        // Добавление слушателя событий на настоящую таблицу для синхронизации с фейковой полосой
+        function handleTableScroll() {
+            if (tableContentRef.value) {
+                tableContentRef.value.addEventListener('scroll', () => {
+                    if (fakeScrollContainer.value) {
+                        fakeScrollContainer.value.scrollLeft = tableContentRef.value.scrollLeft;
+                    }
+                });
+            }
+        }
 
-onMounted(() => {
-    const tableElement = tableRef.value;
-    tableElement.addEventListener('scroll', handleScroll);
-});
+        // Обновление ширины фейкового скроллбара в зависимости от ширины таблицы
+        function updateFakeScrollWidth() {
+            if (tableRef.value) {
+                // Ширина фейкового скроллбара равна ширине таблицы
+                fakeScrollWidth.value = `${tableRef.value.scrollWidth - 390}px`;
+            }
+        }
 
-function handleScroll(event) {
-    const tableElement = event.target;
-    const firstCell = tableElement.querySelectorAll('.table_info_cell._check')[0];
+        onMounted(() => {
+            nextTick(() => {
+                handleFakeScroll();
+                handleTableScroll();
+                updateFakeScrollWidth();
+            });
+        });
 
-    if (tableElement.scrollLeft > 0) {
-        firstCell.classList.add('_shadow');
-    } else {
-        firstCell.classList.remove('_shadow');
+        // Обновление ширины фейкового скроллбара при изменении объектов
+        watch(objects, () => {
+            updateFakeScrollWidth();
+        });
+
+        watch(() => window.innerWidth, () => {
+            updateFakeScrollWidth();
+        });
+
+        // Сортировка объектов
+        const objectsSorting = computed(() => {
+            return objects.value.sort((a, b) => {
+                let modifier = 1;
+                if (typeSort.value === 'desc') modifier = -1;
+                if (a[sortField.value] < b[sortField.value]) return -1 * modifier;
+                if (a[sortField.value] > b[sortField.value]) return 1 * modifier;
+                return 0;
+            });
+        });
+
+        // Установка сортировки
+        const setSort = (name) => {
+            if (sortField.value === name) {
+                typeSort.value = typeSort.value === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortField.value = name;
+            }
+        };
+
+        // Управление выбором объектов
+        const toggleSelection = (id) => {
+            const index = selectedObjects.value.indexOf(id);
+            if (index === -1) {
+                selectedObjects.value.push(id);
+            } else {
+                selectedObjects.value.splice(index, 1);
+            }
+        };
+
+        const selectObject = (objectId) => {
+            const object = objects.value.find(obj => obj.id === optionId);
+            if (object) {
+                object.checked = checked;
+                toggleSelection(optionId);
+            }
+        };
+
+        // Логика прокрутки таблицы с добавлением класса тени
+        function handleTableScrollShadow(event) {
+            const tableElement = event.target;
+            const firstCell = tableElement.querySelector('.table_info_cell._check');
+
+            if (tableElement.scrollLeft > 0) {
+                firstCell.classList.add('_shadow');
+            } else {
+                firstCell.classList.remove('_shadow');
+            }
+        }
+
+        return {
+            sortField,
+            typeSort,
+            objects,
+            selectedObjects,
+            tableRef,
+            tableContentRef,
+            fakeScrollContainer,
+            fakeScrollWidth,
+            dropDownState,
+            activeItem,
+            objectsSorting,
+            dropState,
+            changeItem,
+            selectObject,
+            handleTableScrollShadow,
+            toggleSelection,
+            setSort,
+            updateFakeScrollWidth,
+            handleTableScroll,
+        }
     }
 }
-
-
 </script>
 
 <template>
     <div class="table_container">
-        <div class="table_content" ref="tableRef">
-          <table class="table" id="mainTable">
-            <TableHead/>
-              <tbody>
-                <TableBody v-for="object in objects" :key="object.id" :object="object"/>
-              </tbody>
-          </table>
+        <div class="table_content" ref="tableContentRef">
+            <table class="table" id="mainTable" ref="tableRef">
+                <TableHead />
+                <tbody>
+                <TableBody v-for="object in objects" :key="object.id" :object="object" />
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="fake_scroll">
+        <div class="fake_items fz-15">
+            по:
+            <div class="fake_dropdown fz-14">
+                <div class="fake_dropdown_text" @click="dropState">
+                    {{ activeItem }}
+                    <span :class="{ active: dropDownState }">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10.033" height="5">
+                            <path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z" />
+                        </svg>
+                    </span>
+                </div>
+                <div class="fake_dropdown_list fz-1em" :class="{ active: dropDownState }">
+                    <div class="fake_dropdown_item fz-14" @click="changeItem($event)">5</div>
+                    <div class="fake_dropdown_item fz-14" @click="changeItem($event)">15</div>
+                    <div class="fake_dropdown_item fz-14" @click="changeItem($event)">25</div>
+                </div>
+            </div>
+        </div>
+        <div class="fake_table_scroll">
+            <div ref="fakeScrollContainer" class="fake_table_scroll_container" style="overflow-x: auto;">
+                <div class="fake_table_scroll_scrollbar" :style="{ width: fakeScrollWidth }"></div>
+            </div>
+        </div>
+        <div class="fake_pagination">
+            <ul class="fake_pagination_menu">
+                <li class="pagination_prev pagination_action disabled"></li>
+                <li class="fake_pagination_item fz-14 active">1</li>
+                <li class="fake_pagination_item fz-14">2</li>
+                <li class="fake_pagination_item fz-14">3</li>
+                <li class="fake_pagination_item fz-14">4</li>
+                <li class="pagination_action fake_pagination_item fz-14">...</li>
+                <li class="pagination_next pagination_action fake_pagination_item fz-14"></li>
+            </ul>
         </div>
     </div>
 </template>

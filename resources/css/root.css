@@ -1,0 +1,92 @@
+:root {
+    --login-box-shadow: 13, 35, 67;
+    --login-box-hover: 34, 36, 38;
+    --color-white: #fff;
+    --color-white-grey: #fefefe;
+    --color-white-gray: #cacaca;
+    --color-black: #0a0a0a;
+    --color-gray: #262829;
+    --color-black-original: #000;
+    --color-blue: #3588F3;
+    --color-sky: #E1F3FF;
+    --btn-gray: #e0e1e2;
+    --btn-green: 229, 243, 211;
+    --btn-red: 249, 215, 201;
+    --btn-blue: 206, 235, 244;
+    --btn-orange: 250, 237, 204;
+    --main-color-gray: #444;
+    --main-color-grey: #777;
+    --main-color-green: #036746;
+    --main-color-red: #db3230;
+    --main-color-blue: #1f59af;
+    --main-color-orange: #f68219;
+    --main-color-link: #317DDF;
+    --main-btn-gray: #ddd;
+    --main-btn-gray-hover: #eee;
+    --main-btn-black: #333;
+    --color-tomate: tomato;
+    --color-yellow: yellow;
+    --main-turkuaz: #05A87C;
+    --yellow-contract: #fffedc;
+    --yellow-contract-hover: #fffec9;
+    --green-contract: #d9ffdc;
+    --green-contract-hover: #c9ffcd;
+    --red-contract: #FFD9DF;
+    --red-contract-hover: #ffcdcd;
+    --popup-bg: 10, 10, 10;
+    --color-purple: #B74DFF;
+    --color-fake-white: #FBFBFB;
+    --color-fake-bg-blue: #FBFBFB;
+    --color-rgb-black: 0,0,0;
+    --color-main-turquaz: #18b2b2;
+    --color-main-bg-turquaz: 24, 178, 178;
+    --color-fake-grey: #c3c5d4;
+    --color-fake-gray: 195, 197, 212;
+    --color-object-black: #222222;
+    --color-notify-white: #F9D7C9;
+    --color-progress-white: #e8f7f3;
+    --color-step-red: #e35c80;
+    --bg-turkuaz-black: 5, 168, 124;
+    --btn-prev-orange: #f39c18;
+    --btn-svg-orange: #f39d18;
+    --btn-bg-prev-orange: 243, 156, 24;
+    --color-cart-object: #6c6c6c;
+    --color-cart-popup: #1b1c1d;
+    --color-table-grey: #f4f5f7;
+    --color-table-red: #e00943;
+    --color-table-redwhite: #e55360;
+    --color-table-redblack: #DB2828;
+    --color-table-orange: #d17e00;
+    --color-table-white: #E4F2FE;
+    --color-table-gray: #ebedef;
+    --color-table-granit: #555;
+    --box-shadow-table: 80, 86, 141;
+    --gradient-linear-table-granit: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(176, 177, 201, 0.2) 100%);
+    --blue-circle: #1eb0db;
+    --gold-circle: #f9ba16;
+    --gray-circle: #E8E8E8;
+    --color-location: #1fb0db;
+    --color-price: #ccc;
+    --bg-with-turkuaz: #cdeee5;
+    --color-green-light: #91d637;
+    --color-footer-gray: #747474;
+    --color-cell-black: #1a1a1a;
+    --color-separator: #A5A5A5;
+    --color-addresses: #5E5E5E;
+}
+
+.fz-1em{
+    font-size: 1em;
+}
+.fz-13{
+    font-size: 13px;
+}
+.fz-14{
+    font-size: 14px;
+}
+.fz-15{
+    font-size: 15px;
+}
+.fz-24{
+    font-size: 24px;
+}

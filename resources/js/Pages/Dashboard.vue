@@ -37,11 +37,11 @@ export default {
     <Head :title="title"/>
     <section class="subheader d-flex align-center justify-between">
         <div class="subheader_box">
-            <div class="subheader_item">
+            <div class="subheader_item fz-13">
                 <div class="subheader_ico">
                     <svg data-name="Layer 1" width="16" height="16" fill="#B74DFF" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 0h7v7H0zM0 9h7v7H0zM9 0h7v7H9zM9 9h7v7H9z"/></svg>
                 </div>
-                <div class="subheader_title tt">
+                <div class="subheader_title fz-13 tt">
                     ОБЪЕКТЫ КОМПАНИИ
                 </div>
                 <div class="subheader_arrow">

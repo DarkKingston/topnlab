@@ -5,6 +5,7 @@ use Inertia\Inertia;
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'login'])->name('login');
 Route::get('/test', [\App\Http\Controllers\IndexController::class, 'test'])->name('test');
 Route::get('/dashboard', [\App\Http\Controllers\IndexController::class, 'index'])->name('dashboard');
+Route::get('/object/{id}', [\App\Http\Controllers\IndexController::class, 'object'])->name('object');
 
 
 ?>

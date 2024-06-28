@@ -24,4 +24,13 @@ class IndexController extends Controller
             'title'=>'Dashboard'
         ]);
     }
+
+    public function object($id) {
+        $object = ['id'=>$id];
+        return Inertia::render('Object', [
+            'title'=>'Object',
+            'id' => $id,
+            'object' => $object,
+        ]);
+    }
 }

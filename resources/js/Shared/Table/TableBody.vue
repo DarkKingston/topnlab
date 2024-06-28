@@ -3,16 +3,19 @@ import Fancybox from "../ui/Fancybox";
 import { ref } from 'vue';
 import PopupUserTable from "../popups/PopupUserTable";
 import {usePresentationStore} from "../../store/computed";
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
     components:{
         Fancybox,
+        Link,
         PopupUserTable
     },
     props:{
         object: Object
     },
     setup(){
+        console.log(Object);
         const presentationStore = usePresentationStore();
         const active = ref(false);
         const showedNumber = ref(false);
@@ -97,7 +100,7 @@ export default {
         <td v-if="!presentationStore.presentation" class="table_info_cell _user_id">
             <div class="table_cell_content">
                 <div class="table_cell_user" @click="togglePopup">
-                    <div class="link pb0" @click="togglePopup">
+                    <div class="link pb0">
                         Пугачева Татьяна
                     </div>
                     <div class="table_cell_user_label">
@@ -523,7 +526,9 @@ export default {
                             <div class="footer_info_box">
                                 <div class="footer_info_box_item" style="margin: 0 10px;">
                                     <span class="color_grey">id:</span>
-                                    <span class="link" style="padding: 3px 7px;">54901950</span>
+                                    <Link style="padding: 3px 7px; color: #0370c9;" :href="'/object/'+object.id">{{object.id}}
+                                    </Link>
+
                                 </div>
                                 <div class="footer_info_box_item" style="padding: 1px 7px 4px 9px;">
                                     <div class="btn-icon-text tt color_red bg_red"
