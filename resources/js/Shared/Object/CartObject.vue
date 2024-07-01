@@ -1,7 +1,8 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
-
+import { Fancybox } from '@fancyapps/ui';
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
 export default {
     props:{
         object: Object
@@ -22,9 +23,7 @@ export default {
         }
 
         onMounted(() => {
-            console.log(123);
-
-            var slider = new Swiper ('.gallery-slider', {
+            const slider = new Swiper ('.gallery-slider', {
                 slidesPerView: 1,
                 centeredSlides: true,
                 loop: false,
@@ -35,8 +34,7 @@ export default {
                     prevEl: '.swiper-button-prev',
                 },
             });
-
-            var thumbs = new Swiper ('.gallery-thumbs', {
+            const thumbs = new Swiper ('.gallery-thumbs', {
                 slidesPerView: 'auto',
                 spaceBetween: 4,
                 centeredSlides: true,
@@ -45,6 +43,13 @@ export default {
             });
             slider.controller.control = thumbs;
             thumbs.controller.control = slider;
+
+            Fancybox.bind('[data-fancybox="slider"]', {
+                Toolbar: false,
+                animated: false,
+                hideScrollbar: false,
+                click: false,
+            });
         })
 
         return {
@@ -162,6 +167,7 @@ export default {
 
         <div class="cart_object_info">
             <div class="cart_object_info_main">
+
                 <div class="cart_object_info_preview">
                     <div class="cart_preview_actions">
                         <div class="combo_button">
@@ -190,12 +196,12 @@ export default {
                     <div class="cart_object_slider">
                         <div class="swiper-container gallery-slider">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
                             </div>
                             <div class="swiper-button-prev">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#3588f3"/></svg>
@@ -222,14 +228,46 @@ export default {
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="cart_object_info_contract">
-
+                    <div class="cart_contract">
+                        Устная договоренность
+                    </div>
                 </div>
                 <div class="cart_object_info_params">
-
+                    <div class="cart_object_param_title">
+                        Заголовок не задан
+                    </div>
+                    <table>
+                        <tr class="cart_object_data">
+                            <td class="cart_object_data_item">
+                                <div class="cart_object_data_item_wrapper">
+                                    <div class="cart_object_data_item_price blue"> ₽ 10 500 000 </div>
+                                    <div class="cart_object_data_item_name"><span>350 000</span> ₽/м²</div>
+                                </div>
+                            </td>
+                            <td class="cart_object_data_item">
+                                <div class="cart_object_data_item_wrapper">
+                                    <div class="cart_object_data_item_price"><span>30</span> м²</div>
+                                    <div class="cart_object_data_item_name">ОБЩАЯ</div>
+                                </div>
+                            </td>
+                            <td class="cart_object_data_item">
+                                <div class="cart_object_data_item_wrapper">
+                                    <div class="cart_object_data_item_price"><span>10</span> м²</div>
+                                    <div class="cart_object_data_item_name">КУХНЯ</div>
+                                </div>
+                            </td>
+                            <td class="cart_object_data_item">
+                                <div class="cart_object_data_item_wrapper">
+                                    <div class="cart_object_data_item_price">22 из 25</div>
+                                    <div class="cart_object_data_item_name">ЭТАЖ</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+
             </div>
             <div class="cart_object_info_sidebar"></div>
         </div>

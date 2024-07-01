@@ -73,6 +73,8 @@
     --color-cell-black: #1a1a1a;
     --color-separator: #A5A5A5;
     --color-addresses: #5E5E5E;
+    --color-label_separator: #D3D5E0;
+    --color-label_red: #F44D05;
 }
 
 .fz-1em{
