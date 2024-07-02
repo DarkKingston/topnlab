@@ -22,6 +22,7 @@ export default {
         });
 
         onMounted(() => {
+            document.querySelector('main').classList.remove('no_scroll')
             const storedPresentation = localStorage.getItem('presentation');
             if (storedPresentation !== null) {
                 presentationStore.presentation = storedPresentation === 'true';
