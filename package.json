@@ -30,6 +30,7 @@
         "vue": "^3.4.27",
         "vue-dragscroll": "^4.0.5",
         "vue-tippy": "^6.4.1",
-        "vuedraggable": "^4.1.0"
+        "vuedraggable": "^4.1.0",
+        "ymaps": "^0.2.1"
     }
 }

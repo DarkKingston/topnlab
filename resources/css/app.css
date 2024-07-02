@@ -1843,3 +1843,9 @@ body ::-webkit-scrollbar-track {
 .cart_param_descr_btn_content svg.active{
     transform: rotate(180deg) scale(0.7);
 }
+
+.cart_object_map{
+    height: 500px;
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+}

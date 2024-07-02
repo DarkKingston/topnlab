@@ -17,7 +17,6 @@ export default {
         const tabNav = ref(2);
         const toggledText = ref(false);
         const showedNumber = ref(false);
-
         function clipboardCopy(id){
             copied.value = !copied.value;
             navigator.clipboard.writeText(id);
@@ -57,7 +56,63 @@ export default {
                 hideScrollbar: false,
                 click: false,
             });
-        })
+
+            if (!window.ymaps) {
+                loadYandexMapsAPI().then(initMap).catch(error => console.log('Failed to load Yandex Maps', error));
+            } else {
+                initMap();
+            }
+        });
+
+        function loadYandexMapsAPI() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://api-maps.yandex.ru/2.1/?lang=en_RU&apikey=86a0173b-9f43-47a8-81cb-f70b1cf08265';
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+        function initMap() {
+            ymaps.ready(() => {
+                const myMap = new ymaps.Map('object_map', {
+                    center: [46.9622462, 28.8485565],
+                    zoom: 10,
+                }, {
+                    searchControlProvider: 'yandex#search'
+                });
+
+                const myGeoObjects = new ymaps.Clusterer({}, {
+                    preset: "twirl#redStretchyIcon",
+                    strokeWidth: 4,
+                    geodesic: true
+                });
+
+                const MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+                    '<div style="padding: 2px 5px; font-weight: bold; color: #000; background: #FFFFFF; border-radius: 3px;">$[properties.iconContent]</div>'
+                );
+
+                const placemark = new ymaps.Placemark([46.9622462, 28.8485565], {
+                    hintContent: 'дом 120 м² 3.3 сотки'
+                }, {
+                    iconContentLayout: MyIconContentLayout,
+                    iconLayout: 'default#imageWithContent',
+                    iconImageHref: "https://www.svgrepo.com/show/255181/location-pin.svg",
+                    iconImageSize: [40, 42],
+                    iconImageOffset: [-5, -38]
+                });
+                myGeoObjects.add(placemark);
+
+                myMap.geoObjects.add(myGeoObjects);
+                const bounds = myGeoObjects.getBounds();
+
+                if (myGeoObjects.getGeoObjects().length === 1) {
+                    myMap.setBounds([[bounds[1][0] - 0.02, bounds[1][1] - 0.02], [bounds[1][0] + 0.02, bounds[1][1] + 0.02]], { checkZoomRange: true });
+                } else {
+                    myMap.setBounds(bounds, { checkZoomRange: true });
+                }
+            });
+        }
 
         function changeShowNumber(){
             showedNumber.value = !showedNumber.value
