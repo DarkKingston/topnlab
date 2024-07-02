@@ -73,8 +73,11 @@
     --color-cell-black: #1a1a1a;
     --color-separator: #A5A5A5;
     --color-addresses: #5E5E5E;
-    --color-label_separator: #D3D5E0;
-    --color-label_red: #F44D05;
+    --color-label-separator: #D3D5E0;
+    --color-label-red: #F44D05;
+    --color-info-red: #E23D4B;
+    --color-note-white: #e4e4e4;
+    --color-params-hover: #F5F6FA;
 }
 
 .fz-1em{
@@ -94,4 +97,20 @@
 }
 .fz-24{
     font-size: 24px;
+}
+.link{
+    color: var(--color-blue);
+    cursor: pointer;
+    padding: 4px 0;
+    padding-top: 0;
+}
+.link:hover{
+    text-decoration: underline;
+}
+
+.no_scroll{
+    overflow: hidden;
+}
+.mb-4{
+    margin-bottom: 24px !important;
 }
