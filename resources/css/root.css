@@ -8,6 +8,7 @@
     --color-gray: #262829;
     --color-black-original: #000;
     --color-blue: #3588F3;
+    --color-blue-hover: #336FE6;
     --color-sky: #E1F3FF;
     --btn-gray: #e0e1e2;
     --btn-green: 229, 243, 211;
@@ -63,6 +64,7 @@
     --box-shadow-table: 80, 86, 141;
     --gradient-linear-table-granit: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(176, 177, 201, 0.2) 100%);
     --blue-circle: #1eb0db;
+    --blue-circle-black: #188cae;
     --gold-circle: #f9ba16;
     --gray-circle: #E8E8E8;
     --color-location: #1fb0db;
@@ -78,6 +80,7 @@
     --color-info-red: #E23D4B;
     --color-note-white: #e4e4e4;
     --color-params-hover: #F5F6FA;
+    --color-btn-blue: #1F2D3E;
 }
 
 .fz-1em{
@@ -107,10 +110,55 @@
 .link:hover{
     text-decoration: underline;
 }
+.btn_object{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 178px;
+    height: 36px;
+    padding: 0 20px;
+    margin: 0 7.5px;
+    border-radius: 5px;
+    background: var(--color-blue);
+    font-weight: 400;
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+.btn_object:hover{
+    background: var(--color-blue-hover);
+}
+
+.btn_object svg{
+    width: 16px;
+    height: 16px;
+    margin-right: 9px;
+}
 
 .no_scroll{
     overflow: hidden;
 }
 .mb-4{
     margin-bottom: 24px !important;
+}
+.mb-5{
+    margin-bottom: 35px !important;
+}
+.ml-a{
+    margin-left: auto !important;
+}
+._bold {
+    font-weight: 600;
+}
+._italic{
+    font-style: italic;
+}
+._gray{
+    color: var(--main-color-grey);
+}
+.ml-3 {
+    margin-left: 16px !important;
 }

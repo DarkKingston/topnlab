@@ -886,7 +886,6 @@ export default {
             </div>
 
             <div class="cart_object_map" id="object_map">
-
             </div>
         </div>
     </div>

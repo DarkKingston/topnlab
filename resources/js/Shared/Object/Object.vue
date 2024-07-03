@@ -1,12 +1,16 @@
 <script>
 import { ref } from 'vue';
 import CartObject from "./CartObject";
+import AppealsObject from "./AppealsObject";
+import ServiceObject from "./ServiceObject";
 export default {
     props: {
         object: Object
     },
     components:{
-        CartObject
+        CartObject,
+        AppealsObject,
+        ServiceObject
     },
     setup() {
         const activeTab = ref(0);
@@ -84,6 +88,8 @@ export default {
         </div>
     </div>
     <CartObject :object="object" v-if="activeTab === 0"/>
+    <AppealsObject :object="object" v-if="activeTab === 1"/>
+    <ServiceObject :object="object" v-if="activeTab === 2"/>
 </template>
 
 
