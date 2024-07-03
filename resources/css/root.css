@@ -162,3 +162,7 @@
 .ml-3 {
     margin-left: 16px !important;
 }
+
+.empty{
+    background: var(--main-btn-gray-hover) !important;
+}

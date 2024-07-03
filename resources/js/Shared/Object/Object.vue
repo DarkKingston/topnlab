@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import CartObject from "./CartObject";
 import AppealsObject from "./AppealsObject";
 import ServiceObject from "./ServiceObject";
+import FilesObject from "./FilesObject";
 export default {
     props: {
         object: Object
@@ -10,7 +11,8 @@ export default {
     components:{
         CartObject,
         AppealsObject,
-        ServiceObject
+        ServiceObject,
+        FilesObject
     },
     setup() {
         const activeTab = ref(0);
@@ -90,6 +92,7 @@ export default {
     <CartObject :object="object" v-if="activeTab === 0"/>
     <AppealsObject :object="object" v-if="activeTab === 1"/>
     <ServiceObject :object="object" v-if="activeTab === 2"/>
+    <FilesObject :object="object" v-if="activeTab === 3"/>
 </template>
 
 
