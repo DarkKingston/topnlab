@@ -2200,3 +2200,60 @@ body ::-webkit-scrollbar-track {
 .adv_pack_btn.active svg{
     transform: rotate(180deg);
 }
+
+.modal_photo{
+    position: relative;
+    height: auto;
+    padding: 0;
+    outline: none;
+    padding-top: 20px;
+}
+
+.modal_photo_separator{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 21px;
+    background: var(--main-btn-gray-hover);
+    color: var(--color-addresses);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0 22px;
+}
+
+.modal_photo_btn{
+    display: flex;
+    align-items: center;
+    padding: 14px 10px;
+}
+
+.modal_photo_btn svg{
+    width: 24px;
+    height: 24px;
+    fill: var(--color-white);
+}
+
+.modal_photo_wrapper{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    min-height: 159px;
+    padding: 0 8px;
+}
+
+.modal_photo_item{
+    width: 180px;
+    height: 129px;
+    margin: 0 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(13, 35, 67, 0.1);
+    overflow: hidden;
+}
+
+.modal_photo_item img{
+    width: 100%;
+    height: 100%;
+}

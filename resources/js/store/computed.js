@@ -5,3 +5,9 @@ export const usePresentationStore = defineStore('presentation', {
         presentation: false
     }),
 });
+
+export const useObjectTab = defineStore('object_tab', {
+    state: () => ({
+        tab: +localStorage.getItem('object_tab') || 0
+    }),
+});

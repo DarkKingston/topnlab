@@ -4,6 +4,9 @@ import CartObject from "./CartObject";
 import AppealsObject from "./AppealsObject";
 import ServiceObject from "./ServiceObject";
 import FilesObject from "./FilesObject";
+import PhotoVideoObject from "./PhotoVideoObject";
+import {useObjectTab } from "../../store/computed";
+
 export default {
     props: {
         object: Object
@@ -12,13 +15,17 @@ export default {
         CartObject,
         AppealsObject,
         ServiceObject,
-        FilesObject
+        FilesObject,
+        PhotoVideoObject,
+        useObjectTab
     },
     setup() {
-        const activeTab = ref(0);
-
+        const objectTab = useObjectTab();
+        const activeTab = ref(objectTab.tab);
         function toggleObjectTab(index) {
-            activeTab.value = index;
+            objectTab.tab = index;
+            activeTab.value = objectTab.tab;
+            localStorage.setItem('object_tab', index);
         }
 
         return {
@@ -93,6 +100,7 @@ export default {
     <AppealsObject :object="object" v-if="activeTab === 1"/>
     <ServiceObject :object="object" v-if="activeTab === 2"/>
     <FilesObject :object="object" v-if="activeTab === 3"/>
+    <PhotoVideoObject :object="object" v-if="activeTab === 4"/>
 </template>
 
 
