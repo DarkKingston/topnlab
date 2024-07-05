@@ -4,6 +4,7 @@ import CartObject from "./CartObject";
 import AppealsObject from "./AppealsObject";
 import ServiceObject from "./ServiceObject";
 import FilesObject from "./FilesObject";
+import TasksObject from "./TasksObject";
 import PhotoVideoObject from "./PhotoVideoObject";
 import {useObjectTab } from "../../store/computed";
 
@@ -17,6 +18,7 @@ export default {
         ServiceObject,
         FilesObject,
         PhotoVideoObject,
+        TasksObject,
         useObjectTab
     },
     setup() {
@@ -101,6 +103,7 @@ export default {
     <ServiceObject :object="object" v-if="activeTab === 2"/>
     <FilesObject :object="object" v-if="activeTab === 3"/>
     <PhotoVideoObject :object="object" v-if="activeTab === 4"/>
+    <TasksObject :object="object" v-if="activeTab === 5"/>
 </template>
 
 
