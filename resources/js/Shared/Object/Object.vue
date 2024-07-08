@@ -6,6 +6,8 @@ import ServiceObject from "./ServiceObject";
 import FilesObject from "./FilesObject";
 import TasksObject from "./TasksObject";
 import PhotoVideoObject from "./PhotoVideoObject";
+import PaymentsObject from "./PaymentsObject";
+import HistoryObject from "./HistoryObject";
 import {useObjectTab } from "../../store/computed";
 
 export default {
@@ -19,7 +21,9 @@ export default {
         FilesObject,
         PhotoVideoObject,
         TasksObject,
-        useObjectTab
+        useObjectTab,
+        PaymentsObject,
+        HistoryObject
     },
     setup() {
         const objectTab = useObjectTab();
@@ -104,6 +108,8 @@ export default {
     <FilesObject :object="object" v-if="activeTab === 3"/>
     <PhotoVideoObject :object="object" v-if="activeTab === 4"/>
     <TasksObject :object="object" v-if="activeTab === 5"/>
+    <PaymentsObject :object="object" v-if="activeTab === 6"/>
+    <HistoryObject :object="object" v-if="activeTab === 7"/>
 </template>
 
 

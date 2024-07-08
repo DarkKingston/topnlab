@@ -44,6 +44,7 @@ export default {
                 </div>
             </div>
         </div>
+        <div class="task_list_date fz-13"> Сегодня </div>
         <div class="task_table" v-if="taskList == 0">
             <div class="task_table_content">
                 На сегодня задач не запланировано
