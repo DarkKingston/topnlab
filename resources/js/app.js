@@ -6,6 +6,8 @@ import VueDragscroll from "vue-dragscroll";
 import VueTippy from 'vue-tippy'
 import vClickOutside from "click-outside-vue3"
 import "tippy.js/dist/tippy.css";
+import 'maz-ui/css/main.css'
+import 'vue3-select/dist/vue3-select.css';
 import { createPinia } from 'pinia'
 InertiaProgress.init()
 const pinia = createPinia()

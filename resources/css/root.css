@@ -82,6 +82,18 @@
     --color-params-hover: #F5F6FA;
     --color-btn-blue: #1F2D3E;
     --color-bg-white: #eaeaea;
+    --color-checkbox-main: #ecebed;
+    --color-checkbox-second: #e9ecef;
+    --color-checkbox-active: #127cda;
+    --color-popup-blue: #005496;
+    --color-popup-gray: #afacac;
+    --color-popup-grey: #e8ecf8;
+    --color-popup-ico: #757575;
+    --color-popup-hover: #f6f6f6;
+    --color-popup-main-item: #3f3f3f;
+    --color-popup-main-gray: #6f6f6f;
+    --color-popup-main-red: #E04B73;
+    --color-popup-danger: #cc6454;
 }
 
 .fz-1em{
@@ -98,6 +110,9 @@
 }
 .fz-15{
     font-size: 15px;
+}
+.fz-16{
+    font-size: 16px;
 }
 .fz-24{
     font-size: 24px;
@@ -160,10 +175,99 @@
 ._gray{
     color: var(--main-color-grey);
 }
-.ml-3 {
+.ml-4 {
+    margin-left: 24px !important;
+}.ml-3 {
     margin-left: 16px !important;
+}
+.ml-2 {
+    margin-left: 12px !important;
+}
+.w100{
+    width: 100%;
 }
 
 .empty{
     background: var(--main-btn-gray-hover) !important;
+}
+
+.checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.checkbox + label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+.checkbox + label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 2px solid var(--color-label-separator);
+    border-radius: 2px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+}
+.checkbox:checked + label::before {
+    border-color: var(--color-checkbox-active);
+    background-color: var(--color-checkbox-active);
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAsMCwyNjAsMjUwIj4KPGcgZmlsbD0iI2ZmZmZmZiIgZmlsbC1ydWxlPSJub256ZXJvIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iIiBzdHJva2UtZGFzaG9mZnNldD0iMCIgZm9udC1mYW1pbHk9Im5vbmUiIGZvbnQtd2VpZ2h0PSJub25lIiBmb250LXNpemU9Im5vbmUiIHRleHQtYW5jaG9yPSJub25lIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6IG5vcm1hbCI+PGcgdHJhbnNmb3JtPSJzY2FsZSg4LjUzMzMzLDguNTMzMzMpIj48cGF0aCBkPSJNMjYuOTgwNDcsNS45OTAyM2MtMC4yNTk4LDAuMDA3NzQgLTAuNTA2MzgsMC4xMTYzMiAtMC42ODc1LDAuMzAyNzNsLTE1LjI5Mjk3LDE1LjI5Mjk3bC02LjI5Mjk3LC02LjI5Mjk3Yy0wLjI1MDgyLC0wLjI2MTI0IC0wLjYyMzI3LC0wLjM2NjQ3IC0wLjk3MzcxLC0wLjI3NTExYy0wLjM1MDQ0LDAuMDkxMzYgLTAuNjI0MTEsMC4zNjUwMyAtMC43MTU0NywwLjcxNTQ3Yy0wLjA5MTM2LDAuMzUwNDQgMC4wMTM4OCwwLjcyMjg5IDAuMjc1MTEsMC45NzM3MWw3LDdjMC4zOTA1MywwLjM5MDM3IDEuMDIzNTMsMC4zOTAzNyAxLjQxNDA2LDBsMTYsLTE2YzAuMjk1NzYsLTAuMjg3NDkgMC4zODQ2OSwtMC43MjcwNyAwLjIyMzkzLC0xLjEwNjkxYy0wLjE2MDc1LC0wLjM3OTg1IC0wLjUzODIxLC0wLjYyMjA0IC0wLjk1MDUsLTAuNjA5ODh6Ij48L3BhdGg+PC9nPjwvZz4KPC9zdmc+");
+    background-size: 22px 16px;
+}
+.checkbox:not(:disabled):not(:checked) + label:hover::before {
+    border-color: var(--color-label-separator);
+}
+.checkbox:not(:disabled):active + label::before {
+    background-color: var(--color-label-separator);
+    border: 1px solid var(--color-checkbox-main);
+}
+.checkbox:focus + label::before {
+    box-shadow: 0px 7px 20px rgba(var(--color-rgb-black), 0.07);
+}
+.checkbox:focus:not(:checked) + label::before {
+    border-color: var(--color-label-separator);
+}
+.checkbox:disabled + label::before {
+    background-color: var(--color-checkbox-second);
+    border: 1px solid var(--color-checkbox-main);
+}
+
+body::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(var(--color-rgb-black), 0.25);
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+}
+body::-webkit-scrollbar-track {
+    background: rgba(var(--color-rgb-black), 0.1);
+    border-radius: 0;
+}
+body::-webkit-scrollbar {
+    height: 10px;
+}
+body::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+
+.transition{
+    animation-iteration-count: 1;
+    animation-duration: 300ms;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+}
+
+.justify-start{
+    justify-content: flex-start;
 }
