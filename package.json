@@ -35,6 +35,7 @@
         "vue": "^3.4.27",
         "vue-dragscroll": "^4.0.5",
         "vue-flatpickr-component": "^11.0.5",
+        "vue-search-select": "^3.2.0",
         "vue-tippy": "^6.4.1",
         "vue3-quill": "^0.3.1",
         "vue3-select": "^0.1.2",

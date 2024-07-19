@@ -309,3 +309,9 @@ sub, sup{
     line-height: 0;
     position: relative;
 }
+
+.blue_line{
+    height: 1px;
+    width: 100%;
+    background: var(--color-blue);
+}

@@ -601,3 +601,130 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
     }),
 });
+
+export const useCreateObjectAddress = defineStore('create_object_address', {
+    state: () => ({
+        region: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: 'Красноярский край' },
+                { id: 2, title: 'Краснодарский край' },
+                { id: 3, title: 'Липецкая область' },
+                { id: 4, title: 'Омская область' },
+            ],
+            selectedOption: ''
+        },
+        area_region: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Анапский р-н' },
+                { id: 2, title: 'Динской р-н' },
+                { id: 3, title: 'Кавказкий р-н' },
+                { id: 4, title: 'Мостовский р-н' },
+            ],
+            selectedOption: ''
+        },
+        township: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { value: 1, text: 'Армавир г.' },
+                { value: 2, text: 'Анапа г. (Анапский р-н)' },
+                { value: 3, text: 'Аргопром снт (Сочи г.)' },
+            ],
+            selectedOption: ''
+        },
+        street: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { value: 1, text: 'Фадеева' },
+                { value: 2, text: 'Невский проспект' },
+                { value: 3, text: 'Московская улица' },
+            ],
+            selectedOption: ''
+        },
+        number_house: {
+            value: '',
+            required: true,
+            access: true,
+        },
+        enclosure: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        litera: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        structure: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        apartment: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        street_additional: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { value: 1, text: 'Фадеева' },
+                { value: 2, text: 'Невский проспект' },
+                { value: 3, text: 'Московская улица' },
+            ],
+            selectedOption: {}
+        },
+        number_house_additional: {
+            value: '',
+            required: true,
+            access: true,
+        },
+        enclosure_additional: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        litera_additional: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        structure_additional: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        apartment_additional: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        name_township: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        km_city: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        coordinates_value: {
+            value: [46.9622462, 28.8485565],
+            required: false,
+            access: true,
+        }
+    }),
+});

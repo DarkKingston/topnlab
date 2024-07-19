@@ -648,3 +648,70 @@ img{
     padding: 1px 4px;
     margin-left: 4px;
 }
+
+.popup_main_cell_item.three{
+    width: 176.5px;
+}
+
+.popup_btn_research{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 27px;
+    padding: 0 15px;
+    border-radius: 5px;
+    background: var(--main-btn-gray-hover);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--color-black);
+}
+
+.popup_additional_address_wrapper{
+
+}
+.popup_additional_address_wrapper{
+    z-index: 3;
+    position: relative;
+}
+.popup_additional_address{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0 20px;
+    cursor: pointer;
+    z-index: 2;
+    background: var(--color-white);
+    color: var(--color-blue);
+}
+.popup_additional_address svg{
+    fill: var(--color-blue);
+}
+.popup_additional_address span{
+    display: flex;
+    align-items: center;
+}
+
+.popup_additional_address::after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    z-index: -1;
+    height: 1px;
+    background: var(--color-blue);
+}
+
+.popup_additional_address.active svg{
+    transform: rotate(180deg);
+}
+
+.tab_radio_info.active{
+    display: flex;
+}
