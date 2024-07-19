@@ -94,6 +94,7 @@
     --color-popup-main-gray: #6f6f6f;
     --color-popup-main-red: #E04B73;
     --color-popup-danger: #cc6454;
+    --color-popup-label: #999;
 }
 
 .fz-1em{
@@ -116,6 +117,27 @@
 }
 .fz-24{
     font-size: 24px;
+}
+.fw-300{
+    font-weight: 300;
+}
+.fw-400{
+    font-weight: 400;
+}
+.fw-500{
+    font-weight: 500;
+}
+.fw-600{
+    font-weight: 600;
+}
+.fw-700{
+    font-weight: 700;
+}
+.fw-800{
+    font-weight: 800;
+}
+.fw-900{
+    font-weight: 900;
 }
 .link{
     color: var(--color-blue);
@@ -270,4 +292,20 @@ body::-webkit-scrollbar {
 
 .justify-start{
     justify-content: flex-start;
+}
+.direction-column{
+    flex-direction: column;
+}
+.justify-end{
+    justify-content: flex-end;
+}
+
+strong, strong *{
+    font-weight: bold !important;
+}
+
+sub, sup{
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
 }

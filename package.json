@@ -30,11 +30,13 @@
         "libphonenumber-js": "^1.11.4",
         "maz-ui": "^3.44.3",
         "pinia": "^2.1.7",
+        "quill": "^2.0.2",
         "swiper": "^11.1.4",
         "vue": "^3.4.27",
         "vue-dragscroll": "^4.0.5",
         "vue-flatpickr-component": "^11.0.5",
         "vue-tippy": "^6.4.1",
+        "vue3-quill": "^0.3.1",
         "vue3-select": "^0.1.2",
         "vuedraggable": "^4.1.0",
         "ymaps": "^0.2.1"

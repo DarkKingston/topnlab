@@ -304,6 +304,30 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
             ],
             selectedOption: ''
         },
+        percentage: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: '100% ' },
+                { id: 2, title: '50%' },
+                { id: 3, title: '1%' },
+           ],
+            selectedOption: ''
+        },
+        floor_in_apartment: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: '1' },
+                { id: 2, title: '2' },
+                { id: 3, title: '3' },
+                { id: 4, title: '4' },
+                { id: 5, title: '5' },
+            ],
+            selectedOption: ''
+        },
         floor: {
             value: '',
             required: true,
@@ -331,20 +355,25 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
             required: true,
             access: true,
             options :[
-                { id: 1, title: '-2 ' },
-                { id: 2, title: '-1' },
-                { id: 3, title: 'Подвал' },
-                { id: 4, title: 'Цоколь' },
-                { id: 5, title: 'Мансарда' },
-                { id: 6, title: '1' },
-                { id: 7, title: '2' },
-                { id: 8, title: '3' },
-                { id: 9, title: '4' },
-                { id: 10, title: '5' },
-                { id: 11, title: '6' },
-                { id: 12, title: '7' },
-                { id: 13, title: '8' },
-                { id: 14, title: '9' }
+                { id: 1, title: '1' },
+                { id: 2, title: '2' },
+                { id: 3, title: '3' },
+                { id: 4, title: '4' },
+                { id: 5, title: '5' },
+                { id: 6, title: '6' },
+                { id: 7, title: '7' },
+                { id: 8, title: '8' },
+                { id: 9, title: '9' },
+            ],
+            selectedOption: ''
+        },
+        litter: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'есть' },
+                { id: 2, title: 'нет' },
             ],
             selectedOption: ''
         },
@@ -357,7 +386,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
                 { id: 2, title: '$' },
                 { id: 3, title: 'MDL' }
             ],
-            selectedOption: ''
+            selectedOption: 1
         },
         bargain: {
             value: '',
@@ -366,7 +395,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         liquidity: {
             value: '',
-            required: true,
+            required: false,
             access: true,
             options :[
                 { id: 1, title: 'Ликвид' },
@@ -387,12 +416,12 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         total_area: {
             value: '',
-            required: false,
+            required: true,
             access: true,
         },
         rooms_area: {
             value: '',
-            required: false,
+            required: true,
             access: true,
         },
         living_area: {
@@ -402,7 +431,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         kitchen_area: {
             value: '',
-            required: false,
+            required: true,
             access: true,
         },
         hallway_area: {
@@ -417,7 +446,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         ballcony: {
             value: '',
-            required: false,
+            required: true,
             access: true,
             options :[
                 { id: 1, title: 'Нет' },
@@ -433,7 +462,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         bathroom: {
             value: '',
-            required: false,
+            required: true,
             access: true,
             options :[
                 { id: 1, title: 'Нет' },
@@ -444,7 +473,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         heating: {
             value: '',
-            required: false,
+            required: true,
             access: true,
             options :[
                 { id: 1, title: 'Нет' },
@@ -465,7 +494,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         view_window: {
             value: '',
-            required: false,
+            required: true,
             access: true,
             options :[
                 { id: 1, title: 'Во двор' },
@@ -476,7 +505,7 @@ export const useCreateObjectAbout = defineStore('create_object_about', {
         },
         renovation: {
             value: '',
-            required: false,
+            required: true,
             access: true,
             options :[
                 { id: 1, title: 'Черновая' },
