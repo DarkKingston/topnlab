@@ -2807,3 +2807,10 @@ section.ql-container{
     font-style: italic;
     color: var(--color-popup-label);
 }
+
+.select_box.disabled{
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+    background: var(--main-btn-gray-hover);
+}

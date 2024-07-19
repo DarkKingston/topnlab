@@ -728,3 +728,105 @@ export const useCreateObjectAddress = defineStore('create_object_address', {
         }
     }),
 });
+
+export const useCreateObjectBuild = defineStore('create_object_build', {
+    state: () => ({
+        builder: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { value: 1, text: 'Частный застройщик' },
+                { value: 2, text: 'ООО << С3 Черномор >>' },
+            ],
+            selectedOption: false
+        },
+        complex: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { value: 1, text: 'Золотой Колос' },
+                { value: 2, text: 'Дом на Школьной' },
+            ],
+            selectedOption: false
+        },
+        corpus: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Корпус 2' },
+                { id: 2, title: 'Корпус 3' },
+                { id: 4, title: 'Корпус 4' },
+                { id: 5, title: 'Корпус 5' },
+            ],
+            selectedOption: ''
+        },
+        type_home: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: 'Кирпичный' },
+                { id: 2, title: 'Монолитный' },
+                { id: 4, title: 'Панельный' },
+                { id: 5, title: 'Блочный' },
+            ],
+            selectedOption: ''
+        },
+        series_home: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        lift: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: 'Нет лифта' },
+                { id: 2, title: '1 лифт' },
+                { id: 4, title: '2 лифта' },
+                { id: 5, title: '3 и более' },
+                { id: 6, title: 'Только грузовой' },
+            ],
+            selectedOption: ''
+        },
+        new_house: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                { id: 1, title: 'Да' },
+                { id: 2, title: 'Нет' },
+            ],
+            selectedOption: ''
+        },
+        year_build: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        year_rennovation: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        area_buildings: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Да' },
+                { id: 2, title: 'Нет' },
+            ],
+            selectedOption: ''
+        },
+        building_block: {
+            value: '',
+            required: false,
+            access: true,
+        }
+    }),
+});

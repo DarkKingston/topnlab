@@ -315,3 +315,7 @@ sub, sup{
     width: 100%;
     background: var(--color-blue);
 }
+
+.vs__search, .vs__search:focus{
+    font-size: 14px;
+}
