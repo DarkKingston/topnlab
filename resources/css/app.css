@@ -2466,7 +2466,7 @@ body ::-webkit-scrollbar-track {
     border-top: 0;
     box-shadow: 0 0 12px rgba(var(--login-box-shadow), 0.16);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-shrink: 0;
     align-items: center;
 }

@@ -95,6 +95,7 @@
     --color-popup-main-red: #E04B73;
     --color-popup-danger: #cc6454;
     --color-popup-label: #999;
+    --color-hover-btn: #E7E7E7;
 }
 
 .fz-1em{
@@ -318,4 +319,31 @@ sub, sup{
 
 .vs__search, .vs__search:focus{
     font-size: 14px;
+}
+
+.re_button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 178px;
+    height: 36px;
+    padding: 0 20px;
+    margin: 0 7.5px;
+    border-radius: 5px;
+    background: var(--main-btn-gray-hover);
+    color: var(--color-object-black);
+    font-weight: 400;
+    font-size: 15px;
+    cursor: pointer;
+}
+.re_button:hover{
+    background: var(--color-hover-btn);
+}
+.re_button.blue{
+    background: var(--color-blue);
+    color: var(--color-white);
+}
+.re_button.blue:hover{
+    background: var(--color-blue-hover);
 }

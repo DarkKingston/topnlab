@@ -26,7 +26,7 @@ export default {
     setup() {
         const checkbox = ref(false);
         const navSelected = ref(Array(8).fill(false));
-
+        const create_object_with_this_data = ref(false);
 
         function removeActivePopup() {
             document.querySelector('.popup_create').classList.remove('active');
@@ -65,7 +65,8 @@ export default {
             checkbox,
             removeActivePopup,
             navSelected,
-            toggleNav
+            toggleNav,
+            create_object_with_this_data
         }
     }
 }
@@ -187,6 +188,20 @@ export default {
                 </div>
             </div>
         </div>
-        <div class="popup_create_footer"></div>
+        <div class="popup_create_footer d-flex justify-between">
+            <div class="d-flex justify-start ml-4">
+                <input
+                    class="checkbox"
+                    type="checkbox"
+                    id="create_object_with_this_data"
+                    v-model="create_object_with_this_data"
+                >
+                <label for="create_object_with_this_data" style="gap: 10px">Создать еще один объект на основе этих данных</label>
+            </div>
+            <div class="popup_footer_actions d-flex align-center">
+                <div class="re_button" @click="removeActivePopup">Отмена</div>
+                <div class="re_button blue">Создать</div>
+            </div>
+        </div>
     </div>
 </template>
