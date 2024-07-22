@@ -4,7 +4,9 @@ import Table from "../Shared/Table.vue";
 import Tabs from "../Shared/Tabs.vue";
 import PopupCreateObject from "../Shared/popups/PopupCreateObject";
 import { ref, watch, onMounted } from 'vue'
-import {usePresentationStore} from '../store/computed';
+import { storeToRefs } from 'pinia';
+import {usePresentationStore, usePopupNotes} from '../store/computed';
+import PopupNotes from "../Shared/popups/PopupNotes";
 export default {
     props:{
         title: String
@@ -14,10 +16,13 @@ export default {
         Table,
         Tabs,
         usePresentationStore,
-        PopupCreateObject
+        PopupCreateObject,
+        PopupNotes
     },
     setup(){
         const presentationStore = usePresentationStore();
+        const popupNotesStore = usePopupNotes();
+        const { popup_notes, tab } = storeToRefs(popupNotesStore);
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
@@ -30,6 +35,7 @@ export default {
             }
         });
 
+
         function createObject(){
             document.querySelector('main').classList.toggle('no_scroll')
             document.querySelector('.popup_create').classList.toggle('active')
@@ -37,7 +43,9 @@ export default {
 
         return{
             presentationStore,
-            createObject
+            createObject,
+            popup_notes,
+            tab
         }
     }
 };
@@ -113,6 +121,11 @@ export default {
         <div class="popup popup_create">
             <div class="popup_content big">
                 <PopupCreateObject/>
+            </div>
+        </div>
+        <div class="popup" :class="{active: popup_notes}">
+            <div class="popup_content popup_right">
+                <PopupNotes :tab="tab"/>
             </div>
         </div>
     </section>

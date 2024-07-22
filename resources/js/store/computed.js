@@ -981,8 +981,19 @@ export const useCreateObjectContract = defineStore('create_object_contract', {
     }),
 });
 
-export const useCreateObjectNote = defineStore('create_object_note', {
+export const usePopupNotes = defineStore('popup_notes', {
     state: () => ({
+        popup_notes: false,
+        tab: 1
+    }),
+});
 
+
+export const useCreateObjectNote = defineStore('object_note', {
+    state: () => ({
+        object_note: {
+            personal: [],
+            public: []
+        }
     }),
 });
