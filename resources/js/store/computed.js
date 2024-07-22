@@ -830,3 +830,153 @@ export const useCreateObjectBuild = defineStore('create_object_build', {
         }
     }),
 });
+
+export const useCreateObjectContract = defineStore('create_object_contract', {
+    state: () => ({
+        contract_service: {
+            value: '',
+            required: true,
+            access: true,
+            options :[
+                {
+                    id: 1,
+                    title: 'Возмездный договор',
+                    additional:{
+                        subtitle: 'Клиент готов заключить с Вами агентский возмездный договор, но данный договор не дает Вам право на эксклюзивную работу, т.е. с этим клиентом могут работать и другие агенты.'
+                    }
+                },
+                {
+                    id: 2,
+                    title: 'Нет договора',
+                    additional:{
+                        subtitle: 'Клиент категорически отказывается заключать договор'
+                    }
+                },
+                {
+                    id: 4,
+                    title: 'Устная договоренность',
+                    additional:{
+                        subtitle: 'Клиент не готов заключать бумажные договоры, но готов с Вами работать без договора.'
+                    }
+                },
+                {
+                    id: 5,
+                    title: 'Эксклюзивный',
+                    additional:{
+                        subtitle: 'Клиент готов заключить с Вами эксклюзивный агентский договор, согласно которому Вы единственный Агент, который будет оказывать ему услугу.'
+                    }
+                },
+            ],
+            selectedOption: ''
+        },
+        type_property: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Свидетельство о гос регистрации' },
+                { id: 2, title: 'Договор долевого участия' },
+            ],
+            selectedOption: ''
+        },
+        object_right: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        subject_contract: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Объект (без земельного участка)' },
+                { id: 2, title: 'Объект + земельный участок' },
+                { id: 3, title: 'Земельный участок (объект не сдан)' },
+            ],
+            selectedOption: ''
+        },
+        basis: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        type_right: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Собственность' },
+                { id: 2, title: 'Общая долевая собственность' },
+                { id: 3, title: 'Общая совместная собственность' },
+                { id: 4, title: 'Уступка прав по договору аренды' },
+            ],
+            selectedOption: ''
+        },
+        right_land: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Собственность' },
+                { id: 2, title: 'Общая долевая собственность' },
+                { id: 3, title: 'Общая совместная собственность' },
+                { id: 4, title: 'Аренда' },
+                { id: 5, title: 'Уступка прав по договору аренды' },
+                { id: 6, title: 'Право требований' },
+            ],
+            selectedOption: ''
+        },
+        individual_mentioned: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: '1' },
+                { id: 2, title: '2' },
+                { id: 3, title: '3' },
+                { id: 4, title: '4' },
+            ],
+            selectedOption: ''
+        },
+        primary: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'да' },
+                { id: 2, title: 'нет' }
+            ],
+            selectedOption: ''
+        },
+        deffered_payments: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'да' },
+                { id: 2, title: 'нет' }
+            ],
+            selectedOption: ''
+        },
+        indefinite_contract: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'да' },
+                { id: 2, title: 'нет' }
+            ],
+            selectedOption: ''
+        },
+        fix_price: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'да' },
+                { id: 2, title: 'нет' }
+            ],
+            selectedOption: ''
+        },
+    }),
+});

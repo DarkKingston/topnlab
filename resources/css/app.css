@@ -2814,3 +2814,20 @@ section.ql-container{
     opacity: 0.6;
     background: var(--main-btn-gray-hover);
 }
+
+.popup_main_cell textarea{
+    max-width: 100%;
+    resize: vertical;
+    width: 100%;
+    min-height: 38px;
+    padding: 6px 14px;
+    min-width: 0;
+    height: 90px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid var(--color-white-gray);
+    background-color: var(--color-white-grey);
+    max-height: 200px;
+    margin-bottom: 0;
+    border-radius: 5px;
+}
