@@ -980,3 +980,9 @@ export const useCreateObjectContract = defineStore('create_object_contract', {
         },
     }),
 });
+
+export const useCreateObjectNote = defineStore('create_object_note', {
+    state: () => ({
+
+    }),
+});

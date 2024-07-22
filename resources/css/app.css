@@ -2831,3 +2831,45 @@ section.ql-container{
     margin-bottom: 0;
     border-radius: 5px;
 }
+
+.popup_main_note_title{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.popup_main_note_title span{
+    color: var(--color-separator);
+    margin-left: 3px;
+}
+
+.popup_note_add{
+    position: relative;
+    padding: 10px 13px;
+    width: 100%;
+    min-height: 32px;
+    background: var(--color-sky);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.popup_note_add_wrapper{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--color-blue);
+}
+
+.popup_note_add_btn{
+    display: flex;
+    padding: 4px;
+    margin-right: 8px;
+    width: 21px;
+    fill: var(--color-blue);
+    cursor: pointer;
+}
