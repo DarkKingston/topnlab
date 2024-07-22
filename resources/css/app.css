@@ -3045,3 +3045,12 @@ section.ql-container{
     border-radius: 5px;
     margin-top: 5px;
 }
+
+.comment_label{
+    margin-top: 3px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-popup-label);
+}

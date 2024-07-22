@@ -997,3 +997,57 @@ export const useCreateObjectNote = defineStore('object_note', {
         }
     }),
 });
+
+
+export const useCreateObjectFields = defineStore('custom_fields', {
+    state: () => ({
+        status: {
+            value: '',
+            required: false,
+            access: false,
+            options :[
+                { id: 1, title: 'Сбор данных' },
+                { id: 2, title: 'Сбор данных 2' },
+            ],
+            selectedOption: ''
+        },
+        no_export: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        site: {
+            value: '',
+            required: false,
+            access: false,
+        },
+        bd_close: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        comment_call_center: {
+            value: '',
+            required: false,
+            access: true,
+        },
+        remove_status: {
+            value: '',
+            required: false,
+            access: true,
+            options :[
+                { id: 1, title: 'Передумал' },
+                { id: 2, title: 'Продал сам' },
+                { id: 3, title: 'Дубль' },
+                { id: 4, title: 'Обьявление не актуально' },
+                { id: 5, title: 'Другая причина' },
+            ],
+            selectedOption: ''
+        },
+        call:{
+            value: '',
+            required: false,
+            access: true
+        },
+    }),
+});
