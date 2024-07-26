@@ -5,8 +5,9 @@ import Tabs from "../Shared/Tabs.vue";
 import PopupCreateObject from "../Shared/popups/PopupCreateObject";
 import { ref, watch, onMounted } from 'vue'
 import { storeToRefs } from 'pinia';
-import {usePresentationStore, usePopupNotes} from '../store/computed';
+import {usePresentationStore, usePopupNotes, usePopupSettingsCell, useFilterState} from '../store/computed';
 import PopupNotes from "../Shared/popups/PopupNotes";
+import PopupSettingsCells from "../Shared/popups/PopupSettingsCells";
 export default {
     props:{
         title: String
@@ -16,13 +17,20 @@ export default {
         Table,
         Tabs,
         usePresentationStore,
+        usePopupSettingsCell,
         PopupCreateObject,
-        PopupNotes
+        useFilterState,
+        PopupNotes,
+        PopupSettingsCells
     },
     setup(){
         const presentationStore = usePresentationStore();
         const popupNotesStore = usePopupNotes();
         const { popup_notes, tab } = storeToRefs(popupNotesStore);
+        const popupSettingsCellStore = usePopupSettingsCell();
+        const { popup_settings_cell } = storeToRefs(popupSettingsCellStore);
+        const popupFilterStateStore = useFilterState();
+        const { filter_state } = storeToRefs(popupFilterStateStore);
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
@@ -41,11 +49,23 @@ export default {
             document.querySelector('.popup_create').classList.toggle('active')
         }
 
+        function changePopupSettings(){
+            popup_settings_cell.value = !popup_settings_cell.value
+        }
+
+        function changeFilter(){
+            filter_state.value = !filter_state.value
+        }
+
         return{
             presentationStore,
             createObject,
             popup_notes,
-            tab
+            tab,
+            changePopupSettings,
+            popup_settings_cell,
+            filter_state,
+            changeFilter
         }
     }
 };
@@ -82,14 +102,15 @@ export default {
         </h1>
         <div class="actions_wrapper">
             <div class="actions_item">
-                <div class="btn sky">
+                <div class="btn sky" @click="changeFilter">
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="search">
                         <path fill="none" d="M0 0h24v24H0V0z"></path>
                         <path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
                       </svg>
                     </span>
-                    Поиск
+                    <span v-if="filter_state">Скрыть поиск</span>
+                    <span v-else>Поиск</span>
                 </div>
             </div>
             <div class="actions_item">
@@ -104,8 +125,8 @@ export default {
                     Создать обьект
                 </div>
             </div>
-            <div class="actions_item">
-                <div class="btn sky btn_only_icon">
+            <div class="actions_item" v-tippy.top="'Настройка таблицы'">
+                <div class="btn sky btn_only_icon" @click="changePopupSettings">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="view-column">
                         <path fill="none" d="M0 0h24v24H0V0z"></path>
                         <path d="M11 18h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1zm-6 0h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1zM16 6v11c0 .55.45 1 1 1h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1z"></path>
@@ -126,6 +147,11 @@ export default {
         <div class="popup" :class="{active: popup_notes}">
             <div class="popup_content popup_right">
                 <PopupNotes :tab="tab"/>
+            </div>
+        </div>
+        <div class="popup" :class="{active: popup_settings_cell}">
+            <div class="popup_content popup_right">
+                <PopupSettingsCells/>
             </div>
         </div>
     </section>

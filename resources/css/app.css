@@ -3054,3 +3054,13 @@ section.ql-container{
     font-weight: 400;
     color: var(--color-popup-label);
 }
+
+.footer_settings_cells{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings_cells_content{
+    flex: 1
+}

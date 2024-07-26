@@ -988,6 +988,18 @@ export const usePopupNotes = defineStore('popup_notes', {
     }),
 });
 
+export const usePopupSettingsCell = defineStore('popup_settings_cell', {
+    state: () => ({
+        popup_settings_cell: false,
+    }),
+});
+
+export const useFilterState = defineStore('filter_state', {
+    state: () => ({
+        filter_state: false,
+    }),
+});
+
 
 export const useCreateObjectNote = defineStore('object_note', {
     state: () => ({

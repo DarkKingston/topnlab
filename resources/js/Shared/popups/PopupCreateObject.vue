@@ -200,7 +200,7 @@ export default {
             </div>
             <div class="popup_footer_actions d-flex align-center">
                 <div class="re_button" @click="removeActivePopup">Отмена</div>
-                <div class="re_button blue">Создать</div>
+                <div class="re_button blue" @click="removeActivePopup">Создать</div>
             </div>
         </div>
     </div>
