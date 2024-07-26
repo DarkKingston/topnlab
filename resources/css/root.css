@@ -268,24 +268,30 @@
     opacity: 0.7;
 }
 
-body::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     cursor: pointer;
     border-radius: 5px;
     background: rgba(var(--color-rgb-black), 0.25);
     -webkit-transition: color 0.2s ease;
     transition: color 0.2s ease;
 }
-body::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background: rgba(var(--color-rgb-black), 0.1);
     border-radius: 0;
 }
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
     height: 10px;
 }
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
     height: 10px;
+}
+
+body.no_scroll_bar::-webkit-scrollbar-thumb,
+body.no_scroll_bar::-webkit-scrollbar
+{
+    display: none;
 }
 
 .transition{

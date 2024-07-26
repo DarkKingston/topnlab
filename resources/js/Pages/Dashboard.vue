@@ -51,10 +51,12 @@ export default {
 
         function changePopupSettings(){
             popup_settings_cell.value = !popup_settings_cell.value
+            document.querySelector('body').classList.add('no_scroll_bar')
         }
 
         function changeFilter(){
             filter_state.value = !filter_state.value
+
         }
 
         return{
@@ -149,8 +151,8 @@ export default {
                 <PopupNotes :tab="tab"/>
             </div>
         </div>
-        <div class="popup" :class="{active: popup_settings_cell}">
-            <div class="popup_content popup_right">
+        <div class="settings" :class="{active: popup_settings_cell}">
+            <div class="popup_content popup_right" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); width: 365px; position:fixed;">
                 <PopupSettingsCells/>
             </div>
         </div>
