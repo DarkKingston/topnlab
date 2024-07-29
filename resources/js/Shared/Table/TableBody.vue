@@ -1,8 +1,9 @@
 <script>
 import Fancybox from "../ui/Fancybox";
 import { ref } from 'vue';
-import {usePresentationStore} from "../../store/computed";
+import {useCreateObjectSettings, usePresentationStore} from "../../store/computed";
 import { Link } from '@inertiajs/inertia-vue3';
+import {storeToRefs} from "pinia";
 
 export default {
     components:{
@@ -13,8 +14,11 @@ export default {
         object: Object
     },
     setup(props, { emit }){
-        console.log(Object);
+
         const presentationStore = usePresentationStore();
+        const popupSettingsTableStore = useCreateObjectSettings();
+        const { settings_table } = storeToRefs(popupSettingsTableStore);
+
         const active = ref(false);
         const showedNumber = ref(false);
         const statePopup = ref(false)
@@ -41,7 +45,8 @@ export default {
             showedNumber,
             togglePopup,
             statePopup,
-            presentationStore
+            presentationStore,
+            settings_table
         }
     }
 }
@@ -96,7 +101,7 @@ export default {
                 <div class="table_cell_id">{{ object.id }}</div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _user_id">
+        <td v-if="!presentationStore.presentation && settings_table.settings_responsible.value" class="table_info_cell _user_id">
             <div class="table_cell_content">
                 <div class="table_cell_user" @click="togglePopup(object)">
                     <div class="link pb0">
@@ -134,7 +139,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _photo">
+        <td v-if="settings_table.settings_photo.value" class="table_info_cell _photo">
             <Fancybox
                 :options="{
                     Carousel: {
@@ -166,7 +171,7 @@ export default {
             </Fancybox>
 
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _contacts">
+        <td v-if="!presentationStore.presentation && settings_table.settings_contacts.value" class="table_info_cell _contacts">
             <div class="contact_box">
                 <div v-if="true">
                     <div class="state_contact" :class="{ active: active }">
@@ -213,7 +218,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _ad">
+        <td v-if="!presentationStore.presentation && settings_table.settings_adpopup.value" class="table_info_cell _ad">
             <div class="base_table_content">
                 <div class="rel_ad" v-tippy.top="`Посмотреть список всех обращений по этому объекту`">
                     Обращений - <span>0</span>
@@ -223,7 +228,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _realty_type">
+        <td v-if="settings_table.settings_type_objects.value" class="table_info_cell _realty_type">
             <div class="base_table_content">
                 <div class="table_label">
                     Студия
@@ -239,7 +244,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _location" v-tippy.top="`Посмотреть расположение на карте`">
+        <td v-if="settings_table.settings_location.value" class="table_info_cell _location" v-tippy.top="`Посмотреть расположение на карте`">
             <div class="base_table_content link">
                     <div class="base_table_location base_table_ellipsis d-flex align-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M32 5a21 21 0 0 0-21 21c0 17 21 33 21 33s21-16 21-33A21 21 0 0 0 32 5zm0 31a10 10 0 1 1 10-10 10 10 0 0 1-10 10z"/></svg>
@@ -259,14 +264,17 @@ export default {
                     </div>
             </div>
         </td>
-        <td class="table_info_cell _house">
+        <td v-if="settings_table.settings_house.value" class="table_info_cell _house">
             <div class="base_table_content">
                 <div class="table_label">
                     д. 193а
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _price">
+        <td v-if="settings_table.settings_metro.value" class="table_info_cell _metro">
+            <div class="base_table_content">—</div>
+        </td>
+        <td v-if="settings_table.settings_price.value" class="table_info_cell _price">
             <div class="base_table_content" style="overflow: unset">
                 <div class="_fz18 fw600  d-flex align-center">
                     ₽ 6 300 000
@@ -304,7 +312,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _market_price">
+        <td v-if="settings_table.settings_market_price.value" class="table_info_cell _market_price">
             <div class="base_table_content">
                 <div class="liquid_label fz-13 _green d-flex align-center">
                     <svg width="16" height="16" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 128 128"
@@ -323,14 +331,14 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _commission">
+        <td v-if="settings_table.settings_commission.value" class="table_info_cell _commission">
             <div class="base_table_content">
                 <div class="base_table_ellipsis">
                     <span class="color_grey">ГДК:</span> 5% / 35 000 000 р
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _floor">
+        <td v-if="settings_table.settings_floor.value" class="table_info_cell _floor">
             <div class="base_table_content">
                 <div class="fw600 base_table_ellipsis">
                     Мансарда / 7

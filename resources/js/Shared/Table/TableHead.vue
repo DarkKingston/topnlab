@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { usePresentationStore } from "../../store/computed";
+import {useCreateObjectSettings, usePresentationStore} from "../../store/computed";
+import {storeToRefs} from "pinia";
 
 const presentationStore = usePresentationStore();
+const popupSettingsTableStore = useCreateObjectSettings();
+const { settings_table } = storeToRefs(popupSettingsTableStore);
 const activeClass = ref(null);
 
 function activeTab(event) {
@@ -33,7 +36,7 @@ function activeTab(event) {
                     <label for="all"></label>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_responsible.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Ответственный
@@ -47,7 +50,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_photo.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Фото
@@ -61,7 +64,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="!presentationStore.presentation && settings_table.settings_contacts.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Контакты
@@ -89,7 +92,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="!presentationStore.presentation && settings_table.settings_adpopup.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Реклама
@@ -111,7 +114,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_type_objects.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Тип объекта
@@ -145,7 +148,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_location.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Расположение
@@ -182,7 +185,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_house.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Дом
@@ -196,7 +199,14 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_metro.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        Метро
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_price.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Цена
@@ -221,7 +231,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_market_price.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Рыночная цена
@@ -249,7 +259,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_commission.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Комиссия
@@ -271,7 +281,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_floor.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Этаж

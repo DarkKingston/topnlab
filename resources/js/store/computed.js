@@ -1074,19 +1074,19 @@ export const useCreateObjectSettings = defineStore('settings_table', {
                 order: 1,
                 label: 'Прогресс-бар этапов воронки',
             },
-            settings_photo: {
+            settings_responsible: {
                 id: 2,
                 default: true,
                 value: true,
                 order: 2,
-                label: 'Фото',
+                label: 'Ответственный',
             },
-            settings_responsible: {
+            settings_photo: {
                 id: 3,
                 default: true,
                 value: true,
                 order: 3,
-                label: 'Ответственный',
+                label: 'Фото',
             },
             settings_contacts: {
                 id: 4,
