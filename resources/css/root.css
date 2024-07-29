@@ -224,6 +224,7 @@
     align-items: center;
     user-select: none;
     cursor: pointer;
+    text-align: left;
 }
 .checkbox + label::before {
     content: '';

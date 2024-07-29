@@ -3070,6 +3070,7 @@ section.ql-container{
 .settings_cells_content{
     flex: 1;
     overflow: auto;
+    padding-left: 15px;
 }
 
 .settings_search{
