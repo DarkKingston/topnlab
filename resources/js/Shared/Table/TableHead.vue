@@ -202,7 +202,7 @@ function activeTab(event) {
             <th v-if="settings_table.settings_metro.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
-                        Метро
+                        {{ settings_table.settings_metro.label }}
                     </div>
                 </div>
             </th>
@@ -295,7 +295,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_type_house.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Тип Дома
@@ -309,7 +309,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_areas.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Площади
@@ -337,14 +337,14 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_tasks.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Задачи
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_type_contract.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Тип Договора
@@ -358,7 +358,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell"  @click="activeTab($event)">
+            <th v-if="settings_table.settings_type_sell.value" class="table_head_cell"  @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Тип продажи
@@ -383,63 +383,63 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_complex.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Комплекс
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_design.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Интерьер
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_notes.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Примечания
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_description.value"  class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Описание
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_communication.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Коммуникации
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_additional_params.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Доп. параметры
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_look.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Вид раз. исп.
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell">
+            <th v-if="settings_table.settings_room.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Помещение
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_cadastral_number.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Кадастровый номер
@@ -453,7 +453,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell" @click="activeTab($event)">
+            <th v-if="settings_table.settings_publication.value" class="table_head_cell" @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Публикация
@@ -475,7 +475,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_source.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Источник
@@ -489,7 +489,7 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th class="table_head_cell" @click="activeTab($event)">
+            <th v-if="settings_table.settings_status.value" class="table_head_cell" @click="activeTab($event)">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Статус
@@ -526,10 +526,445 @@ function activeTab(event) {
                     </div>
                 </div>
             </th>
-            <th v-if="!presentationStore.presentation" class="table_head_cell">
+            <th v-if="!presentationStore.presentation && settings_table.settings_comments.value" class="table_head_cell">
                 <div class="d-flex align-center h100">
                     <div class="table_head_cell_title">
                         Комментарий для КЦ
+                    </div>
+                </div>
+            </th>
+
+            <th v-if="settings_table.settings_have_renter.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_have_renter.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_form_ownership.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_form_ownership.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_area_construction.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_area_construction.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_object_permission.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_object_permission.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_code_db.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_code_db.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_roof.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_roof.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_lease_term.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_lease_term.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_type_ownership.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_type_ownership.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_reason_withdrawal.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_reason_withdrawal.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_subject_contract.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_subject_contract.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_exist_encumbrance.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_exist_encumbrance.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_building_block.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_building_block.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_ownership.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_ownership.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_basis.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_basis.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_encumbrance_bank.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_encumbrance_bank.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_type_layout.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_type_layout.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_invite_client_manager.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_invite_client_manager.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_area_apartment.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_area_apartment.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_summ_encumbrance.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_summ_encumbrance.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_exhaust.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_exhaust.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_type_object_right.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_type_object_right.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_exist_enforcement.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_exist_enforcement.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_water_supply.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_water_supply.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_rooms_in_sauna.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_rooms_in_sauna.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_share_ownership.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_share_ownership.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_partner.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_partner.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_amount_enforcement.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_amount_enforcement.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_catering.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_catering.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_pool.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_pool.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_leased.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_leased.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_land_plot.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_land_plot.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_name_lessee.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_name_lessee.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_profit_lessee.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_profit_lessee.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_area_place.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_area_place.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_facade.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_facade.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_warehouse_class.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_warehouse_class.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_type.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_type.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_corner.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_corner.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_floor_room.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_floor_room.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_number_boxes.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_number_boxes.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_length.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_length.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_coverage.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_coverage.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_pit.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_pit.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_width.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_width.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_approach.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_approach.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_lifts.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_lifts.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_rampa.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_rampa.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_showers.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_showers.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_fridge.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_fridge.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_crande_girder.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_crande_girder.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_crande_girder_tones.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_crande_girder_tones.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_gate_width.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_gate_width.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_bathroom.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_bathroom.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_gate_heigth.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_gate_heigth.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_type_gate.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_type_gate.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_office_available.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_office_available.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_number_windows.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_number_windows.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_number_buildings.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_number_buildings.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_area_office.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_area_office.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_area_buildings.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_area_buildings.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_additional_permited_use.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_additional_permited_use.label }}
+                    </div>
+                </div>
+            </th>
+            <th v-if="settings_table.settings_last_call.value" class="table_head_cell"  @click="activeTab($event)">
+                <div class="d-flex align-center h100">
+                    <div class="table_head_cell_title">
+                        {{ settings_table.settings_last_call.label }}
                     </div>
                 </div>
             </th>

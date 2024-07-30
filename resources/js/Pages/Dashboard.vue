@@ -5,6 +5,7 @@ import Tabs from "../Shared/Tabs.vue";
 import PopupCreateObject from "../Shared/popups/PopupCreateObject";
 import { ref, watch, onMounted } from 'vue'
 import { storeToRefs } from 'pinia';
+import VSelect from 'vue3-select';
 import {usePresentationStore, usePopupNotes, usePopupSettingsCell, useFilterState} from '../store/computed';
 import PopupNotes from "../Shared/popups/PopupNotes";
 import PopupSettingsCells from "../Shared/popups/PopupSettingsCells";
@@ -21,7 +22,8 @@ export default {
         PopupCreateObject,
         useFilterState,
         PopupNotes,
-        PopupSettingsCells
+        PopupSettingsCells,
+        VSelect
     },
     setup(){
         const presentationStore = usePresentationStore();
@@ -30,7 +32,7 @@ export default {
         const popupSettingsCellStore = usePopupSettingsCell();
         const { popup_settings_cell } = storeToRefs(popupSettingsCellStore);
         const popupFilterStateStore = useFilterState();
-        const { filter_state } = storeToRefs(popupFilterStateStore);
+        const { filter_state, type_objects, currency } = storeToRefs(popupFilterStateStore);
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
@@ -67,7 +69,9 @@ export default {
             changePopupSettings,
             popup_settings_cell,
             filter_state,
-            changeFilter
+            changeFilter,
+            type_objects,
+            currency
         }
     }
 };
@@ -136,6 +140,31 @@ export default {
                 </div>
             </div>
         </div>
+    </section>
+
+    <section class="filter_settings">
+        <div class="filter_settings_row d-flex align-center">
+            <div class="filter_select filter_bg_white">
+                <v-select
+                    :options="type_objects.options"
+                    label="title"
+                    :reduce="option => option.id"
+                    v-model="type_objects.selectedOption"
+                    placeholder="Тип объекта"
+                ></v-select>
+            </div>
+            <div class="_price">
+                <v-select
+                    :options="currency.options"
+                    label="title"
+                    :reduce="option => option.id"
+                    v-model="currency.selectedOption"
+                ></v-select>
+            </div>
+
+        </div>
+        <div class="filter_settings_row"></div>
+        <div class="filter_settings_row"></div>
     </section>
 
     <section class="table">

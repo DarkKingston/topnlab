@@ -997,6 +997,24 @@ export const usePopupNotes = defineStore('popup_notes', {
 export const useFilterState = defineStore('filter_state', {
     state: () => ({
         filter_state: false,
+        type_objects: {
+            options :[
+                { id: 1, title: 'Квартира' },
+                { id: 2, title: 'Комната' },
+                { id: 3, title: 'Дом/Дача/Таунхаус' },
+                { id: 4, title: 'Коммерция' },
+                { id: 5, title: 'Зем.Участок' },
+                { id: 6, title: 'Гараж' }
+            ],
+            selectedOption: ''
+        },
+        currency: {
+            options :[
+                { id: 1, title: 'Цена' },
+                { id: 2, title: 'Цена в $/€' }
+            ],
+            selectedOption: 1
+        }
     }),
 });
 

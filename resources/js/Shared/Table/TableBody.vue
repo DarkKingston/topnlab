@@ -352,7 +352,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _building_type">
+        <td v-if="settings_table.settings_type_house.value" class="table_info_cell _building_type">
             <div class="base_table_content">
                 <div class="fw600 _nowrap">
                     Новый дом
@@ -360,7 +360,7 @@ export default {
                 <div class="_nowrap">Кирпичный</div>
             </div>
         </td>
-        <td class="table_info_cell _areas">
+        <td v-if="settings_table.settings_areas.value" class="table_info_cell _areas">
             <div class="base_table_content">
                 <div>
                     <span>общая:</span> 607м2
@@ -385,7 +385,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _tasks">
+        <td v-if="!presentationStore.presentation && settings_table.settings_tasks.value" class="table_info_cell _tasks">
             <div class="base_table_content">
                 <div class="d-flex align-center link" v-tippy.left="`Создать новую задачу или заметку`">
                     <div class="button_note">
@@ -397,7 +397,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _dc_contract_type">
+        <td v-if="!presentationStore.presentation && settings_table.settings_type_contract.value" class="table_info_cell _dc_contract_type">
             <div class="base_table_content _yellow-contract" v-if="true">
                 <div class="fw600">
                     Возмездный договор
@@ -413,22 +413,22 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _sale_type">
+        <td v-if="settings_table.settings_type_sell.value" class="table_info_cell _sale_type">
             <div class="base_table_content">
                 <span>Свободная (прямая)</span>
             </div>
         </td>
-        <td class="table_info_cell _primaries_id">
+        <td v-if="settings_table.settings_complex.value" class="table_info_cell _primaries_id">
             <div class="base_table_content">
                 —
             </div>
         </td>
-        <td class="table_info_cell _layout">
+        <td v-if="settings_table.settings_design.value" class="table_info_cell _layout">
             <div class="base_table_content">
                 Косметический ремонт
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _notes">
+        <td v-if="!presentationStore.presentation && settings_table.settings_notes.value" class="table_info_cell _notes">
             <div class="base_table_content">
                 <div class="d-flex align-center link mt6" v-tippy.left="`Нажмите чтобы добавить ЛИЧНОЕ примечание или посмотреть историю ранее созданных(личные примечания доступны только вам)`">
                     <div class="button_note">
@@ -451,7 +451,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _mydescription">
+        <td v-if="settings_table.settings_description.value" class="table_info_cell _mydescription">
             <div class="base_table_content _hover-cell">
                 <div class="multi-ellipsis _four _no-scroll">
                     <span class="color_grey">
@@ -463,7 +463,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _communications">
+        <td v-if="settings_table.settings_communication.value" class="table_info_cell _communications">
             <div class="base_table_content">
                 <div>
                     <span class="color_grey">газ:</span> —
@@ -473,7 +473,7 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _extra-options">
+        <td v-if="settings_table.settings_additional_params.value" class="table_info_cell _extra-options">
             <div class="base_table_content">
                 <div>
                     <span class="color_grey">балкон:</span> есть
@@ -483,27 +483,27 @@ export default {
                 </div>
             </div>
         </td>
-        <td class="table_info_cell _usage_land">
+        <td v-if="settings_table.settings_look.value" class="table_info_cell _usage_land">
             <div class="base_table_content">—</div>
         </td>
-        <td class="table_info_cell _use">
+        <td v-if="settings_table.settings_room.value" class="table_info_cell _use">
             <div class="base_table_content">—</div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _cadastral_num">
+        <td v-if="!presentationStore.presentation && settings_table.settings_cadastral_number.value" class="table_info_cell _cadastral_num">
             <div class="base_table_content">—</div>
         </td>
-        <td class="table_info_cell _show_in_mls">
+        <td v-if="settings_table.settings_publication.value" class="table_info_cell _show_in_mls">
             <div class="base_table_content">
                 <div>в МЛС с 04.06.2024</div>
                 <div>Не в фиде</div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _source_name">
+        <td v-if="!presentationStore.presentation && settings_table.settings_source.value" class="table_info_cell _source_name">
             <div class="base_table_content">
                 Холодный звонок
             </div>
         </td>
-        <td class="table_info_cell _deal_state">
+        <td v-if="settings_table.settings_status.value" class="table_info_cell _deal_state">
             <div class="base_table_content">
                 <div class="btn-icon-text fz-13 tt"
                      style="background: rgb(224, 225, 226); color: rgb(68, 68, 68); font-size: 10px; font-weight: 700;"
@@ -512,7 +512,323 @@ export default {
                 </div>
             </div>
         </td>
-        <td v-if="!presentationStore.presentation" class="table_info_cell _comment_callcenter">
+        <td v-if="!presentationStore.presentation && settings_table.settings_comments.value" class="table_info_cell _comment_callcenter">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+
+        <td v-if="settings_table.settings_have_renter.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_form_ownership.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_area_construction.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_object_permission.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_code_db.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_roof.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_lease_term.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_type_ownership.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_reason_withdrawal.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_subject_contract.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_exist_encumbrance.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_building_block.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_ownership.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_basis.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_encumbrance_bank.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_type_layout.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_invite_client_manager.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_area_apartment.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_summ_encumbrance.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_exhaust.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_type_object_right.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_exist_enforcement.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_water_supply.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_rooms_in_sauna.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_share_ownership.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_partner.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_amount_enforcement.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_catering.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_pool.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_leased.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_land_plot.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_name_lessee.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_profit_lessee.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_place.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_area_place.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_facade.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_warehouse_class.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_type.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_corner.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_floor_room.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_number_boxes.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_length.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_coverage.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_pit.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_width.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_approach.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_lifts.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_rampa.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_showers.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_fridge.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_crande_girder.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_crande_girder_tones.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_gate_width.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_bathroom.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_gate_heigth.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_type_gate.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_office_available.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_number_windows.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_number_buildings.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_area_office.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_area_buildings.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_additional_permited_use.value" class="table_info_cell">
+            <div class="base_table_content">
+                —
+            </div>
+        </td>
+        <td v-if="settings_table.settings_last_call.value" class="table_info_cell">
             <div class="base_table_content">
                 —
             </div>

@@ -3112,3 +3112,40 @@ section.ql-container{
     width: 18px;
     height: 18px;
 }
+
+._price .vs__actions,
+._price .vs__search{
+    display: none;
+}
+
+._price .vs--searchable .vs__dropdown-toggle{
+    width: fit-content;
+    border: none;
+    background: transparent;
+}
+._price{
+    width: fit-content;
+}
+._price .vs__dropdown-menu{
+    width: fit-content;
+    min-width: unset;
+}
+._price .vs__dropdown-toggle{
+    height: unset;
+}
+
+._price .vs__selected{
+    color: var(--color-blue);
+}
+
+.filter_select{
+    min-width: 150px;
+    width: max-content;
+}
+.filter_bg_white .vs__dropdown-toggle{
+    background: var(--color-white);
+}
+
+.filter_select .vs__dropdown-menu{
+    width: auto;
+}
