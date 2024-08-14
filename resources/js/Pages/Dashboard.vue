@@ -33,6 +33,10 @@ export default {
         const { popup_settings_cell } = storeToRefs(popupSettingsCellStore);
         const popupFilterStateStore = useFilterState();
         const { filter_state, type_objects, currency } = storeToRefs(popupFilterStateStore);
+        const withPhoto = ref(false);
+        const likvid = ref(false);
+        const nelikvid = ref(false);
+        const avglikvid = ref(false);
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
@@ -71,7 +75,11 @@ export default {
             filter_state,
             changeFilter,
             type_objects,
-            currency
+            currency,
+            withPhoto,
+            likvid,
+            nelikvid,
+            avglikvid
         }
     }
 };
@@ -153,7 +161,7 @@ export default {
                     placeholder="Тип объекта"
                 ></v-select>
             </div>
-            <div class="_price">
+            <div class="filter_select _price">
                 <v-select
                     :options="currency.options"
                     label="title"
@@ -161,10 +169,74 @@ export default {
                     v-model="currency.selectedOption"
                 ></v-select>
             </div>
-
+            <div class="filter_input d-flex align-center">
+                <input type="number" placeholder="от" class="input_main">
+            </div>
+            <div class="filter_input d-flex align-center">
+                <input type="number" placeholder="до" class="input_main">
+            </div>
+            <div class="filter_checkbox">
+                <input
+                    class="checkbox"
+                    type="checkbox"
+                    v-model="withPhoto"
+                    id="withPhoto">
+                <label for="withPhoto">С фото</label>
+            </div>
         </div>
-        <div class="filter_settings_row"></div>
-        <div class="filter_settings_row"></div>
+
+        <div class="filter_settings_row d-flex align-center">
+            <div class="filter_btn_region">
+                Краснодар г.
+            </div>
+            <div class="filter_btn_region">
+                Район
+            </div>
+            <div class="filter_search">
+                <input type="text" class="filter_search_inp" placeholder="Город, улица, метро, район, ЖК, id карточки, тел. клиента и т.д.">
+                <div class="filter_search_icon">
+                    <svg data-v-097ba13b="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="search"><path data-v-097ba13b="" fill="none" d="M0 0h24v24H0V0z"></path><path data-v-097ba13b="" d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                </div>
+            </div>
+            <div class="filter_btn_more filter_btn_region">
+                Еще фильтры
+            </div>
+            <div class="filter_show">
+                Показать
+            </div>
+            <div class="filter_map filter_btn_region">
+                <div class="filter_map_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M25.046 8.483a10 10 0 0 0-7.911-5.425 11.364 11.364 0 0 0-2.27 0 10.003 10.003 0 0 0-7.911 5.425 10.806 10.806 0 0 0 1.48 11.893l6.794 8.26a1 1 0 0 0 1.544 0l6.793-8.26a10.806 10.806 0 0 0 1.481-11.893zM16 17a4 4 0 1 1 4-4 4.005 4.005 0 0 1-4 4z" /></svg>
+                </div>
+                На карте
+            </div>
+        </div>
+        <div class="filter_settings_row d-flex align-center filter_likvid_wrapper">
+            <div class="filter_checkbox tt">
+                <input
+                    class="checkbox"
+                    type="checkbox"
+                    v-model="likvid"
+                    id="likvid">
+                <label for="likvid">Ликвид</label>
+            </div>
+            <div class="filter_checkbox tt">
+                <input
+                    class="checkbox"
+                    type="checkbox"
+                    v-model="nelikvid"
+                    id="nelikvid">
+                <label for="nelikvid">Неликвид</label>
+            </div>
+            <div class="filter_checkbox tt">
+                <input
+                    class="checkbox"
+                    type="checkbox"
+                    v-model="avglikvid"
+                    id="avglikvid">
+                <label for="avglikvid">Средняя лик-сть</label>
+            </div>
+        </div>
     </section>
 
     <section class="table">

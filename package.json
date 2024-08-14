@@ -31,6 +31,8 @@
         "maz-ui": "^3.44.3",
         "pinia": "^2.1.7",
         "quill": "^2.0.2",
+        "semantic-ui-css": "^2.5.0",
+        "semantic-ui-vue": "^0.11.0",
         "swiper": "^11.1.4",
         "vue": "^3.4.27",
         "vue-dragscroll": "^4.0.5",
