@@ -150,7 +150,7 @@ export default {
         </div>
     </section>
 
-    <section class="filter_settings">
+    <section class="filter_settings" v-if="filter_state">
         <div class="filter_settings_row d-flex align-center">
             <div class="filter_select filter_bg_white">
                 <v-select
