@@ -307,6 +307,9 @@ body.no_scroll_bar::-webkit-scrollbar
 .justify-start{
     justify-content: flex-start;
 }
+.justify-center{
+    justify-content: center;
+}
 .direction-column{
     flex-direction: column;
 }
