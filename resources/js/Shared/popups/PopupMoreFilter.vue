@@ -16,16 +16,33 @@ export default {
         const contract_to_sign = ref(null);
         const commission = ref(false);
         const selectedTypeDocument = ref(null);
+        const selectedTypeTitle = ref(null);
+        const selectedPowerAttorney = ref(null);
+        const selectedSurveying = ref(null);
+        const selectedEncounter = ref(null);
+        const selectedBreakdownAmount = ref(null);
+        const selectedIfNotarisedTransaction = ref(null);
         const selectedTypeSell = ref(null);
+        const selectedPrimary = ref(null);
+        const selectedNotarisedTransaction = ref(null);
         const selectedStatus = ref(null);
         const selectedState = ref(null);
+        const selectedObjectRight = ref(null);
+        const selectedEnforcementProceedings = ref(null);
         const selectedSource = ref(null);
         const from_city_km = ref(null);
         const import_id = ref(null);
+        const encumbrance_amount = ref(null);
+        const selectedEncumbrance = ref(null);
+        const code_db = ref(null);
+        const selectedReasonWithdrawal = ref(null);
         const selectedDirection = ref(null);
+        const partner = ref(null);
+        const selectedTehnicalPass = ref(null);
         const mortgage = ref(false);
         const number_contract = ref('');
         const overdue_contracts = ref(false);
+        const invite_client_manager = ref(false);
         const type_document = ref([
             { id: 1, title: 'Возмездный договор' },
             { id: 2, title: 'Нет договора' },
@@ -67,11 +84,78 @@ export default {
             { id: 6, title: 'Сделка' },
             { id: 7, title: 'Отказ' }
         ]);
+        const reason_withdrawal = ref([
+            { id: 1, title: 'Передумал' },
+            { id: 2, title: 'Продал сам' },
+            { id: 3, title: 'Дубль' },
+            { id: 4, title: 'Объявление не актуально' },
+            { id: 5, title: 'Другая причина' }
+        ]);
+        const object_right = ref([
+            { id: 1, title: 'Собственность' },
+            { id: 2, title: 'Общая долевая собственность' },
+            { id: 3, title: 'Общая совместная собственность' },
+            { id: 4, title: 'Аренда' },
+            { id: 5, title: 'Уступка прав по договору аренды' },
+            { id: 6, title: 'Право требования' }
+        ]);
+        const type_title = ref([
+            { id: 1, title: 'Собственность' },
+            { id: 2, title: 'Общая долевая собственность' },
+            { id: 3, title: 'Общая совместная собственность' },
+            { id: 4, title: 'Аренда' },
+            { id: 5, title: 'Уступка прав по договору аренды' },
+            { id: 6, title: 'Право требования' }
+        ]);
+        const encumbrance = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const notarised_transaction = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const enforcement_proceedings = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const tehnical_pass = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const primary = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const surveying = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const power_attorney = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const breakdown_amount = ref([
+            { id: 1, title: 'да' },
+            { id: 2, title: 'нет' }
+        ]);
+        const if_notarised_transaction = ref([
+            { id: 1, title: 'доли' },
+            { id: 2, title: 'опека' }
+        ]);
+        const encounter = ref([
+            { id: 1, title: 'есть' },
+            { id: 2, title: 'нет' }
+        ]);
         const last_update = ref({
             from: null,
             to: null
         })
         const created_at = ref({
+            from: null,
+            to: null
+        })
+        const last_meeting = ref({
             from: null,
             to: null
         })
@@ -89,13 +173,18 @@ export default {
             contract_to_sign,
             selectedTypeDocument,
             type_document,
+            tehnical_pass,
             overdue_contracts,
             number_contract,
+            selectedBreakdownAmount,
             type_sell,
             selectedTypeSell,
             mortgage,
             selectedState,
+            selectedObjectRight,
+            encounter,
             selectedSource,
+            selectedTypeTitle,
             state,
             selectedDirection,
             direction,
@@ -105,6 +194,32 @@ export default {
             last_update,
             from_city_km,
             import_id,
+            partner,
+            selectedEncumbrance,
+            type_title,
+            selectedPrimary,
+            code_db,
+            selectedIfNotarisedTransaction,
+            selectedTehnicalPass,
+            encumbrance_amount,
+            reason_withdrawal,
+            encumbrance,
+            last_meeting,
+            primary,
+            selectedEnforcementProceedings,
+            invite_client_manager,
+            selectedReasonWithdrawal,
+            object_right,
+            power_attorney,
+            breakdown_amount,
+            selectedPowerAttorney,
+            notarised_transaction,
+            enforcement_proceedings,
+            selectedSurveying,
+            if_notarised_transaction,
+            selectedNotarisedTransaction,
+            selectedEncounter,
+            surveying,
             created_at
         }
     }
@@ -316,6 +431,241 @@ export default {
                 </div>
                 <div class="popup_main_cell d-flex justify-start ml-4">
                     <input type="text" class="input_main" v-model="import_id">
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Код в БД
+                </div>
+                <div class="popup_main_cell d-flex justify-start ml-4">
+                    <input type="text" class="input_main" v-model="code_db">
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Причина снятия
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="reason_withdrawal"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedReasonWithdrawal"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Наличие обременения
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="encumbrance"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedEncumbrance"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Пригласил Клиент-менеджер
+                </div>
+                <div class="popup_main_cell d-flex justify-start ml-4">
+                    <input
+                        class="checkbox"
+                        type="checkbox"
+                        id="invite_client_manager"
+                        v-model="invite_client_manager"
+                    >
+                    <label for="invite_client_manager" style="gap: 10px"></label>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Сумма обременения
+                </div>
+                <div class="popup_main_cell d-flex justify-start ml-4">
+                    <input type="text" class="input_main" v-model="encumbrance_amount">
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Вид права на объект
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="object_right"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedObjectRight"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Наличие исполнительных производств
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="enforcement_proceedings"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedEnforcementProceedings"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Партнер
+                </div>
+                <div class="popup_main_cell d-flex justify-start ml-4">
+                    <input type="text" class="input_main" v-model="partner">
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Вид права на з/у
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="type_title"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedTypeTitle"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Наличие техпаспорта
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="tehnical_pass"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedTehnicalPass"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Первичка
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="primary"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedPrimary"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Межевание
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="surveying"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedSurveying"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Нотариальная сделка
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="notarised_transaction"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedNotarisedTransaction"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Если нотариальная сделка
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="if_notarised_transaction"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedIfNotarisedTransaction"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Встречка
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="encounter"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedEncounter"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Наличие доверенности
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="power_attorney"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedPowerAttorney"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Разбивка суммы
+                </div>
+                <div class="popup_main_cell ml-4">
+                    <v-select
+                        :options="breakdown_amount"
+                        label="title"
+                        :reduce="item => item.id"
+                        v-model="selectedBreakdownAmount"
+                        placeholder="Не выбрано"
+                    ></v-select>
+                </div>
+            </div>
+            <div class="popup_main_row d-flex align-center">
+                <div class="popup_main_cell">
+                    Дата последнего прозвона
+                </div>
+                <div class="popup_main_cell d-flex justify-start ml-4">
+                    <span class="popup_main_cell_box">
+                        От
+                        <flat-pickr class="popup_birthday fz-16" v-model="last_meeting.from" placeholder="ДД.ММ.ГГГГ"/>
+                    </span>
+                    <span class="popup_main_cell_box">
+                        До
+                        <flat-pickr class="popup_birthday fz-16" v-model="last_meeting.to" placeholder="ДД.ММ.ГГГГ"/>
+                    </span>
                 </div>
             </div>
         </div>
