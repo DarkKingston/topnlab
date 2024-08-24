@@ -11,6 +11,7 @@ import PopupNotes from "../Shared/popups/PopupNotes";
 import PopupSettingsCells from "../Shared/popups/PopupSettingsCells";
 import PopupPlace from "../Shared/popups/PopupPlace";
 import PopupMoreFilter from "../Shared/popups/PopupMoreFilter";
+import PopupMap from "../Shared/popups/PopupMap";
 export default {
     props:{
         title: String
@@ -27,6 +28,7 @@ export default {
         PopupMoreFilter,
         PopupSettingsCells,
         VSelect,
+        PopupMap,
         PopupPlace
     },
     setup(){
@@ -78,6 +80,11 @@ export default {
             document.querySelector('main').classList.add('no_scroll');
         }
 
+        function showMap(){
+            document.querySelector('.popup_map').classList.add('active');
+            document.querySelector('main').classList.add('no_scroll');
+        }
+
         return{
             presentationStore,
             createObject,
@@ -94,7 +101,8 @@ export default {
             nelikvid,
             avglikvid,
             showPopupPlace,
-            showPopupMoreFilter
+            showPopupMoreFilter,
+            showMap
         }
     }
 };
@@ -202,10 +210,7 @@ export default {
 
         <div class="filter_settings_row d-flex align-center">
             <div class="filter_btn_region" @click="showPopupPlace('country')">
-                Краснодар г.
-            </div>
-            <div class="filter_btn_region" @click="showPopupPlace('region')">
-                Район
+                Регион
             </div>
             <div class="filter_search">
                 <input type="text" class="filter_search_inp" placeholder="Город, улица, метро, район, ЖК, id карточки, тел. клиента и т.д.">
@@ -219,7 +224,7 @@ export default {
             <div class="filter_show">
                 Показать
             </div>
-            <div class="filter_map filter_btn_region">
+            <div class="filter_map filter_btn_region" @click="showMap">
                 <div class="filter_map_icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M25.046 8.483a10 10 0 0 0-7.911-5.425 11.364 11.364 0 0 0-2.27 0 10.003 10.003 0 0 0-7.911 5.425 10.806 10.806 0 0 0 1.48 11.893l6.794 8.26a1 1 0 0 0 1.544 0l6.793-8.26a10.806 10.806 0 0 0 1.481-11.893zM16 17a4 4 0 1 1 4-4 4.005 4.005 0 0 1-4 4z" /></svg>
                 </div>
@@ -264,6 +269,13 @@ export default {
     <div class="popup popup_more_filter">
         <div class="popup_content big">
             <PopupMoreFilter/>
+        </div>
+    </div>
+
+
+    <div class="popup popup_map">
+        <div class="popup_content map">
+            <PopupMap/>
         </div>
     </div>
 
