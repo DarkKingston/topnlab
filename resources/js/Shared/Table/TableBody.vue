@@ -147,25 +147,13 @@ export default {
                 }"
                 v-tippy.right="`Посмотреть`"
             >
-                <a class="table_img" data-fancybox="gallery" href="https://s3.topnlab.ru/files-service/storage/351a609b8063fba90bdc2397595a/0bccd87dc1fa1aa8304a45b272dd0e3d.jpg">
-                    <img src="https://s3.topnlab.ru/files-service/storage/351a609b8063fba90bdc2397595a/0bccd87dc1fa1aa8304a45b272dd0e3d.jpg" alt="">
-                    <div class="table_img_shadow">
+                <a v-for="(item, idx) in object.IMAGE" :class="{table_img: idx==0}" :key="idx" data-fancybox="gallery" :href="'https://crm.mirax.md'+item">
+                    <img :src="'https://crm.mirax.md'+item" width="200" height="150" />
+                    <div class="table_img_shadow" v-if="idx == 0">
                         <div class="table_img_shadow_btn">
                             <svg fill="#0070c9" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="m494.8,241.4l-50.6-49.4c-50.1-48.9-116.9-75.8-188.2-75.8s-138.1,26.9-188.2,75.8l-50.6,49.4c-11.3,12.3-4.3,25.4 0,29.2l50.6,49.4c50.1,48.9 116.9,75.8 188.2,75.8s138.1-26.9 188.2-75.8l50.6-49.4c4-3.8 11.7-16.4 0-29.2zm-238.8,84.4c-38.5,0-69.8-31.3-69.8-69.8 0-38.5 31.3-69.8 69.8-69.8 38.5,0 69.8,31.3 69.8,69.8 0,38.5-31.3,69.8-69.8,69.8zm-195.3-69.8l35.7-34.8c27-26.4 59.8-45.2 95.7-55.4-28.2,20.1-46.6,53-46.6,90.1 0,37.1 18.4,70.1 46.6,90.1-35.9-10.2-68.7-29-95.7-55.3l-35.7-34.7zm355,34.8c-27,26.3-59.8,45.1-95.7,55.3 28.2-20.1 46.6-53 46.6-90.1 0-37.2-18.4-70.1-46.6-90.1 35.9,10.2 68.7,29 95.7,55.4l35.6,34.8-35.6,34.7z"></path> </g> </g></svg>
                         </div>
                     </div>
-                </a>
-                <a data-fancybox="gallery" href="https://lipsum.app/id/61/1600x1200">
-                    <img src="https://lipsum.app/id/61/200x150" width="200" height="150" />
-                </a>
-                <a data-fancybox="gallery" href="https://lipsum.app/id/62/1600x1200">
-                    <img src="https://lipsum.app/id/62/200x150" width="200" height="150" />
-                </a>
-                <a data-fancybox="gallery" href="https://lipsum.app/id/63/1600x1200">
-                    <img src="https://lipsum.app/id/63/200x150" width="200" height="150" />
-                </a>
-                <a data-fancybox="gallery" href="https://lipsum.app/id/64/1600x1200">
-                    <img src="https://lipsum.app/id/64/200x150" width="200" height="150" />
                 </a>
             </Fancybox>
 
@@ -276,7 +264,7 @@ export default {
         <td v-if="settings_table.settings_price.value" class="table_info_cell _price">
             <div class="base_table_content" style="overflow: unset">
                 <div class="_fz18 fw600  d-flex align-center">
-                    ₽ 6 300 000
+                    € {{ object.OPPORTUNITY }}
                     <div class="price_arrow" v-if="true" style="min-width: 14px">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.924 13.617A1 1 0 0 0 19 13h-3V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v10H5a1 1 0 0 0-.707 1.707l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 0 0 .217-1.09z" style="fill:#91d637" data-name="Down"/></svg>
                         <div class="price_box">

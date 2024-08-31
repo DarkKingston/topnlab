@@ -200,34 +200,35 @@ export default {
         <div class="cart_object_header">
             <div class="cart_object_header_box">
                 <div class="cart_object_header_title fz-24">
-                    <span>
-                        Продается
-                    </span>
-                    <span class="cart_object_name cart_object_separator">
-                        дом
-                    </span>
-                    <span class="cart_object_name cart_object_separator">
-                       120 м²
-                    </span>
-                    <span class="cart_object_name">
-                       3.3 сотки
-                    </span>
+<!--                    <span>-->
+<!--                        Продается-->
+<!--                    </span>-->
+<!--                    <span class="cart_object_name cart_object_separator">-->
+<!--                        дом-->
+<!--                    </span>-->
+<!--                    <span class="cart_object_name cart_object_separator">-->
+<!--                       120 м²-->
+<!--                    </span>-->
+<!--                    <span class="cart_object_name">-->
+<!--                       3.3 сотки-->
+<!--                    </span>-->
+                    {{object.TITLE}}
                 </div>
                 <div class="cart_object_addresses">
-                    Краснодарский край,г. Краснодар,снт КСТ-2,Прикубанский р-н,ул. Крайняя,д. 399
+                    {{object?.UF_CRM_1685299014085}}
                 </div>
             </div>
             <div class="cart_object_header_box">
 
                 <div class="cart_object_dates">
                     <div class="cart_object_date_item fz-13">
-                        Создано: 11.10.2022, 13:12
+                        Создано: {{object.DATE_CREATE}}
                     </div>
                     <div class="cart_object_date_item fz-13">
-                        Изменено: 24.01.2024, 21:30
+                        Изменено: {{object.DATE_CREATE}}
                     </div>
-                    <div class="cart_object_date_realty_id fz-13" @click="clipboardCopy(object.id)">
-                        id объекта: {{object.id}}
+                    <div class="cart_object_date_realty_id fz-13" @click="clipboardCopy(object.ID)">
+                        id объекта: {{object.ID}}
                         <span>
                             <svg height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" fill="white">
                                 <path d="M14 8H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V10c0-1.103-.897-2-2-2z"/>
@@ -278,12 +279,9 @@ export default {
                     <div class="cart_object_slider">
                         <div class="swiper-container gallery-slider">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide" data-fancybox="slider" href="/assets/object.jpg"><span class="blur"></span><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" v-for="(item, idx) in object.IMAGE" :key="idx" data-fancybox="slider" :href="'https://crm.mirax.md/'+item">
+                                    <span class="blur"></span><img :src="'https://crm.mirax.md/'+item" :alt="object.TITLE">
+                                </div>
                             </div>
                             <div class="swiper-button-prev">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#3588f3"/></svg>
@@ -301,12 +299,7 @@ export default {
 
                         <div class="swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
-                                <div class="swiper-slide"><img src="/assets/object.jpg" alt=""></div>
+                                <div class="swiper-slide" v-for="(item, idx) in object.IMAGE" :key="idx"><img :src="'https://crm.mirax.md/'+item" :alt="object.TITLE"></div>
                             </div>
                         </div>
                     </div>
@@ -324,8 +317,8 @@ export default {
                         <tr class="cart_object_data">
                             <td class="cart_object_data_item">
                                 <div class="cart_object_data_item_wrapper">
-                                    <div class="cart_object_data_item_price blue"> ₽ 10 500 000 </div>
-                                    <div class="cart_object_data_item_name"><span>350 000</span> ₽/м²</div>
+                                    <div class="cart_object_data_item_price blue"> € {{object.OPPORTUNITY}} </div>
+                                    <div class="cart_object_data_item_name"><span>350 000</span> €/м²</div>
                                 </div>
                             </td>
                             <td class="cart_object_data_item">
@@ -359,19 +352,19 @@ export default {
                 <div class="cart_object_responsible" v-if="tabResponsible == 1">
                     <div class="cart_object_responsible_wrapper">
                         <div class="cart_responsible_img">
-                            <img src="/assets/object_responsible.png" alt="">
+                            <img src="https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg" alt="">
                         </div>
                         <div class="cart_responsible_info">
                             <div class="cart_responsible_info_name">
-                                Половинкина Ольга
+                                {{ object.ASSIGNED_BY_NAME }} {{ object.ASSIGNED_BY_LAST_NAME }}
                             </div>
                             <div class="cart_responsible_info_role">
                                 #Стажер
                             </div>
                             <div class="contact_phone_number">
-                                <div v-if="!showedNumber" v-tippy.top="`Нажми, чтобы c показать номер`">+7 93 <span class="link" @click="changeShowNumber">...показать номер</span></div>
+                                <div v-if="!showedNumber" v-tippy.top="`Нажми, чтобы c показать номер`">373 <span class="link" @click="changeShowNumber">...показать номер</span></div>
                                 <div v-else class="link">
-                                    +7 934 342 6058
+                                    {{ object?.ASSIGNED_BY_PHONE }}
                                 </div>
                             </div>
                             <div class="cart_responsible_info_mess fz-14" >
@@ -431,11 +424,11 @@ export default {
                                 <div class="notes_log_item">
                                     <div class="notes_log_message">
                                         <div class="notes_log_message_avatar">
-                                            <img src="/assets/object_responsible.png" alt="">
+                                            <img src="https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg" alt="">
                                         </div>
                                         <div class="notes_log_message_content">
                                             <div class="notes_log_message_content_name">
-                                                <div class="link">Половинкина Ольга</div>
+                                                <div class="link">{{ object.ASSIGNED_BY_NAME }} {{ object.ASSIGNED_BY_LAST_NAME }}</div>
                                                 <span>22:55</span>
                                             </div>
                                             <div class="notes_log_message_content_text">

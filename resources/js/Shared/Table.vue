@@ -221,11 +221,11 @@ export default {
             <ul class="fake_pagination_menu">
                 <li class="pagination_prev pagination_action disabled"></li>
                 <li class="fake_pagination_item fz-14 active">1</li>
-                <li class="fake_pagination_item fz-14">2</li>
-                <li class="fake_pagination_item fz-14">3</li>
-                <li class="fake_pagination_item fz-14">4</li>
-                <li class="pagination_action fake_pagination_item fz-14">...</li>
-                <li class="pagination_next pagination_action fake_pagination_item fz-14"></li>
+<!--                <li class="fake_pagination_item fz-14">2</li>-->
+<!--                <li class="fake_pagination_item fz-14">3</li>-->
+<!--                <li class="fake_pagination_item fz-14">4</li>-->
+<!--                <li class="pagination_action fake_pagination_item fz-14">...</li>-->
+                <li class="pagination_next pagination_action fake_pagination_item fz-14 disabled"></li>
             </ul>
         </div>
     </div>

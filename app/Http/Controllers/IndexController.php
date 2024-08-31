@@ -111,24 +111,37 @@ class IndexController extends Controller
 
 
     public function object($id) {
-        $object = ['id'=>$id];
-//        if (Auth::check()) {
-//            \Log::info('User is authenticated', ['user' => Auth::user()]);
-//            return Inertia::render('Object', [
-//                'title'=>'Object',
-//                'id' => $id,
-//                'object' => $object,
-//                'user' => Auth::user()
-//            ]);
-//        } else {
-//            \Log::warning('User is not authenticated');
-//            return redirect()->route('login');
-//        }
-        return Inertia::render('Object', [
-            'title'=>'Object',
-            'id' => $id,
-            'object' => $object,
-            'user' => Auth::user()
-        ]);
+        $data = [
+            "hash" => "790ebb21ae5ebb8d5c8cb0b14460c11a",
+            'id' => $id
+        ];
+        $url = 'https://crm.mirax.md/restapi/deal.detail';
+
+        $response = Http::withOptions([
+            'verify' => false  // Disable SSL certificate verification
+        ])->post($url, $data);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+
+            $object = $responseData ?? [];
+
+            return Inertia::render('Object', [
+                'title'=>'Object',
+                'id' => $id,
+                'object' => $object,
+                'user' => Auth::user()
+            ]);
+        } else {
+            // Log error or handle it accordingly
+            \Log::error('Failed to fetch deals from the API', [
+                'status' => $response->status(),
+                'error' => $response->body()
+            ]);
+
+            // Optionally, redirect back or show an error page
+            return back()->withErrors('Failed to load deals from the API.');
+        }
+
     }
 }
