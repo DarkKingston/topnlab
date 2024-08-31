@@ -4,17 +4,20 @@ import TableHead from './Table/TableHead';
 import TableBody from './Table/TableBody';
 import PopupUserTable from "./popups/PopupUserTable";
 export default {
+    props:{
+        objects: Object
+    },
     components: {
         TableHead,
         TableBody,
         PopupUserTable
     },
-    setup() {
+    setup(props) {
 
         // Данные и состояние
         const sortField = ref('id');
         const typeSort = ref('asc');
-        const objects = ref([{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]);
+        const objects = ref(props.objects);
         const selectedObjects = ref([]);
         const userInfo = ref(null);
         const showUserPopup = ref(false);
@@ -186,7 +189,7 @@ export default {
     </div>
     <div class="popup" :class="{active: showUserPopup}">
         <div class="popup_content">
-            <PopupUserTable :userId="userInfo"/>
+            <PopupUserTable :user="userInfo"/>
         </div>
     </div>
 

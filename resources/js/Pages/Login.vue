@@ -2,6 +2,7 @@
     import Layout from '../Shared/LayoutLogin';
     import { Link, Head } from '@inertiajs/inertia-vue3';
     import {ref} from "vue";
+    import axios from "axios";
     export default{
         layout: Layout,
         components:{
@@ -12,6 +13,8 @@
             title: String
         },
         setup(){
+            const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
             let changeView = ref(false);
             function onChangeView() {
                 changeView.value = !changeView.value;
@@ -24,6 +27,7 @@
             return{
                 onSubmit,
                 onChangeView,
+                csrf_token,
                 changeView
             }
         }
@@ -31,6 +35,7 @@
 </script>
 
 <template>
+    <meta name="csrf-token" :content="csrf_token">
     <Head :title="title"/>
     <header>
         <div class="container">
@@ -48,12 +53,13 @@
                         Вход
                     </h2>
 
-                    <div class="login_form">
+                    <form action="/" method="post" class="login_form">
+                        <input type="hidden" name="_token" :value="csrf_token" />
                         <div class="login_box">
-                            <input type="text" placeholder="Электронная почта">
+                            <input type="text" name="username" placeholder="Электронная почта">
                         </div>
                         <div class="login_box">
-                            <input :type="changeView ? 'text' : 'password'" placeholder="Пароль">
+                            <input :type="changeView ? 'text' : 'password'" name="password" placeholder="Пароль">
                             <div class="login_eye" :class="{ active: changeView }" @click="onChangeView">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="open">
                                     <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
@@ -63,10 +69,10 @@
                                 </svg>
                             </div>
                         </div>
-                        <Link href="/dashboard" class="login_btn btn color_white bg_black">
+                        <button type="submit" class="login_btn btn color_white bg_black">
                             Войти
-                        </Link>
-                    </div>
+                        </button>
+                    </form>
 
                 </div>
             </div>

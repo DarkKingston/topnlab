@@ -14,7 +14,8 @@ import PopupMoreFilter from "../Shared/popups/PopupMoreFilter";
 import PopupMap from "../Shared/popups/PopupMap";
 export default {
     props:{
-        title: String
+        title: String,
+        objects: Object
     },
     components:{
         Head,
@@ -31,7 +32,7 @@ export default {
         PopupMap,
         PopupPlace
     },
-    setup(){
+    setup(props){
         const presentationStore = usePresentationStore();
         const popupNotesStore = usePopupNotes();
         const { popup_notes, tab } = storeToRefs(popupNotesStore);
@@ -46,6 +47,7 @@ export default {
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
+        console.log(props.objects);
 
         onMounted(() => {
             document.querySelector('main').classList.remove('no_scroll')
@@ -281,7 +283,7 @@ export default {
 
     <section class="table">
         <Tabs/>
-        <Table/>
+        <Table :objects="objects"/>
         <div class="popup popup_create">
             <div class="popup_content big">
                 <PopupCreateObject/>

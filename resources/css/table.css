@@ -135,7 +135,8 @@
 .table_info_cell._check{
     position: sticky;
     left: 0;
-    max-width: 35px;
+    /*max-width: 35px;*/
+    max-width: fit-content;
     width: 100%;
     background-color: var(--color-white);
     z-index: 10;

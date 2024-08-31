@@ -33,8 +33,7 @@ export default {
             showedNumber.value = !showedNumber.value
         }
         const togglePopup = (user) => {
-            console.log(user.id);
-            emit('toggle-popup', user.id);
+            emit('toggle-popup', user);
         };
 
         return{
@@ -96,23 +95,23 @@ export default {
                 <input
                     class="checkbox"
                     type="checkbox"
-                    :id="object.id">
-                <label :for="object.id"></label>
-                <div class="table_cell_id">{{ object.id }}</div>
+                    :id="object.ID">
+                <label :for="object.ID"></label>
+                <div class="table_cell_id">{{ object.ID }}</div>
             </div>
         </td>
         <td v-if="!presentationStore.presentation && settings_table.settings_responsible.value" class="table_info_cell _user_id">
             <div class="table_cell_content">
                 <div class="table_cell_user" @click="togglePopup(object)">
                     <div class="link pb0">
-                        Пугачева Татьяна
+                        {{ object.ASSIGNED_BY_NAME }} {{ object.ASSIGNED_BY_LAST_NAME }}
                     </div>
                     <div class="table_cell_user_label">
                         #Стажер
                     </div>
                 </div>
                 <div class="table_cell_user_info">
-                    <div class="table_cell_user_info_name fz-14 fw600">Пугачева Татьяна</div>
+                    <div class="table_cell_user_info_name fz-14 fw600">{{ object.ASSIGNED_BY_NAME }} {{ object.ASSIGNED_BY_LAST_NAME }}</div>
                     <div class="table_cell_user_info_action">
                         <div class="table_cell_user_info_item fz-14 _nowrap">
                                 <span>
@@ -844,7 +843,7 @@ export default {
                             <div class="footer_info_box">
                                 <div class="footer_info_box_item" style="margin: 0 10px;">
                                     <span class="color_grey">id:</span>
-                                    <Link style="padding: 3px 7px; color: #0370c9;" :href="'/object/'+object.id">{{object.id}}
+                                    <Link style="padding: 3px 7px; color: #0370c9;" :href="'/object/'+object.ID">{{object.ID}}
                                     </Link>
 
                                 </div>

@@ -3535,3 +3535,8 @@ section.ql-container{
     height: 30px;
     fill: #318BFF;
 }
+
+
+.map_actions .drawing{
+    background: #c2dcff;
+}

@@ -3,9 +3,10 @@ import { ref } from 'vue';
 export default {
     components: {},
     props:{
-        userId: Number
+        user: Object
     },
-    setup(){
+    setup(props){
+        console.log(props.user)
         const checkbox = ref(false)
         function removeActivePopup(){
             document.querySelector('.popup.active').classList.remove('active')
@@ -23,7 +24,7 @@ export default {
     <div>
         <div class="popup_header">
             <div class="popup_label">
-                id сотрудника: {{userId}}
+                id сотрудника: {{user?.ASSIGNED_BY_ID}}
             </div>
             <div class="popup_close" @click="removeActivePopup">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#3588F3" width="17.828" height="17.828"><path d="m2.828 17.828 6.086-6.086L15 17.828 17.828 15l-6.086-6.086 6.086-6.086L15 0 8.914 6.086 2.828 0 0 2.828l6.085 6.086L0 15l2.828 2.828z"/></svg>
@@ -37,18 +38,18 @@ export default {
             </div>
             <div class="popup_info_box">
                 <div class="popup_info_name">
-                    Пугачева Татьяна Николаевна
+                    {{user?.ASSIGNED_BY_NAME}} {{user?.ASSIGNED_BY_LAST_NAME}} {{user?.ASSIGNED_BY_SECOND_NAME}}
                 </div>
                 <div class="popup_info_state">
                     Заблокирован
                 </div>
                 <div class="popup_info_specialist">
-                    Агент
+                    {{ user?.ASSIGNED_BY_WORK_POSITION }}
                 </div>
                 <div class="popup_info_company">
                     Компания:
                     <span>
-                        АЯКС
+                        MIRAX
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m18.707 12.707-3 3a1 1 0 0 1-1.414-1.414L15.586 13H6a1 1 0 0 1 0-2h9.586l-1.293-1.293a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414z"  data-name="Right"/></svg>
                     </span>
                     <span>
@@ -79,16 +80,16 @@ export default {
                         Рабочий телефон: <span>+7 918 349 3245</span>
                     </div>
                     <div class="icon_list_item_info">
-                        Почта: <span>vasilyev_pn@ayax.ru</span>
+                        Почта: <span>{{ user?.ASSIGNED_BY_LOGIN }}</span>
                     </div>
                     <div class="icon_list_item_birthday">
                         <input
                             class="checkbox"
                             type="checkbox"
-                            :id="userId"
+                            :id="user?.ASSIGNED_BY_LOGIN"
                             v-model="checkbox"
                         >
-                        <label :for="userId">Уведомлять о дне рождения коллеги</label>
+                        <label :for="user?.ASSIGNED_BY_LOGIN">Уведомлять о дне рождения коллеги</label>
                     </div>
                 </div>
             </div>
