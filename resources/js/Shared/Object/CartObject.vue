@@ -378,12 +378,18 @@ export default {
                 </div>
                 <div class="cart_object_responsible" v-if="tabResponsible == 2">
                     <div class="cart_object_responsible_wrapper">
-                        <div class="cart_object_responsible_customer">
-                            C
-                        </div>
-                        <div class="cart_responsible_info">
-                            <div class="cart_responsible_contact">
-                                Недостаточно прав для просмотра контактной информации
+                        <div class="cart_contact_info">
+                            <div class="cart_responsible_info_name" v-if="false">
+                                {{ object.ASSIGNED_BY_NAME }} {{ object.ASSIGNED_BY_LAST_NAME }}
+                            </div>
+                            <div class="contact_phone_number">
+                                <div v-if="!showedNumber" v-tippy.top="`Нажми, чтобы c показать номер`">373 <span class="link" @click="changeShowNumber">...показать номер</span></div>
+                                <div v-else class="link">
+                                    {{ object?.CONTACT_FIELD?.VALUE }}
+                                </div>
+                            </div>
+                            <div class="cart_responsible_info_mess fz-14" >
+                                Написать сообщение
                             </div>
                         </div>
                     </div>
