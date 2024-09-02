@@ -30,6 +30,7 @@ export default {
             active.value = !active.value
         }
         function changeShowNumber(){
+
             showedNumber.value = !showedNumber.value
         }
         const togglePopup = (user) => {
@@ -58,11 +59,8 @@ export default {
                 <div class="table_status_sticky">
                     <div class="table_status_progress">
                         <div class="table_status_steps">
-                            <div class="table_status_step_item">
-                                <div class="table_status_step_descr">Заключенные договоры</div>
-                            </div>
-                            <div class="table_status_step_item">
-                                <div class="table_status_step_descr">Новые продавцы</div>
+                            <div class="table_status_step_item" v-for="(item, key) in object.STAGE_TREE" :key="key">
+                                <div class="table_status_step_descr">{{item.name}}</div>
                             </div>
                         </div>
                     </div>
@@ -189,9 +187,9 @@ export default {
                         </div>
                     </div>
                     <div class="contact_phone_number">
-                        <div v-if="!showedNumber" v-tippy.top="`Нажми, чтобы c показать номер`">+7 93 <span class="link" @click="changeShowNumber">...показать номер</span></div>
+                        <div v-if="!showedNumber && object.CONTACT_FIELD?.VALUE" v-tippy.top="`Нажми, чтобы c показать номер`">+373 <span class="link" @click="changeShowNumber">...показать номер</span></div>
                         <div v-else class="link" v-tippy.top="`Нажми, чтобы найти клиента с таким же номером`">
-                            +7 934 342 6058
+                            {{ object.CONTACT_FIELD.VALUE }}
                         </div>
                     </div>
                     <div class="btn-icon-text fz-13" v-tippy.top="`Нажми, чтобы выбрать способ отправки сообщения`">
@@ -265,7 +263,7 @@ export default {
             <div class="base_table_content" style="overflow: unset">
                 <div class="_fz18 fw600  d-flex align-center">
                     € {{ object.OPPORTUNITY }}
-                    <div class="price_arrow" v-if="true" style="min-width: 14px">
+                    <div class="price_arrow" v-if="false" style="min-width: 14px">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.924 13.617A1 1 0 0 0 19 13h-3V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v10H5a1 1 0 0 0-.707 1.707l7 7a1 1 0 0 0 1.414 0l7-7a1 1 0 0 0 .217-1.09z" style="fill:#91d637" data-name="Down"/></svg>
                         <div class="price_box">
                             <div class="price_box_wrapper">
@@ -291,8 +289,8 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <span class="lh18">262 500</span> ₽/м²
+                <div v-if="object.UF_CRM_1685705685511">
+                    <span> {{ (+object.OPPORTUNITY_ACCOUNT / +object.UF_CRM_1685705685511).toFixed(2) }}</span> €/м²
                 </div>
                 <div class="color_grey">
                     ипотека
@@ -845,12 +843,12 @@ export default {
                             <div class="footer_info_box ">
                                 <div class="footer_bar_date fz-13 d-flex align-center">
                                     <span class="color_gray" style="margin-right: 2px;">Созд:</span>
-                                    07.11.2023, 12:09
+                                    {{object.DATE_CREATE}}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#7e7e7e" width="10.033" height="5"><path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z"/></svg>
                                 </div>
                                 <div class="footer_bar_date fz-13">
                                     <span class="color_gray" style="margin-right: 2px;">Изм:</span>
-                                    07.11.2023, 12:09
+                                    {{object.DATE_MODIFY}}
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#7e7e7e" width="10.033" height="5"><path d="M5.016 0 0 .003 2.506 2.5 5.016 5l2.509-2.5L10.033.003 5.016 0z"/></svg>
                                 </div>
                             </div>

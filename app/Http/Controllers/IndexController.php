@@ -77,9 +77,47 @@ class IndexController extends Controller
 //        ]);
 //    }
 
-    public function index(){
+//    public function index(){
+//        $data = [
+//            "hash" => "790ebb21ae5ebb8d5c8cb0b14460c11a",
+//            "nPageSize" => 5,
+//            "iNumPage" => 1
+//        ];
+//        $url = 'https://crm.mirax.md/restapi/deal.list';
+//
+//        $response = Http::withOptions([
+//            'verify' => false  // Disable SSL certificate verification
+//        ])->post($url, $data);
+//
+//        if ($response->successful()) {
+//            $responseData = $response->json();
+//
+//            $items = $responseData ?? [];
+//
+//            return Inertia::render('Dashboard', [
+//                'title' => 'Dashboard',
+//                'user' => Auth::user(),
+//                'objects' => $items
+//            ]);
+//        } else {
+//            // Log error or handle it accordingly
+//            \Log::error('Failed to fetch deals from the API', [
+//                'status' => $response->status(),
+//                'error' => $response->body()
+//            ]);
+//
+//            // Optionally, redirect back or show an error page
+//            return back()->withErrors('Failed to load deals from the API.');
+//        }
+//    }
+
+    public function index(Request $request){
+        $currentPage = $request->input('page', 1);
+
         $data = [
-            "hash" => "790ebb21ae5ebb8d5c8cb0b14460c11a"
+            "hash" => "790ebb21ae5ebb8d5c8cb0b14460c11a",
+            "nPageSize" => 5,
+            "iNumPage" => $currentPage
         ];
         $url = 'https://crm.mirax.md/restapi/deal.list';
 
@@ -89,22 +127,28 @@ class IndexController extends Controller
 
         if ($response->successful()) {
             $responseData = $response->json();
+            if ($request->isMethod('post')) {
 
-            $items = $responseData['items'] ?? [];
-
+//                dd($responseData);
+            }
+            $items = $responseData ?? [];
+            $totalPages = $responseData['total'] ?? 1; // Допустим, API возвращает общее количество страниц
+            $paginationData = [
+                'currentPage' => $currentPage,
+                'totalPages' => $totalPages
+            ];
             return Inertia::render('Dashboard', [
                 'title' => 'Dashboard',
                 'user' => Auth::user(),
-                'objects' => $items
+                'objects' => $items,
+                'pagination' => $paginationData
             ]);
         } else {
-            // Log error or handle it accordingly
             \Log::error('Failed to fetch deals from the API', [
                 'status' => $response->status(),
                 'error' => $response->body()
             ]);
 
-            // Optionally, redirect back or show an error page
             return back()->withErrors('Failed to load deals from the API.');
         }
     }

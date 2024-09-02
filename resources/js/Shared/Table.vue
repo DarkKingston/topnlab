@@ -3,9 +3,12 @@ import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import TableHead from './Table/TableHead';
 import TableBody from './Table/TableBody';
 import PopupUserTable from "./popups/PopupUserTable";
+import { Inertia } from '@inertiajs/inertia'
 export default {
     props:{
-        objects: Object
+        objects: Object,
+        total: String,
+        pagination: Object
     },
     components: {
         TableHead,
@@ -13,11 +16,11 @@ export default {
         PopupUserTable
     },
     setup(props) {
-
+console.log('props.pagination', props.pagination)
         // Данные и состояние
         const sortField = ref('id');
+
         const typeSort = ref('asc');
-        const objects = ref(props.objects);
         const selectedObjects = ref([]);
         const userInfo = ref(null);
         const showUserPopup = ref(false);
@@ -75,6 +78,7 @@ export default {
         }
 
         onMounted(() => {
+            console.log('objects', props.objects)
             nextTick(() => {
                 handleFakeScroll();
                 handleTableScroll();
@@ -83,7 +87,7 @@ export default {
         });
 
         // Обновление ширины фейкового скроллбара при изменении объектов
-        watch(objects, () => {
+        watch(props.objects, () => {
             updateFakeScrollWidth();
         });
 
@@ -93,13 +97,21 @@ export default {
 
         // Сортировка объектов
         const objectsSorting = computed(() => {
-            return objects.value.sort((a, b) => {
+            return props.objects.sort((a, b) => {
                 let modifier = 1;
                 if (typeSort.value === 'desc') modifier = -1;
                 if (a[sortField.value] < b[sortField.value]) return -1 * modifier;
                 if (a[sortField.value] > b[sortField.value]) return 1 * modifier;
                 return 0;
             });
+        });
+
+        const visiblePages = computed(() => {
+            let range = [];
+            for (let i = Math.max(1, props.pagination.currentPage - 1); i <= Math.min(props.pagination.currentPage + 1, props.pagination.totalPages); i++) {
+                range.push(i);
+            }
+            return range;
         });
 
         // Установка сортировки
@@ -122,10 +134,10 @@ export default {
         };
 
         const selectObject = (objectId) => {
-            const object = objects.value.find(obj => obj.id === optionId);
+            const object = props.objects.find(obj => obj.id === objectId);
             if (object) {
                 object.checked = checked;
-                toggleSelection(optionId);
+                toggleSelection(objectId);
             }
         };
 
@@ -147,10 +159,27 @@ export default {
             showUserPopup.value = !showUserPopup.value;
         };
 
+        function changePage(pageValue) {
+            if(pageValue){
+
+                Inertia.post('/dashboard', {
+                    page: pageValue
+                }, {
+                    preserveState: true,
+                    onSuccess: (data) => {
+                        console.log("Page changed successfully.", data);
+
+                    },
+                    onError: (errors) => {
+                        console.log("Errors occurred:", errors);
+                    }
+                });
+            }
+        }
+
         return {
             sortField,
             typeSort,
-            objects,
             selectedObjects,
             tableRef,
             tableContentRef,
@@ -160,6 +189,8 @@ export default {
             activeItem,
             objectsSorting,
             dropState,
+            visiblePages,
+            changePage,
             changeItem,
             selectObject,
             handleTableScrollShadow,
@@ -219,14 +250,13 @@ export default {
         </div>
         <div class="fake_pagination">
             <ul class="fake_pagination_menu">
-                <li class="pagination_prev pagination_action disabled"></li>
-                <li class="fake_pagination_item fz-14 active">1</li>
-<!--                <li class="fake_pagination_item fz-14">2</li>-->
-<!--                <li class="fake_pagination_item fz-14">3</li>-->
-<!--                <li class="fake_pagination_item fz-14">4</li>-->
-<!--                <li class="pagination_action fake_pagination_item fz-14">...</li>-->
-                <li class="pagination_next pagination_action fake_pagination_item fz-14 disabled"></li>
+                <li class="pagination_prev pagination_action" :class="{disabled: pagination.currentPage <= 1}" @click="changePage(pagination.currentPage != 1 ? pagination.currentPage - 1 : null)"></li>
+                <li v-for="page in visiblePages" class="fake_pagination_item fz-14" :class="{ 'active': page === pagination.currentPage }" @click="changePage(page)">
+                    {{ page }}
+                </li>
+                <li class="pagination_next pagination_action" :class="{disabled: pagination.currentPage >= pagination.totalPages}" @click="changePage(pagination.currentPage < pagination.totalPages ? pagination.currentPage + 1 : null)"></li>
             </ul>
+
         </div>
     </div>
 </template>

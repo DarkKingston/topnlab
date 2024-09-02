@@ -15,7 +15,8 @@ import PopupMap from "../Shared/popups/PopupMap";
 export default {
     props:{
         title: String,
-        objects: Object
+        objects: Object,
+        pagination: Object
     },
     components:{
         Head,
@@ -47,7 +48,7 @@ export default {
         watch(() => presentationStore.presentation, (newVal) => {
             localStorage.setItem('presentation', newVal);
         });
-        console.log(props.objects);
+        console.log('props.objects', props.objects);
 
         onMounted(() => {
             document.querySelector('main').classList.remove('no_scroll')
@@ -137,7 +138,7 @@ export default {
 
     <section class="actions">
         <h1 class="actions_title">
-            Продавцы, Объекты компании - 27209
+            Продавцы, Объекты компании - {{ objects.total }}
         </h1>
         <div class="actions_wrapper">
             <div class="actions_item">
@@ -283,7 +284,7 @@ export default {
 
     <section class="table">
         <Tabs/>
-        <Table :objects="objects"/>
+        <Table :objects="objects.items" :total="objects.total" :pagination="pagination"/>
         <div class="popup popup_create">
             <div class="popup_content big">
                 <PopupCreateObject/>

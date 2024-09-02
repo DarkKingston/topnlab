@@ -24,7 +24,7 @@ export default {
     <div>
         <div class="popup_header">
             <div class="popup_label">
-                id сотрудника: {{user?.ASSIGNED_BY_ID}}
+                ID сотрудника: {{user?.RESPONSIBLE.ID}}
             </div>
             <div class="popup_close" @click="removeActivePopup">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#3588F3" width="17.828" height="17.828"><path d="m2.828 17.828 6.086-6.086L15 17.828 17.828 15l-6.086-6.086 6.086-6.086L15 0 8.914 6.086 2.828 0 0 2.828l6.085 6.086L0 15l2.828 2.828z"/></svg>
@@ -33,6 +33,7 @@ export default {
         <div class="popup_info">
             <div class="popup_info_box">
                 <div class="popup_info_img">
+                    <img v-if="user?.RESPONSIBLE.PHOTO" :src="'https://crm.mirax.md'+user?.RESPONSIBLE.PHOTO" alt="">
                     <img src="https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg" alt="">
                 </div>
             </div>
@@ -41,7 +42,7 @@ export default {
                     {{user?.ASSIGNED_BY_NAME}} {{user?.ASSIGNED_BY_LAST_NAME}} {{user?.ASSIGNED_BY_SECOND_NAME}}
                 </div>
                 <div class="popup_info_state">
-                    Заблокирован
+<!--                    Заблокирован-->
                 </div>
                 <div class="popup_info_specialist">
                     {{ user?.ASSIGNED_BY_WORK_POSITION }}
@@ -77,7 +78,7 @@ export default {
                 </div>
                 <div class="icon_list_item_content">
                     <div class="icon_list_item_info">
-                        Рабочий телефон: <span>+7 918 349 3245</span>
+                        Рабочий телефон: <span>{{user?.RESPONSIBLE.WORK_PHONE}}</span>
                     </div>
                     <div class="icon_list_item_info">
                         Почта: <span>{{ user?.ASSIGNED_BY_LOGIN }}</span>

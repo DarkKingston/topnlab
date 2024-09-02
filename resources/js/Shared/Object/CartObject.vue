@@ -10,7 +10,7 @@ export default {
     components:{
         Link
     },
-    setup(){
+    setup(props){
 
         const copied = ref(false);
         const tabResponsible = ref(1);
@@ -73,45 +73,50 @@ export default {
                 document.head.appendChild(script);
             });
         }
+        console.log(props.object);
         function initMap() {
-            ymaps.ready(() => {
-                const myMap = new ymaps.Map('object_map', {
-                    center: [46.9622462, 28.8485565],
-                    zoom: 10,
-                }, {
-                    searchControlProvider: 'yandex#search'
+            const coords = props.object?.UF_COORDS;
+            if(coords){
+
+                const coordsArray = coords.split('|');
+                ymaps.ready(() => {
+                    const myMap = new ymaps.Map('object_map', {
+                        center: [coordsArray[0], coordsArray[1]],
+                        zoom: 10,
+                    }, {
+                        searchControlProvider: 'yandex#search'
+                    });
+
+                    const myGeoObjects = new ymaps.Clusterer({}, {
+                        preset: "twirl#redStretchyIcon",
+                        strokeWidth: 4,
+                        geodesic: true
+                    });
+
+                    const MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+                        '<div style="padding: 2px 5px; font-weight: bold; color: #000; background: #FFFFFF; border-radius: 3px;">$[properties.iconContent]</div>'
+                    );
+                    const placemark = new ymaps.Placemark([coordsArray[0], coordsArray[1]], {
+                        hintContent: props.object.UF_TITLE_RU || props.object.TITLE
+                    }, {
+                        iconContentLayout: MyIconContentLayout,
+                        iconLayout: 'default#imageWithContent',
+                        iconImageHref: "https://www.svgrepo.com/show/255181/location-pin.svg",
+                        iconImageSize: [40, 42],
+                        iconImageOffset: [-5, -38]
+                    });
+                    myGeoObjects.add(placemark);
+
+                    myMap.geoObjects.add(myGeoObjects);
+                    const bounds = myGeoObjects.getBounds();
+
+                    if (myGeoObjects.getGeoObjects().length === 1) {
+                        myMap.setBounds([[bounds[1][0] - 0.02, bounds[1][1] - 0.02], [bounds[1][0] + 0.02, bounds[1][1] + 0.02]], { checkZoomRange: true });
+                    } else {
+                        myMap.setBounds(bounds, { checkZoomRange: true });
+                    }
                 });
-
-                const myGeoObjects = new ymaps.Clusterer({}, {
-                    preset: "twirl#redStretchyIcon",
-                    strokeWidth: 4,
-                    geodesic: true
-                });
-
-                const MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-                    '<div style="padding: 2px 5px; font-weight: bold; color: #000; background: #FFFFFF; border-radius: 3px;">$[properties.iconContent]</div>'
-                );
-
-                const placemark = new ymaps.Placemark([46.9622462, 28.8485565], {
-                    hintContent: 'дом 120 м² 3.3 сотки'
-                }, {
-                    iconContentLayout: MyIconContentLayout,
-                    iconLayout: 'default#imageWithContent',
-                    iconImageHref: "https://www.svgrepo.com/show/255181/location-pin.svg",
-                    iconImageSize: [40, 42],
-                    iconImageOffset: [-5, -38]
-                });
-                myGeoObjects.add(placemark);
-
-                myMap.geoObjects.add(myGeoObjects);
-                const bounds = myGeoObjects.getBounds();
-
-                if (myGeoObjects.getGeoObjects().length === 1) {
-                    myMap.setBounds([[bounds[1][0] - 0.02, bounds[1][1] - 0.02], [bounds[1][0] + 0.02, bounds[1][1] + 0.02]], { checkZoomRange: true });
-                } else {
-                    myMap.setBounds(bounds, { checkZoomRange: true });
-                }
-            });
+            }
         }
 
         function changeShowNumber(){
@@ -176,11 +181,8 @@ export default {
         <div class="cart_object_status">
             <div class="table_status_progress">
                 <div class="table_status_steps">
-                    <div class="table_status_step_item fz-13">
-                        <div class="table_status_step_descr fz-14">Заключенные договоры</div>
-                    </div>
-                    <div class="table_status_step_item _red fz-13">
-                        <div class="table_status_step_descr fz-14">Новые продавцы</div>
+                    <div class="table_status_step_item fz-13" v-for="(item, key) in object.STAGE_TREE" :style="{backgroundColor: item.color}" :key="key">
+                        <div class="table_status_step_descr fz-14">{{item.name}}</div>
                     </div>
                 </div>
             </div>
@@ -212,7 +214,7 @@ export default {
 <!--                    <span class="cart_object_name">-->
 <!--                       3.3 сотки-->
 <!--                    </span>-->
-                    {{object.TITLE}}
+                    {{object?.UF_TITLE_RU || object.TITLE}}
                 </div>
                 <div class="cart_object_addresses">
                     {{object?.UF_CRM_1685299014085}}
@@ -280,7 +282,7 @@ export default {
                         <div class="swiper-container gallery-slider">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" v-for="(item, idx) in object.IMAGE" :key="idx" data-fancybox="slider" :href="'https://crm.mirax.md/'+item">
-                                    <span class="blur"></span><img :src="'https://crm.mirax.md/'+item" :alt="object.TITLE">
+                                    <span class="blur"></span><img :src="'https://crm.mirax.md/'+item" :alt="object.UF_TITLE_RU || object.TITLE">
                                 </div>
                             </div>
                             <div class="swiper-button-prev">
@@ -292,14 +294,14 @@ export default {
                             <div class="slider_info">
                                 <div class="slider_info_wrapper">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g id="Layer_2" data-name="Layer 2"><path class="cls-1" d="M32 44a10 10 0 1 0-10-10 10 10 0 0 0 10 10z"/><path class="cls-1" d="M9.51 56h45A5.51 5.51 0 0 0 60 50.49V20.18A4.18 4.18 0 0 0 55.82 16H48.3a1.81 1.81 0 0 1-1.51-.81L43.3 10a4.39 4.39 0 0 0-3.65-2h-15.3a4.39 4.39 0 0 0-3.65 2l-3.5 5.19a1.81 1.81 0 0 1-1.5.81H8.18A4.18 4.18 0 0 0 4 20.18v30.31A5.51 5.51 0 0 0 9.51 56zM52 20a2 2 0 1 1-2 2 2 2 0 0 1 2-2zm-20 0a14 14 0 1 1-14 14 14 14 0 0 1 14-14zM54.82 12A1.18 1.18 0 0 0 56 10.82v-.61A2.22 2.22 0 0 0 53.78 8h-4.15a.74.74 0 0 0-.74.74A3.26 3.26 0 0 0 52.15 12z"/></g></svg>
-                                    <span>6 фото</span>
+                                    <span>{{ object.IMAGE.length }} фото</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="(item, idx) in object.IMAGE" :key="idx"><img :src="'https://crm.mirax.md/'+item" :alt="object.TITLE"></div>
+                                <div class="swiper-slide" v-for="(item, idx) in object.IMAGE" :key="idx"><img :src="'https://crm.mirax.md/'+item" :alt="object.UF_TITLE_RU || object.TITLE"></div>
                             </div>
                         </div>
                     </div>
@@ -318,16 +320,16 @@ export default {
                             <td class="cart_object_data_item">
                                 <div class="cart_object_data_item_wrapper">
                                     <div class="cart_object_data_item_price blue"> € {{object.OPPORTUNITY}} </div>
-                                    <div class="cart_object_data_item_name"><span>350 000</span> €/м²</div>
+                                    <div class="cart_object_data_item_name"><span>{{ (+object.OPPORTUNITY_ACCOUNT / +object.UF_CRM_1685705685511).toFixed(2) }}</span> €/м²</div>
                                 </div>
                             </td>
                             <td class="cart_object_data_item">
                                 <div class="cart_object_data_item_wrapper">
-                                    <div class="cart_object_data_item_price"><span>30</span> м²</div>
+                                    <div class="cart_object_data_item_price"><span>{{object.UF_CRM_1685705685511}}</span> м²</div>
                                     <div class="cart_object_data_item_name">ОБЩАЯ</div>
                                 </div>
                             </td>
-                            <td class="cart_object_data_item">
+                            <td class="cart_object_data_item" v-if="false">
                                 <div class="cart_object_data_item_wrapper">
                                     <div class="cart_object_data_item_price"><span>10</span> м²</div>
                                     <div class="cart_object_data_item_name">КУХНЯ</div>
@@ -335,7 +337,7 @@ export default {
                             </td>
                             <td class="cart_object_data_item">
                                 <div class="cart_object_data_item_wrapper">
-                                    <div class="cart_object_data_item_price">22 из 25</div>
+                                    <div class="cart_object_data_item_price">{{ object.UF_CRM_1685705993392 }} из {{ object.UF_CRM_1687518116 }}</div>
                                     <div class="cart_object_data_item_name">ЭТАЖ</div>
                                 </div>
                             </td>
@@ -352,7 +354,8 @@ export default {
                 <div class="cart_object_responsible" v-if="tabResponsible == 1">
                     <div class="cart_object_responsible_wrapper">
                         <div class="cart_responsible_img">
-                            <img src="https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg" alt="">
+                            <img v-if="object.RESPONSIBLE?.PHOTO" :src="'https://crm.mirax.md/'+object?.RESPONSIBLE?.PHOTO" alt="">
+                            <img v-else src="https://thumbs.dreamstime.com/b/generic-person-gray-photo-placeholder-man-silhouette-white-background-144511705.jpg" alt="">
                         </div>
                         <div class="cart_responsible_info">
                             <div class="cart_responsible_info_name">
@@ -364,7 +367,7 @@ export default {
                             <div class="contact_phone_number">
                                 <div v-if="!showedNumber" v-tippy.top="`Нажми, чтобы c показать номер`">373 <span class="link" @click="changeShowNumber">...показать номер</span></div>
                                 <div v-else class="link">
-                                    {{ object?.ASSIGNED_BY_PHONE }}
+                                    {{ object?.RESPONSIBLE?.WORK_PHONE }}
                                 </div>
                             </div>
                             <div class="cart_responsible_info_mess fz-14" >
@@ -597,13 +600,7 @@ export default {
                 </div>
                 <div class="cart_param_description">
                     <div class="cart_param_description_text">
-                       <div class="cart_param_description_text_value" :class="{active: toggledText}">
-                           <p>Срочная продажа! Полноценная однокомнатная квартира: просторная кухня-гостиная и выделенная спальня, санузел совмещенный. Квартира с ремонтом, и, полностью укомплектована мебелью и техникой. Из панорамных окон открывается красивый вид на реку и зелень. </p>
-                           <p>Квартира расположена в современном жилом комплексе, на первых этажах которого есть все необходимое для жизни: магазины, кафе, аптека, салоны красоты и многое другое. </p>
-                           <p>Двор оборудован детскими площадками и прогулочными зонами. </p>
-                           <p>Продается в связи с переездом по семейным обстоятельствам. Отдаем ниже рынка. В нашем ЖК за такую цену продаются без ремонта.</p>
-                           <p>Статус квартира, один собственник. В собственности более 5 лет</p>
-                           <p>Срочно!</p>
+                       <div class="cart_param_description_text_value" :class="{active: toggledText}" v-html="object.UF_DESCRIPTION_RU">
                        </div>
                         <div class="cart_param_descr_btn">
                             <div class="cart_param_descr_btn_content" @click="toggleText">
@@ -878,7 +875,7 @@ export default {
                 </div>
             </div>
 
-            <div class="cart_object_map" id="object_map">
+            <div class="cart_object_map" id="object_map" v-if="object.UF_COORDS">
             </div>
         </div>
     </div>
