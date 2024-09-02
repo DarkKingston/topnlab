@@ -870,7 +870,7 @@ body ::-webkit-scrollbar-track {
     border: 0;
     border-top-left-radius: 0;
     height: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
     box-shadow: none;
     line-height: 1.14285714em;
     flex-direction: row;
@@ -878,6 +878,9 @@ body ::-webkit-scrollbar-track {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     /*direction: rtl;*/
+}
+.table_status_steps::-webkit-scrollbar{
+    display: none;
 }
 .table_status_step_item{
     color: rgba(var(--color-rgb-black), 0.87);
@@ -904,6 +907,9 @@ body ::-webkit-scrollbar-track {
 }
 .table_status_step_item._red{
     background-color: var(--color-step-red);
+}
+.table_status_step_item:last-child::after{
+    display: none;
 }
 .table_status_step_descr{
     line-height: 1;
