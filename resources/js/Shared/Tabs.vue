@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import draggable from "vuedraggable";
 export default{
+props:{
+    total: String
+},
  components: {
      draggable
  },
@@ -72,7 +75,7 @@ export default{
           <div class="table_tabs_title">
             {{ tab.title }}
           </div>
-          <span class="table_tabs_count">{{ tab.count }}</span>
+          <span class="table_tabs_count">{{ total }}</span>
         </div>
       </div>
       <draggable
@@ -90,7 +93,7 @@ export default{
               <div class="table_tabs_title">
                 {{ tab.title }}
               </div>
-              <span class="table_tabs_count">{{ tab.count }}</span>
+              <span class="table_tabs_count">{{ total }}</span>
             </div>
             <div class="table_tabs_item_drag">
               <span></span>

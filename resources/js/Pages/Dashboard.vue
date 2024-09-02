@@ -283,7 +283,7 @@ export default {
     </div>
 
     <section class="table">
-        <Tabs/>
+        <Tabs :total="objects.total"/>
         <Table :objects="objects.items" :total="objects.total" :pagination="pagination"/>
         <div class="popup popup_create">
             <div class="popup_content big">
