@@ -1,20 +1,41 @@
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import draggable from "vuedraggable";
+import { Inertia } from '@inertiajs/inertia'
+import { useStage } from "../store/computed";
+
 export default{
 props:{
-    total: String
+    total: String,
+    tabs: Object
 },
  components: {
      draggable
  },
- setup(){
+ setup(props){
      const activeClass = ref(null);
+     const stageStore = useStage();
 
-     function activeTab(event) {
+     function activeTab(event, tab_value) {
          if (activeClass.value) {
              activeClass.value.classList.remove('active');
          }
+
+         console.log('tab event', tab_value, tab_value?.name)
+         stageStore.setStage(tab_value?.name);
+         Inertia.post('/dashboard', {
+             stage: tab_value['name']
+         }, {
+             preserveState: true,
+             onSuccess: (data) => {
+                 console.log("Stage changed successfully.", data);
+
+             },
+             onError: (errors) => {
+                 console.log("Errors occurred:", errors);
+             }
+         });
+
 
          const target = event.currentTarget;
          if (target !== activeClass.value) {
@@ -25,25 +46,15 @@ props:{
          }
      }
      let tabsStatic = ref([
-         { id: 0, title: "Новые", count: "7241" },
-         { id: 1, title: "Все", count: "27215" }
+         { id: 0, title: "Все", active: true, name: 'all' },
      ]);
 
-     let tabsDraggable = ref([
-         { id: 2, title: "Вариант", count: "7242" },
-         { id: 3, title: "Отложено", count: "126", tooltip:'На данном этапе находяться Продавцы, которых НОП перевел в отложенный спрос' },
-         { id: 4, title: "Нужно распределить", count: "284", tooltip: 'Старовый этар ТОПа. Заявки, которые нужно распределить по Агентам' },
-         { id: 5, title: "Заключенные договора", count: "1146", tooltip: 'На этом этапе находяться Продавцы, с которыми заключен агентский договор' },
-         { id: 6, title: "Новые продавцы", count: "5", tooltip: 'Это стартовый этап воронки. Вновь созданные карточки Продавцов и карточки полученные от ТОПа будут попадать на этот этап.' },
-         { id: 7, title: "Передано в црп", count: "0", tooltip: 'На этом этапе находяться карточки Продавцов, переданные в Центр Регионального Партнерства' },
-         { id: 8, title: "В рекламе / показы", count: "8333", tooltip: 'На этом этапе находяться объекты Продавцов, по каторым ведется рекламная компания и проводяться показы Покупателям' },
-         { id: 9, title: "Аванс", count: "385", tooltip: 'На этом этапе находяться Продавцы, которые подписали предварительный договор' },
-         { id: 10, title: "Ожидание комиссии", count: "33", tooltip: 'На этом этапе находяться Клиенты, которые ожидают оканчательного расчета за оказание услуг' },
-         { id: 11, title: "Отложено (на Нопа)", count: "180", tooltip: 'На этом этапе находяться Продавцы, которых Агент планирует отложить. НОП принимает решения по отложке' },
-         { id: 12, title: "Отказ снят", count: "4633", tooltip: 'На этом этапе находяться Продавцы, по которым получены отказы. Например: продали сами, отказались от сотрудничества и т.д.' },
-         { id: 13, title: "Сделка закрыта", count: "459", tooltip: 'Финальные этап сделки' }
-     ]);
-
+     let tabsDraggable = ref(Object.values(props.tabs).map(stage => ({
+         id: stage.ID,
+         title: stage.NAME,
+         total: stage.count_deals,
+         name: stage.STATUS_ID
+     })));
      let isDragging = ref(false);
 
      function handleDragStart() {
@@ -55,6 +66,15 @@ props:{
      function handleDragEnd() {
          isDragging.value = false;
      }
+
+     onMounted(() => {
+         const firstTab = document.querySelector('.table_tabs_static .table_tabs_item');
+         if (firstTab) {
+             firstTab.classList.add('active');
+             activeClass.value = firstTab;
+         }
+     });
+
      return{
          handleDragEnd,
          handleDragStart,
@@ -71,13 +91,14 @@ props:{
 <template>
     <div class="table_tabs" :class="{ 'drag-scroll-enabled': !isDragging, 'drag-scroll-disabled': isDragging, 'active': activeClass }" v-dragscroll>
       <div class="table_tabs_static">
-        <div class="table_tabs_item" v-for="tab in tabsStatic" :key="tab.id" @click="activeTab($event)">
+        <div class="table_tabs_item" v-for="tab in tabsStatic" :key="tab.id" @click="activeTab($event, tab)">
           <div class="table_tabs_title">
             {{ tab.title }}
           </div>
-          <span class="table_tabs_count">{{ total }}</span>
+<!--          <span class="table_tabs_count">{{ total }}</span>-->
         </div>
       </div>
+<!--          v-model="tabsDraggable"-->
       <draggable
           v-model="tabsDraggable"
           tag="ol"
@@ -88,12 +109,12 @@ props:{
           @end="handleDragEnd"
       >
         <template #item="{ element: tab }">
-          <li class="table_tabs_item" @click="activeTab($event)" v-tippy="`${tab.tooltip || ''}`">
+          <li class="table_tabs_item" @click="activeTab($event, tab)" v-tippy="`${tab.tooltip || ''}`">
             <div class="table_tabs_item_link">
               <div class="table_tabs_title">
                 {{ tab.title }}
               </div>
-              <span class="table_tabs_count">{{ total }}</span>
+              <span class="table_tabs_count">{{ tab.total }}</span>
             </div>
             <div class="table_tabs_item_drag">
               <span></span>
@@ -192,6 +213,12 @@ props:{
   border-radius: 8px 8px 0 0;
   color: #3588f3;
   font-weight: 600;
+}
+
+.table_tabs_static .table_tabs_item{
+    min-width: 80px;
+    display: flex;
+    justify-content: center;
 }
 .table_tabs_draggable {
   display: flex;

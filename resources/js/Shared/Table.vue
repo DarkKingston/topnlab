@@ -4,6 +4,7 @@ import TableHead from './Table/TableHead';
 import TableBody from './Table/TableBody';
 import PopupUserTable from "./popups/PopupUserTable";
 import { Inertia } from '@inertiajs/inertia'
+import { useStage } from "../store/computed";
 export default {
     props:{
         objects: Object,
@@ -16,7 +17,7 @@ export default {
         PopupUserTable
     },
     setup(props) {
-console.log('props.pagination', props.pagination)
+        const stageStore = useStage();
         // Данные и состояние
         const sortField = ref('id');
 
@@ -108,9 +109,11 @@ console.log('props.pagination', props.pagination)
 
         const visiblePages = computed(() => {
             let range = [];
-            for (let i = Math.max(1, props.pagination.currentPage - 1); i <= Math.min(props.pagination.currentPage + 1, props.pagination.totalPages); i++) {
+            console.log('MATH range', Math.ceil((props.pagination.totalPages / activeItem.value)));
+            for (let i = Math.max(1, props.pagination.currentPage - 1); i <= Math.min(props.pagination.currentPage + 1, Math.ceil((props.pagination.totalPages / activeItem.value))); i++) {
                 range.push(i);
             }
+            console.log('range ',range);
             return range;
         });
 
@@ -160,10 +163,12 @@ console.log('props.pagination', props.pagination)
         };
 
         function changePage(pageValue) {
+            console.log('pagination', props.pagination.currentPage, props.pagination.totalPages / activeItem.value)
             if(pageValue){
 
                 Inertia.post('/dashboard', {
-                    page: pageValue
+                    page: pageValue,
+                    stage: stageStore.stage
                 }, {
                     preserveState: true,
                     onSuccess: (data) => {
@@ -254,7 +259,7 @@ console.log('props.pagination', props.pagination)
                 <li v-for="page in visiblePages" class="fake_pagination_item fz-14" :class="{ 'active': page === pagination.currentPage }" @click="changePage(page)">
                     {{ page }}
                 </li>
-                <li class="pagination_next pagination_action" :class="{disabled: pagination.currentPage >= pagination.totalPages}" @click="changePage(pagination.currentPage < pagination.totalPages ? pagination.currentPage + 1 : null)"></li>
+                <li class="pagination_next pagination_action" :class="{disabled: pagination.currentPage >= Math.ceil(pagination.totalPages / activeItem)}" @click="changePage(pagination.currentPage < Math.ceil((pagination.totalPages / activeItem)) ? pagination.currentPage + 1 : null)"></li>
             </ul>
 
         </div>

@@ -13,6 +13,18 @@ export const useObjectTab = defineStore('object_tab', {
     }),
 });
 
+export const useStage = defineStore('stage', {
+    state: () => ({
+        stage: 'all',
+    }),
+    actions: {
+        setStage(newStage) {
+            this.stage = newStage;
+        }
+    }
+});
+
+
 export const useCreateObjectContact = defineStore('create_object_contact', {
     state: () => ({
         name: {

@@ -113,11 +113,13 @@ class IndexController extends Controller
 
     public function index(Request $request){
         $currentPage = $request->input('page', 1);
+        $stage = $request->input('stage');
 
         $data = [
             "hash" => "790ebb21ae5ebb8d5c8cb0b14460c11a",
             "nPageSize" => 5,
-            "iNumPage" => $currentPage
+            "iNumPage" => $currentPage,
+            "stage" => $stage
         ];
         $url = 'https://crm.mirax.md/restapi/deal.list';
 
