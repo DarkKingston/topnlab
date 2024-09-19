@@ -4,6 +4,8 @@ import { useCreateObjectAddress} from "../../../store/computed";
 import { storeToRefs } from 'pinia';
 import { ModelSelect } from "vue-search-select"
 import VSelect from 'vue3-select';
+import {loadYandexMapsAPI} from "../../../store/serviceMap";
+
 export default {
     components: {
         VSelect,
@@ -20,60 +22,48 @@ export default {
         }
 
         onMounted(() => {
-            setTimeout(() => {
-                if (!window.ymaps) {
-                    loadYandexMapsAPI().then(initMap).catch(error => console.log('Failed to load Yandex Maps', error));
-                } else {
-                    initMap();
-                }
-            }, 10);
+            loadYandexMapsAPI()
+                .then((ymaps) => {
+                    initMap(ymaps);
+                })
+                .catch(error => console.log('Failed to load Yandex Maps', error));
         });
 
-        function loadYandexMapsAPI() {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = 'https://api-maps.yandex.ru/2.1/?lang=en_RU&apikey=86a0173b-9f43-47a8-81cb-f70b1cf08265';
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
+
+
+        function initMap(ymaps) {
+            const myMap = new ymaps.Map('popup_address', {
+                center: coordinates.value,
+                zoom: 9
+            }, {
+                searchControlProvider: 'yandex#search'
             });
-        }
 
-        function initMap() {
-            ymaps.ready(() => {
-                const myMap = new ymaps.Map('popup_address', {
-                    center: coordinates.value,
-                    zoom: 9
-                }, {
-                    searchControlProvider: 'yandex#search'
-                });
+            const MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+                '<div style="padding: 2px 5px; font-weight: bold; color: #000; background: #FFFFFF; border-radius: 3px;">$[properties.iconContent]</div>'
+            );
 
-                const MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-                    '<div style="padding: 2px 5px; font-weight: bold; color: #000; background: #FFFFFF; border-radius: 3px;">$[properties.iconContent]</div>'
-                );
+            let placemark = new ymaps.Placemark(coordinates.value, {
+                hintContent: ''
+            }, {
+                iconContentLayout: MyIconContentLayout,
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: "https://www.svgrepo.com/show/255181/location-pin.svg",
+                iconImageSize: [40, 42],
+                iconImageOffset: [-5, -38]
+            });
 
-                let placemark = new ymaps.Placemark(coordinates.value, {
-                    hintContent: ''
-                }, {
-                    iconContentLayout: MyIconContentLayout,
-                    iconLayout: 'default#imageWithContent',
-                    iconImageHref: "https://www.svgrepo.com/show/255181/location-pin.svg",
-                    iconImageSize: [40, 42],
-                    iconImageOffset: [-5, -38]
-                });
-
-                myMap.geoObjects.add(placemark);
+            myMap.geoObjects.add(placemark);
 
 
-                // Add click event listener to map
-                myMap.events.add('click', function (e) {
-                    const coords = e.get('coords');
-                    coordinates.value = coords;
-                    coordinates_value.value.value = coords;
+            // Add click event listener to map
+            myMap.events.add('click', function (e) {
+                const coords = e.get('coords');
+                coordinates.value = coords;
+                coordinates_value.value.value = coords;
 
-                    // Move placemark to the clicked location
-                    placemark.geometry.setCoordinates(coords);
-                });
+                // Move placemark to the clicked location
+                placemark.geometry.setCoordinates(coords);
             });
         }
 

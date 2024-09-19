@@ -79,7 +79,7 @@ export default {
         }
 
         onMounted(() => {
-            console.log('objects', props.objects)
+            console.log('Table objects', props.objects)
             nextTick(() => {
                 handleFakeScroll();
                 handleTableScroll();

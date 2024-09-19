@@ -3,17 +3,22 @@ import { ref, onMounted } from 'vue';
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import VSelect from 'vue3-select';
+import { loadYandexMapsAPI } from '../../store/serviceMap';
 
 export default {
+    props:{
+      objects: Object
+    },
     components: {
         flatPickr,
         VSelect
     },
-    setup() {
-        const coordinates = ref([55.75, 37.62]); // Координаты центра карты (Москва)
+    setup(props) {
+        const coordinates = ref([47.143858092041974, 28.43401706108875]); // Координаты центра карты (Кишинев)
         let myMap;
-        let polygon;
-        const drawing = ref(false); // флаг для отслеживания режима рисования
+        let ymapsInstance;
+        const drawing = ref(false);
+        const objects = ref(props.objects);
 
         function removeActivePopup() {
             document.querySelector('.popup_map').classList.remove('active');
@@ -22,36 +27,59 @@ export default {
         }
 
         onMounted(() => {
-            loadYandexMapsAPI().then(() => {
-                initMap();
-                drawing.value = false;
-            }).catch(error => console.log('Failed to load Yandex Maps', error));
+            loadYandexMapsAPI()
+                .then((ymaps) => {
+                    ymapsInstance = ymaps;
+                    initMap(ymaps);
+                    addPlacemarksToMap();
+                })
+                .catch(error => console.log('Failed to load Yandex Maps', error));
         });
 
-        function loadYandexMapsAPI() {
-            return new Promise((resolve, reject) => {
-                if (document.querySelector('script[src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=86a0173b-9f43-47a8-81cb-f70b1cf08265"]')) {
-                    resolve();
-                    return;
-                }else{
-                    const script = document.createElement('script');
-                    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=86a0173b-9f43-47a8-81cb-f70b1cf08265';
-                    script.onload = resolve;
-                    script.onerror = reject;
-                    document.head.appendChild(script);
+        function initMap(ymaps) {
+            myMap = new ymaps.Map('big_map', {
+                center: coordinates.value,
+                zoom: 8,
+                controls: ['fullscreenControl', 'zoomControl']
+            });
+        }
+
+        function addPlacemarksToMap() {
+            console.log('props.objects:', props.objects);
+
+            // Проверяем, является ли props.objects объектом
+            if (typeof props.objects !== 'object' || props.objects === null) {
+                console.error('props.objects is not an object', props.objects);
+                return;
+            }
+
+            // Преобразуем props.objects в массив
+            const objectsArray = Array.isArray(props.objects) ? props.objects : Object.values(props.objects);
+
+            objectsArray.forEach(obj => {
+                let latitude, longitude;
+
+                if (obj.UF_COORDS) {
+                    const coords = obj.UF_COORDS.split('|');
+                    if (coords.length === 2) {
+                        latitude = parseFloat(coords[0]);
+                        longitude = parseFloat(coords[1]);
+                    }
+                }
+
+                if (latitude && longitude) {
+                    const placemark = new ymapsInstance.Placemark([latitude, longitude], {
+                        balloonContent: obj.TITLE || obj.name
+                    });
+                    myMap.geoObjects.add(placemark);
+                } else {
+                    console.warn('Объект без координат:', obj);
                 }
             });
         }
 
-        function initMap() {
-            ymaps.ready(() => {
-                myMap = new ymaps.Map('big_map', {
-                    center: coordinates.value,
-                    zoom: 8,
-                    controls: ['fullscreenControl', 'zoomControl']
-                });
-            });
-        }
+
+
 
         function setupDrawButton() {
             if (!drawing.value) {
@@ -63,7 +91,7 @@ export default {
         function startDrawing() {
             const canvas = document.getElementById('draw-canvas');
             const ctx2d = canvas.getContext('2d');
-            const mapElement = document.getElementById('map');
+            const mapElement = document.getElementById('big_map');
             let coordinates = [];
 
             const rect = mapElement.getBoundingClientRect();
@@ -110,12 +138,52 @@ export default {
                     opacity: 0.7
                 });
                 myMap.geoObjects.add(newPolygon);
+                filterObjectsInsidePolygon(newPolygon, ymaps);
             };
         }
+        function filterObjectsInsidePolygon(polygon) {
+            // Очищаем предыдущие метки
+            myMap.geoObjects.each(function (geoObject) {
+                if (geoObject.geometry.getType() === 'Point') {
+                    myMap.geoObjects.remove(geoObject);
+                }
+            });
+
+            // Преобразуем objects.value в массив и перебираем его
+            const objectsArray = Array.isArray(objects.value) ? objects.value : Object.values(objects.value);
+
+            objectsArray.forEach(obj => {
+                let latitude, longitude;
+
+                if (obj.UF_COORDS) {
+                    const coords = obj.UF_COORDS.split('|');
+                    if (coords.length === 2) {
+                        latitude = parseFloat(coords[0]);
+                        longitude = parseFloat(coords[1]);
+                    }
+                }
+
+                if (latitude && longitude) {
+                    const point = [latitude, longitude];
+                    if (polygon.geometry.contains(point)) {
+                        const placemark = new ymapsInstance.Placemark(point, {
+                            balloonContent: obj.TITLE || obj.name
+                        });
+                        myMap.geoObjects.add(placemark);
+                    }
+                } else {
+                    console.warn('Объект без координат:', obj);
+                }
+            });
+        }
+
+
+
 
         function clearMap() {
             myMap.geoObjects.removeAll();
             drawing.value = false;
+            addPlacemarksToMap();
         }
 
         return {

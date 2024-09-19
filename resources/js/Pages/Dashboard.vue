@@ -278,7 +278,7 @@ export default {
 
     <div class="popup popup_map">
         <div class="popup_content map">
-            <PopupMap/>
+            <PopupMap :objects="objects.items"/>
         </div>
     </div>
 
